@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UCAS Decoded — Unit B1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F2E8; --ink:#1B1533;
+  --orange:#FF5A1F; --teal:#00A6A6; --yellow:#FFC93C; --pink:#F0468C;
+  --soft:#4A4166; --dim:#7C7395;
+  --shadow:5px 5px 0 var(--ink); --shadow-sm:3px 3px 0 var(--ink);
+  --border:3px solid var(--ink); --border-sm:2px solid var(--ink);
+  --disp:"Bricolage Grotesque",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;
+  background-image:radial-gradient(var(--ink) .5px,transparent .5px);background-size:22px 22px}
+h1,h2,h3,h4{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-height:1}
+.wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+button{font:inherit;cursor:pointer}
+a{color:var(--ink)}
+:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+
+.titlescreen{min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 20px;position:relative}
+.kicker{font-family:var(--mono);font-size:13px;letter-spacing:.22em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:7px 14px;margin-bottom:22px;display:inline-block}
+.titlescreen h1{font-size:clamp(50px,13vw,132px);margin:0;text-transform:uppercase}
+.titlescreen h1 em{font-style:normal;display:block;color:var(--orange);-webkit-text-stroke:2px var(--ink)}
+.titlescreen .sub{max-width:48ch;margin:24px 0 32px;font-size:18px}
+.blob{position:absolute;border:var(--border);z-index:-1}
+.b1{width:120px;height:120px;background:var(--teal);border-radius:50%;top:12%;left:8%}
+.b2{width:80px;height:80px;background:var(--pink);top:22%;right:11%;transform:rotate(14deg)}
+.b3{width:150px;height:44px;background:var(--orange);bottom:16%;left:14%;transform:rotate(-7deg)}
+.b4{width:60px;height:60px;background:var(--yellow);border-radius:50%;bottom:24%;right:16%}
+@media (max-width:640px){.blob{display:none}}
+
+.btn{background:var(--yellow);border:var(--border);box-shadow:var(--shadow);padding:15px 30px;font-family:var(--disp);font-weight:800;font-size:19px;text-transform:uppercase;transition:transform .1s,box-shadow .1s}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.btn-sm{padding:10px 18px;font-size:14px;box-shadow:var(--shadow-sm)}
+.btn-t{background:var(--teal);color:#fff}
+.btn-o{background:var(--orange);color:#fff}
+.btn-g{background:#fff}
+
+.nav{position:sticky;top:0;z-index:30;background:var(--ink);border-bottom:var(--border)}
+.nav-in{max-width:1060px;margin:0 auto;padding:9px 20px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.nav-btn{background:transparent;border:2px solid transparent;color:#C9C2E0;font-family:var(--mono);font-size:12px;padding:7px 10px;text-transform:uppercase}
+.nav-btn:hover{color:var(--paper);border-color:var(--soft)}
+.nav-btn[aria-current="true"]{background:var(--yellow);color:var(--ink);border-color:var(--yellow)}
+.nav-btn .n{color:var(--teal)}
+.progress{margin-left:auto;display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:#9A92B8}
+.progress-bar{width:62px;height:8px;background:#3A3255;border:2px solid #5A5178}
+.progress-bar i{display:block;height:100%;background:var(--teal);width:0;transition:width .4s}
+
+.page{padding:44px 0 80px}
+.page[hidden]{display:none}
+.tag{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:5px 11px;margin-bottom:14px}
+.page h2{font-size:clamp(28px,5.5vw,48px);margin:0 0 14px;text-transform:uppercase}
+.page h2 em{font-style:normal;color:var(--orange)}
+.page h3{font-size:22px;margin:34px 0 12px}
+.lede{font-size:17.5px;max-width:64ch;margin:0 0 26px}
+
+.card{background:#fff;border:var(--border);box-shadow:var(--shadow);padding:20px 22px;margin-bottom:16px}
+.card h4{font-size:18px;margin:0 0 8px}
+.card p:last-child,.card ul:last-child{margin-bottom:0}
+.card .big{font-family:var(--disp);font-weight:800;font-size:48px;line-height:.95;display:block;margin-bottom:2px}
+.tint-o{background:var(--orange);color:#fff}
+.tint-t{background:var(--teal);color:#fff}
+.tint-y{background:var(--yellow)}
+.tint-p{background:var(--pink);color:#fff}
+.tint-o a,.tint-t a,.tint-p a{color:#fff}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+@media (max-width:760px){.grid2{grid-template-columns:1fr}}
+
+.steps{counter-reset:s;margin:0;padding:0;list-style:none}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 54px;margin-bottom:20px;min-height:40px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:40px;height:40px;background:var(--teal);color:#fff;border:var(--border-sm);display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-weight:800;font-size:18px}
+.steps li b{font-family:var(--disp);font-weight:700;display:block;font-size:17.5px;margin-bottom:3px}
+.steps.orange li::before{background:var(--orange)}
+
+/* route decider */
+.q{background:#fff;border:var(--border);box-shadow:var(--shadow);padding:22px 24px;margin-bottom:16px}
+.q h4{margin:0 0 14px;font-size:19px}
+.opt{display:block;width:100%;text-align:left;background:var(--paper);border:var(--border-sm);padding:14px 16px;margin-bottom:9px;font-size:15.5px}
+.opt:hover{border-color:var(--orange)}
+.opt[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.verdict{border:var(--border);box-shadow:var(--shadow);padding:22px 24px;margin-top:4px}
+.verdict[hidden]{display:none}
+.verdict h4{margin:0 0 8px;font-size:22px}
+.verdict .route{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:4px 10px;background:rgba(0,0,0,.18);display:inline-block;margin-bottom:10px}
+
+/* tariff */
+.tariff{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+@media (max-width:860px){.tariff{grid-template-columns:1fr}}
+.gradegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(86px,1fr));gap:8px}
+.gr{background:#fff;border:var(--border-sm);padding:11px 6px;text-align:center;font-family:var(--disp);font-weight:700;font-size:15px}
+.gr:hover{border-color:var(--orange)}
+.gr[aria-pressed="true"]{background:var(--teal);color:#fff;border-color:var(--ink)}
+.ptsbox{background:var(--ink);color:#fff;border:var(--border);box-shadow:5px 5px 0 var(--orange);padding:24px;text-align:center}
+.ptsbox .n{font-family:var(--disp);font-weight:800;font-size:72px;line-height:1;color:var(--yellow)}
+.ptsbox .l{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#C9C2E0;margin-top:6px}
+.ptsbox p{margin:14px 0 0;font-size:14.5px;color:#C9C2E0}
+
+/* compare table */
+table{width:100%;border-collapse:collapse;background:#fff;border:var(--border);box-shadow:var(--shadow);margin-bottom:16px;font-size:15px}
+th,td{padding:11px 13px;text-align:left;border-bottom:var(--border-sm);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:var(--paper);border-bottom:none}
+tr:last-child td{border-bottom:none}
+.tablewrap{overflow-x:auto}
+
+/* timeline */
+.tl{border-left:4px solid var(--ink);margin-left:14px;padding-left:22px}
+.tl .ev{position:relative;margin-bottom:20px}
+.tl .ev::before{content:"";position:absolute;left:-30px;top:4px;width:14px;height:14px;background:var(--teal);border:var(--border-sm)}
+.tl .ev.hot::before{background:var(--orange)}
+.tl .ev.now::before{background:var(--yellow)}
+.tl .d{font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--orange);font-weight:600}
+.tl .t{font-family:var(--disp);font-weight:700;font-size:17px;margin:2px 0 3px}
+.tl .x{font-size:14.5px;color:var(--soft)}
+
+.gl{background:none;border:none;padding:0;color:inherit;font:inherit;border-bottom:2px dotted var(--orange);cursor:help}
+.gl:hover{background:var(--yellow)}
+.pop{position:absolute;z-index:60;max-width:330px;background:var(--ink);color:#EDE9F7;border:var(--border);box-shadow:5px 5px 0 var(--orange);padding:14px 16px;font-size:14px;line-height:1.55}
+.pop[hidden]{display:none}
+.pop b{display:block;font-family:var(--disp);font-weight:700;color:#fff;margin-bottom:4px;font-size:16px}
+
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;align-items:center}
+.search{flex:1 1 240px;border:var(--border);background:#fff;padding:12px 14px;font:inherit;box-shadow:var(--shadow-sm)}
+.count{font-family:var(--mono);font-size:12px;color:var(--dim)}
+.entry{border-bottom:var(--border-sm);padding:14px 0}
+.entry b{font-family:var(--disp);font-weight:700;font-size:17px;display:block}
+.entry p{margin:4px 0 0;font-size:15px}
+
+.lk{background:#fff;border:var(--border);box-shadow:var(--shadow-sm);padding:16px 18px;text-decoration:none;color:inherit;display:block;margin-bottom:12px}
+.lk:hover{border-color:var(--orange)}
+.lk b{font-family:var(--disp);font-size:16.5px;font-weight:700;display:block;color:var(--orange)}
+.lk .u{font-family:var(--mono);font-size:11.5px;color:var(--dim);display:block;margin:3px 0 7px;word-break:break-all}
+.lk span.d{font-size:14.5px;color:var(--soft)}
+
+.ci{display:flex;gap:12px;align-items:flex-start;padding:13px 0;border-bottom:var(--border-sm)}
+.ci:last-child{border-bottom:none}
+.ci input{margin-top:5px;width:18px;height:18px;flex-shrink:0;accent-color:var(--orange)}
+.ci label{font-size:15.5px;cursor:pointer}
+.ci label b{font-weight:600;display:block;font-family:var(--disp);font-size:15.5px}
+.ci label span{color:var(--dim);font-size:13.5px}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(140%);z-index:60;background:var(--ink);color:var(--paper);border:var(--border);box-shadow:5px 5px 0 var(--orange);padding:12px 20px;transition:transform .35s cubic-bezier(.2,.8,.3,1);text-align:center}
+.toast.up{transform:translateX(-50%) translateY(0)}
+.toast .l{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--yellow);text-transform:uppercase}
+.toast .m{font-family:var(--disp);font-weight:700;font-size:16px}
+.sound-btn{position:fixed;right:14px;bottom:14px;z-index:50;background:var(--ink);color:var(--paper);border:var(--border);box-shadow:4px 4px 0 var(--teal);padding:9px 15px;font-family:var(--mono);font-size:12px;text-transform:uppercase}
+
+.site-footer{border-top:var(--border);padding:24px 0 90px;font-size:13.5px;color:var(--soft)}
+.site-footer p{margin:0 0 8px;max-width:74ch}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{.nav,.sound-btn,.toast,.pop,.titlescreen,.tools{display:none}.page[hidden]{display:block!important}.card,.q,table{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<button class="sound-btn" id="sound" aria-pressed="false">♪ Sound off</button>
+<div class="toast" id="toast"><div class="l">Unlocked</div><div class="m"></div></div>
+<div class="pop" id="pop" hidden role="dialog"></div>
+
+<div class="titlescreen" id="title">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span>
+  <span class="kicker">Unit B1 · AC1 · College and UCAS research</span>
+  <h1>UCAS<em>decoded</em></h1>
+  <p class="sub">What it is, whether you even need it, and how to apply without missing the deadline that matters. Including the bit nobody tells you: some courses don't go through UCAS at all — and the course you're on right now is one of them.</p>
+  <button class="btn" id="start">▶ Press start</button>
+</div>
+
+<div id="shell" hidden>
+<nav class="nav"><div class="nav-in">
+  <button class="nav-btn" data-p="p1"><span class="n">01</span> What is it</button>
+  <button class="nav-btn" data-p="p2"><span class="n">02</span> Which route</button>
+  <button class="nav-btn" data-p="p3"><span class="n">03</span> How to apply</button>
+  <button class="nav-btn" data-p="p4"><span class="n">04</span> Key dates</button>
+  <button class="nav-btn" data-p="p5"><span class="n">05</span> Your points</button>
+  <button class="nav-btn" data-p="p6"><span class="n">06</span> Your task</button>
+  <button class="nav-btn" data-p="p7"><span class="n">07</span> Glossary</button>
+  <div class="progress"><span id="progtxt">0/7</span><div class="progress-bar"><i></i></div></div>
+</div></nav>
+
+<!-- ============ 01 ============ -->
+<section class="page" id="p1" hidden><div class="wrap">
+  <span class="tag">01 — What is it</span>
+  <h2>UCAS is a <em>post office</em></h2>
+  <p class="lede">That is genuinely the clearest way to think about it. UCAS does not teach anyone, does not decide who gets in, and does not set entry requirements. It is the service that carries one application to up to five universities so you don't have to write five.</p>
+
+  <div class="grid3">
+    <div class="card tint-t"><span class="big">1</span><h4>application</h4><p>You fill in one form. Personal details, qualifications, a personal statement, a reference from the college.</p></div>
+    <div class="card tint-o"><span class="big">5</span><h4>choices</h4><p>It goes to up to five courses. They cannot see each other — no university knows where else you applied.</p></div>
+    <div class="card tint-y"><span class="big">£34.50</span><h4>one fee</h4><p>Covers all five. Fee waivers exist if you had free school meals or are care-experienced — check, don't assume.</p></div>
+  </div>
+
+  <h3>What UCAS actually does and doesn't do</h3>
+  <div class="grid2">
+    <div class="card">
+      <h4>It does</h4>
+      <ul>
+        <li>Host the course search for every UK university</li>
+        <li>Carry your application to your five choices</li>
+        <li>Track your offers in one place (the {{hub|UCAS Hub}})</li>
+        <li>Run {{clearing|Clearing}} and {{extra|Extra}} if things don't go to plan</li>
+        <li>Convert qualifications into {{tariff|tariff points}} so courses can compare them</li>
+      </ul>
+    </div>
+    <div class="card tint-p">
+      <h4>It does not</h4>
+      <ul>
+        <li>Decide whether you get in — the university does that</li>
+        <li>Set entry requirements — the university does that too</li>
+        <li>Handle every course in the UK. <strong>Plenty of courses are applied for directly</strong></li>
+        <li>Give you money. Student finance is a separate organisation and a separate application</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Watch UCAS explain it themselves</h3>
+  <a class="lk" href="https://www.youtube.com/user/UCASonline" target="_blank" rel="noopener">
+    <b>UCAS on YouTube →</b><span class="u">youtube.com/user/UCASonline</span>
+    <span class="d">UCAS's own channel, linked from their official site. They publish walkthroughs of the application, the personal statement, Clearing and results day. Worth ten minutes before you start filling anything in.</span></a>
+  <a class="lk" href="https://www.ucas.com/applying/applying-to-university/filling-in-your-ucas-application" target="_blank" rel="noopener">
+    <b>Filling in your UCAS application →</b><span class="u">ucas.com/applying/applying-to-university/filling-in-your-ucas-application</span>
+    <span class="d">UCAS's official step-by-step guide to the form itself. This is the one to have open while you actually do it.</span></a>
+</div></section>
+
+<!-- ============ 02 ============ -->
+<section class="page" id="p2" hidden><div class="wrap">
+  <span class="tag">02 — Which route</span>
+  <h2>UCAS, or straight to the <em>college?</em></h2>
+  <p class="lede">This is the part that catches people out. Students assume everything goes through UCAS, miss the fact that their chosen course takes direct applications, and either pay a fee they didn't need or miss a deadline that was never on the UCAS calendar.</p>
+
+  <div class="card tint-o">
+    <h4>Proof, from your own course page</h4>
+    <p>Look at the course you are on right now: <strong>Level 3 National Extended Diploma in Creative Media Practice (Game Development)</strong>, course code <strong>P00175-AE</strong>, Castlereagh, Full Time, Further Education.</p>
+    <p style="margin-top:10px">That is a <strong>Belfast Met course code</strong>, not a UCAS one. UCAS course codes look like <code style="font-family:var(--mono)">G4G1</code> or <code style="font-family:var(--mono)">W610</code> — short, four characters, letters and numbers. You applied for this course directly on the Belfast Met website. Nobody sent a UCAS form.</p>
+  </div>
+
+  <h3>Work out your route</h3>
+  <p class="lede" style="margin-bottom:18px">Two questions. Answer honestly about the course you are actually considering.</p>
+  <div id="decider"></div>
+  <div class="verdict" id="verdict" hidden></div>
+
+  <h3>The general rule</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>What you're applying for</th><th>How you apply</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td><strong>A full-time undergraduate degree at a university</strong></td><td>UCAS</td><td>BSc Computer Games Development at a university</td></tr>
+      <tr><td><strong>A Further Education course at Belfast Met</strong></td><td>Direct to Belfast Met</td><td>The Level 3 Diploma you are on now</td></tr>
+      <tr><td><strong>A Higher Education course at a college</strong> (HNC, HND, Foundation Degree)</td><td><strong>Depends — check the course page.</strong> Some go through UCAS, many are direct</td><td>HND at Belfast Met</td></tr>
+      <tr><td><strong>An apprenticeship</strong></td><td>Direct to the employer. Positions open all year</td><td>A studio or tech apprenticeship</td></tr>
+      <tr><td><strong>A part-time course</strong></td><td>Direct to the provider, almost always</td><td>Evening or flexible study</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="card tint-t">
+    <h4>The habit that saves you</h4>
+    <p>Every course page on every provider's website has a section called <strong>How to apply</strong>. Read it. It will either give you a UCAS code or an "Apply now" button that goes to the provider's own form. That single check takes thirty seconds and is the difference between applying and thinking you applied.</p>
+  </div>
+
+  <a class="lk" href="https://www.belfastmet.ac.uk/" target="_blank" rel="noopener">
+    <b>Belfast Met course search →</b><span class="u">belfastmet.ac.uk</span>
+    <span class="d">Find the course, open it, and look for how it says to apply. Most Belfast Met courses are applied for directly here.</span></a>
+  <a class="lk" href="https://www.ucas.com/applying/you-apply/what-and-where-study/study-options/studying-higher-education-college" target="_blank" rel="noopener">
+    <b>UCAS — studying higher education at a college →</b><span class="u">ucas.com/applying/.../studying-higher-education-college</span>
+    <span class="d">UCAS's own page on college-based HE, including when it goes through them and when it doesn't.</span></a>
+</div></section>
+
+<!-- ============ 03 ============ -->
+<section class="page" id="p3" hidden><div class="wrap">
+  <span class="tag">03 — How to apply</span>
+  <h2>The <em>six steps</em></h2>
+  <p class="lede">If you decided UCAS is your route, this is the whole process. It takes longer than you think, mostly because of the personal statement and because your reference depends on somebody else.</p>
+
+  <ol class="steps orange">
+    <li><b>Register on the UCAS Hub</b> Create an account at ucas.com. You will be asked for a <strong>buzzword</strong> — that's a code from the college that links your application to Belfast Met so your reference can be attached. Ask for it; don't guess.</li>
+    <li><b>Search for courses and pick up to five</b> Use the UCAS course search. For each one, record the entry requirements, the tariff points, the course content and the location. Five is the maximum, not a target — four strong choices beat five lazy ones.</li>
+    <li><b>Fill in your details and qualifications</b> Personal details, education history, every qualification including the ones you haven't finished yet. Enter your BTEC exactly as it is titled. Getting the qualification wrong here is one of the most common causes of problems later.</li>
+    <li><b>Write your personal statement</b> The part that takes real time. Why this subject, what you have done about it, what you bring. Write it in a separate document and paste it in — do not compose it inside the form. Start early and expect several drafts.</li>
+    <li><b>Get your reference</b> Written by the college, not by you. This is why you apply <em>through</em> Belfast Met rather than on your own. Your tutor needs lead time, so the college deadline will be earlier than the UCAS one.</li>
+    <li><b>Pay and send</b> £34.50 for up to five choices. Check everything, then submit. It goes to the college first for the reference to be attached, then on to UCAS. <strong>Pressing submit is not the end — the college sends it.</strong></li>
+  </ol>
+
+  <div class="card tint-p">
+    <h4>The deadline that actually binds you</h4>
+    <p>UCAS's equal consideration deadline for 2027 entry is <strong>13 January 2027 at 18:00</strong>. But <strong>Belfast Met's internal deadline will be earlier</strong>, because staff need time to read your application, check your qualifications and write your reference. Ask what the college date is and work to that one. Nobody has ever been penalised for being early.</p>
+  </div>
+
+  <h3>Useful official pages</h3>
+  <a class="lk" href="https://www.ucas.com/applying/applying-to-university/writing-your-personal-statement" target="_blank" rel="noopener">
+    <b>Writing your personal statement →</b><span class="u">ucas.com/applying/applying-to-university/writing-your-personal-statement</span>
+    <span class="d">UCAS's guidance on what the statement should contain and how it is read.</span></a>
+  <a class="lk" href="https://digital.ucas.com/coursedisplay/" target="_blank" rel="noopener">
+    <b>UCAS course search →</b><span class="u">digital.ucas.com/coursedisplay</span>
+    <span class="d">Every course, every entry requirement. This is where your research task starts.</span></a>
+  <a class="lk" href="https://www.ucas.com/money-and-student-life/money/student-finance" target="_blank" rel="noopener">
+    <b>Student finance →</b><span class="u">ucas.com/money-and-student-life/money/student-finance</span>
+    <span class="d">A completely separate application from UCAS, with its own deadline. Students forget this one every single year.</span></a>
+</div></section>
+
+<!-- ============ 04 ============ -->
+<section class="page" id="p4" hidden><div class="wrap">
+  <span class="tag">04 — Key dates</span>
+  <h2>The <em>2027 entry</em> calendar</h2>
+  <p class="lede">These are UCAS's published dates for courses starting in autumn 2027 — the cycle that applies if you are finishing this course in summer 2027. Every time is 18:00 UK time.</p>
+  <div class="tl" id="timeline"></div>
+
+  <div class="card tint-y" style="margin-top:10px">
+    <h4>What "equal consideration" means</h4>
+    <p>Apply by 13 January and the university <strong>must</strong> consider your application alongside everyone else's. Apply after it and they only have to look at you if places are left. It is not a cut-off, it is a fairness guarantee — and on a competitive course, missing it is close to the same thing.</p>
+  </div>
+
+  <a class="lk" href="https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications" target="_blank" rel="noopener" style="margin-top:16px">
+    <b>Check these dates yourself →</b><span class="u">ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications</span>
+    <span class="d">The official page. Dates and the fee can change, and part of AC1 is verifying rather than trusting a handout — including this one.</span></a>
+</div></section>
+
+<!-- ============ 05 ============ -->
+<section class="page" id="p5" hidden><div class="wrap">
+  <span class="tag">05 — Your points</span>
+  <h2>What your grades are <em>worth</em></h2>
+  <p class="lede">Universities set entry requirements in UCAS tariff points. Your BTEC Extended Diploma converts into them. Tap your realistic predicted grade — not your dream one.</p>
+
+  <div class="tariff">
+    <div>
+      <div class="gradegrid" id="grades"></div>
+      <p class="count" style="margin-top:12px">Pearson BTEC Level 3 National Extended Diploma (1080 GLH).</p>
+      <div class="card tint-p" style="margin-top:16px">
+        <h4>Verify this, don't trust it</h4>
+        <p>These are the published tariff values at the time of writing. Part of AC1 is checking a figure against its source rather than repeating it from a handout — so run your own grades through the official UCAS tariff calculator and record what it says.</p>
+      </div>
+    </div>
+    <div>
+      <div class="ptsbox" id="pts">
+        <div class="n">—</div>
+        <div class="l">UCAS tariff points</div>
+        <p>Pick a grade to see what it is worth.</p>
+      </div>
+      <a class="lk" href="https://www.ucas.com/applying/before-you-apply/what-and-where-to-study/entry-requirements/ucas-tariff-points" target="_blank" rel="noopener" style="margin-top:16px">
+        <b>Official UCAS tariff calculator →</b><span class="u">ucas.com/applying/.../ucas-tariff-points</span>
+        <span class="d">Enter your actual qualifications and get the official number.</span></a>
+    </div>
+  </div>
+
+  <div class="card tint-t" style="margin-top:20px">
+    <h4>The thing to notice</h4>
+    <p>Look at the gap between two grades next to each other. One grade can be worth 16 points, and a course asking for 112 will not take 96. That is the entire argument for not coasting in year two — and it is worth writing down in your five-year plan as a specific consequence rather than a vague intention.</p>
+  </div>
+</div></section>
+
+<!-- ============ 06 ============ -->
+<section class="page" id="p6" hidden><div class="wrap">
+  <span class="tag">06 — Your task</span>
+  <h2>What B1 <em>needs from you</em></h2>
+  <p class="lede">This section is one of your AC1 deliverables: <strong>College and UCAS research</strong>. It is marked on whether you found real information and whether it changed what you plan to do — not on how much you collected.</p>
+
+  <div class="card tint-o">
+    <h4>The deliverable, as the brief states it</h4>
+    <p>Courses you could progress to, with entry requirements, UCAS points needed, what each course actually contains and how you would fund it. <strong>Named institutions, not "university".</strong></p>
+  </div>
+
+  <h3>Find three real courses</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Record for each one</th><th>Why it matters</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Institution and exact course title</strong></td><td>"Games at Ulster" is not a course. "BSc Hons Computer Games Development" is.</td></tr>
+      <tr><td><strong>How you apply — UCAS or direct</strong></td><td>The thing half the room will get wrong. Check the course page.</td></tr>
+      <tr><td><strong>UCAS code, if it has one</strong></td><td>Its absence tells you it is a direct application.</td></tr>
+      <tr><td><strong>Entry requirements and tariff points</strong></td><td>Compare against your own predicted grade from section 05. Can you actually get in?</td></tr>
+      <tr><td><strong>What the course actually contains</strong></td><td>Module list. Two courses with the same name can be wildly different.</td></tr>
+      <tr><td><strong>Cost, and how you would fund it</strong></td><td>Tuition, living costs, whether you would stay at home. A plan you cannot afford is fiction.</td></tr>
+      <tr><td><strong>The application deadline</strong></td><td>Including the college's internal one if it goes through UCAS.</td></tr>
+      <tr><td><strong>The link</strong></td><td>Non-negotiable. Without it you cannot cite it, and uncited research scores nothing.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Then write the paragraph that actually earns the marks</h3>
+  <div class="grid2">
+    <div class="card">
+      <h4>Scores nothing</h4>
+      <p style="font-style:italic">"I looked at some university courses. There are a few games courses in Northern Ireland. I might apply to one of them."</p>
+    </div>
+    <div class="card tint-t">
+      <h4>Scores well</h4>
+      <p style="font-style:italic">"I'd assumed every course went through UCAS. Checking the Belfast Met page for the HND showed it takes direct applications with a different deadline, which means my January plan would have been irrelevant to it. I've now got two separate deadlines in my calendar instead of one."</p>
+    </div>
+  </div>
+
+  <h3>Before you call this section done</h3>
+  <div class="card" id="checklist"></div>
+
+  <div class="card tint-p" style="margin-top:18px">
+    <h4>Feed it into your five-year plan</h4>
+    <p>Section 05 gave you a points figure. This section gives you the requirements for three real courses. Year 1 of your five-year plan should now name an institution, a course, a route, a deadline and a cost — because you have just looked all of them up.</p>
+  </div>
+</div></section>
+
+<!-- ============ 07 ============ -->
+<section class="page" id="p7" hidden><div class="wrap">
+  <span class="tag">07 — Glossary</span>
+  <h2>UCAS words, <em>decoded</em></h2>
+  <p class="lede">Every term you will meet on the UCAS site or in a conversation about applying.</p>
+  <div class="tools">
+    <input id="search" class="search" type="search" placeholder="Search a term…" aria-label="Search glossary">
+    <span class="count" id="gcount"></span>
+  </div>
+  <div id="glist"></div>
+</div></section>
+
+<footer class="site-footer"><div class="wrap">
+  <p>Unit B1 — Personal Progression. BTEC Level 3 National Extended Diploma in Creative Media Practice (Game Development), Belfast Met, Castlereagh. Supports AC1 (informing ideas) and AC2 (problem solving) through the College and UCAS research deliverable.</p>
+  <p>Dates, fees and tariff values were taken from ucas.com at the time of writing and can change. Always check the official page — and checking it is itself part of what AC1 is marked on.</p>
+</div></footer>
+</div>
+
+<script>
+var $=function(i){return document.getElementById(i);};
+
+/* ---------- audio ---------- */
+var Snd={ctx:null,on:false,mus:null,timer:null,
+ boot:function(){if(this.ctx)return;var C=window.AudioContext||window.webkitAudioContext;if(!C)return;
+  this.ctx=new C();this.mus=this.ctx.createGain();this.mus.gain.value=.11;this.mus.connect(this.ctx.destination);},
+ hz:function(n){return 440*Math.pow(2,(n-69)/12);},
+ note:function(n,at,dur,type,vol,dest){if(!this.on||!this.ctx)return;
+  var o=this.ctx.createOscillator(),g=this.ctx.createGain();
+  o.type=type||"square";o.frequency.value=this.hz(n);
+  g.gain.setValueAtTime(0,at);g.gain.linearRampToValueAtTime(vol,at+.01);
+  g.gain.exponentialRampToValueAtTime(.0001,at+dur);
+  o.connect(g);g.connect(dest||this.ctx.destination);o.start(at);o.stop(at+dur+.05);},
+ fx:function(k){if(!this.on||!this.ctx)return;var t=this.ctx.currentTime;
+  var bank={blip:[[81,0,.05,"square",.12]],move:[[74,0,.04,"square",.10]],
+   pick:[[76,0,.06,"square",.12],[83,.05,.09,"square",.10]],
+   open:[[69,0,.05,"triangle",.13],[76,.05,.08,"triangle",.11]],
+   unlock:[[72,0,.08,"square",.13],[76,.08,.08,"square",.13],[79,.16,.08,"square",.13],[84,.24,.28,"square",.14],[60,.24,.34,"triangle",.11]],
+   done:[[72,0,.1,"square",.14],[76,.1,.1,"square",.14],[79,.2,.1,"square",.14],[84,.3,.1,"square",.14],[88,.4,.45,"square",.15],[48,.4,.5,"triangle",.12]]};
+  var s=bank[k]||[];for(var i=0;i<s.length;i++){var n=s[i];this.note(n[0],t+n[1],n[2],n[3],n[4]);}},
+ loop:function(){if(!this.on||!this.ctx)return;var self=this,b=.33,t0=this.ctx.currentTime+.05;
+  var bars=[[50,[62,66,69]],[55,[67,71,74]],[53,[65,69,72]],[52,[64,67,71]]];
+  bars.forEach(function(ch,i){var s=t0+i*b*8;
+   for(var k=0;k<8;k+=2) self.note(ch[0]-12,s+k*b,b*1.35,"triangle",.15,self.mus);
+   var arp=[ch[1][0],ch[1][2],ch[1][1],ch[1][2],ch[1][0]+12,ch[1][2],ch[1][1],ch[1][0]];
+   arp.forEach(function(n,j){self.note(n,s+j*b,.19,"square",.05,self.mus);});});
+  this.timer=setTimeout(function(){self.loop();},4*8*b*1000);},
+ toggle:function(){this.boot();if(!this.ctx)return false;
+  if(this.ctx.state==="suspended")this.ctx.resume();
+  this.on=!this.on;if(this.on){this.loop();this.fx("blip");}else{clearTimeout(this.timer);}
+  return this.on;}};
+$("sound").addEventListener("click",function(){var on=Snd.toggle();
+  this.textContent=on?"♪ Sound on":"♪ Sound off";this.setAttribute("aria-pressed",String(on));});
+
+var tt;
+function toast(m,l){var t=$("toast");t.querySelector(".m").textContent=m;
+  t.querySelector(".l").textContent=l||"Unlocked";t.classList.add("up");
+  clearTimeout(tt);tt=setTimeout(function(){t.classList.remove("up");},2500);}
+
+/* ---------- glossary ---------- */
+var TERMS={
+ ucas:["UCAS","The Universities and Colleges Admissions Service. A charity that carries one application to up to five universities. It does not decide who gets in."],
+ hub:["UCAS Hub","Your account on ucas.com. Where you build the application, then track your offers after it is sent."],
+ buzzword:["Buzzword","A code your college gives you when you register. It links your application to Belfast Met so your reference can be attached. Ask for it — you cannot guess it."],
+ tariff:["UCAS tariff points","A numerical value given to qualifications so courses can compare different ones. A BTEC Extended Diploma at DDM is worth 128 points."],
+ equal:["Equal consideration","Apply by the January deadline and the university must consider you alongside everyone else. Apply later and they only have to look if places remain."],
+ ref:["Reference","A short statement written by the college about you as a student. You do not write it, and it is why applications go through the college rather than straight from you."],
+ ps:["Personal statement","Your written case for the course. Why this subject, what you have done about it, what you bring. The part that takes the most time."],
+ offer:["Offer","A university saying yes. Conditional means “yes if you get these grades”. Unconditional means “yes regardless”."],
+ firm:["Firm and insurance","Once you have offers you pick a firm choice (your first pick) and an insurance choice (your backup, usually with lower requirements)."],
+ extra:["Extra","If you used all five choices and hold no offers, Extra lets you add another one from late February."],
+ clearing:["Clearing","From early July, a way to match applicants without a place to courses with places left. Opens properly on results day."],
+ code:["UCAS course code","A short code like G4G1 identifying a specific course at a specific provider. If a course has no UCAS code, it is a direct application."],
+ direct:["Direct application","Applying straight to the college or provider on their own website, with their own form and their own deadline. Belfast Met FE courses work this way."],
+ fe:["Further Education (FE)","Post-16 education below degree level — BTECs, A-levels, Level 3 diplomas. The course you are on now."],
+ he:["Higher Education (HE)","Degree-level study — HNC, HND, Foundation Degree, Bachelor's. Can be studied at a university or at a college."],
+ hnd:["HND / HNC","Higher National Diploma (Level 5) and Certificate (Level 4). Vocational higher education, often a route into the later years of a degree."],
+ found:["Foundation degree","A Level 5 qualification, usually two years full time, combining academic study with workplace learning."],
+ deferred:["Deferred entry","Applying this year for a place starting the year after. Useful if you want a year to build a portfolio or earn money."],
+ finance:["Student finance","Tuition fee and maintenance support. A completely separate application from UCAS, with its own deadline. Students forget this every year."],
+ condition:["Conditional offer","A place that depends on you achieving specific grades. Miss them and the offer can be withdrawn — which is why your predicted grade matters."]
+};
+function gloss(h){return String(h).replace(/\{\{(\w+)\|(.*?)\}\}/g,function(m,k,t){
+  return TERMS[k]?'<button class="gl" data-t="'+k+'">'+t+'</button>':t;});}
+var popOpen=null;
+function closePop(){$("pop").hidden=true;popOpen=null;}
+document.addEventListener("click",function(e){
+  var b=e.target.closest(".gl");
+  if(!b){if(!e.target.closest("#pop"))closePop();return;}
+  e.preventDefault();e.stopPropagation();
+  if(popOpen===b){closePop();return;}
+  var t=TERMS[b.dataset.t],p=$("pop");
+  p.innerHTML="<b>"+t[0]+"</b>"+t[1];p.hidden=false;
+  var r=b.getBoundingClientRect(),w=Math.min(330,window.innerWidth-24),x=r.left+window.scrollX;
+  p.style.width=w+"px";
+  if(x+w>window.innerWidth-12)x=window.innerWidth-w-12;
+  p.style.left=Math.max(12,x)+"px";p.style.top=(r.bottom+window.scrollY+8)+"px";
+  popOpen=b;Snd.fx("open");
+},true);
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closePop();});
+window.addEventListener("scroll",function(){if(popOpen)closePop();},{passive:true});
+
+function renderGloss(){
+  var q=$("search").value.toLowerCase().trim();
+  var keys=Object.keys(TERMS).filter(function(k){
+    if(!q)return true;
+    return (TERMS[k][0]+" "+TERMS[k][1]).toLowerCase().indexOf(q)>-1;
+  }).sort(function(a,b){return TERMS[a][0].localeCompare(TERMS[b][0]);});
+  $("gcount").textContent=keys.length+" of "+Object.keys(TERMS).length+" terms";
+  $("glist").innerHTML=keys.length?keys.map(function(k){
+    return '<div class="entry"><b>'+TERMS[k][0]+"</b><p>"+TERMS[k][1]+"</p></div>";
+  }).join(""):'<div class="entry"><p>Nothing matches that. Try a shorter word.</p></div>';
+}
+$("search").addEventListener("input",renderGloss);
+
+/* ---------- route decider ---------- */
+var DQ=[
+ {id:"level",q:"What level is the course you're considering?",
+  a:[["degree","A full degree — BSc, BA, BEng"],
+     ["college","HNC, HND or a Foundation Degree"],
+     ["fe","Another Level 3 / Further Education course"],
+     ["app","An apprenticeship"]]},
+ {id:"where",q:"Where is it?",
+  a:[["uni","A university — Ulster, Queen's, or anywhere in the UK"],
+     ["bmet","Belfast Met"],
+     ["other","Another further education college"]]}
+];
+var ANS={};
+function renderDecider(){
+  $("decider").innerHTML=DQ.map(function(d){
+    return '<div class="q"><h4>'+d.q+'</h4>'+d.a.map(function(o){
+      return '<button class="opt" data-q="'+d.id+'" data-v="'+o[0]+'" aria-pressed="'+(ANS[d.id]===o[0])+'">'+o[1]+"</button>";
+    }).join("")+"</div>";
+  }).join("");
+  $("decider").querySelectorAll(".opt").forEach(function(b){
+    b.addEventListener("click",function(){
+      ANS[b.dataset.q]=b.dataset.v;Snd.fx("pick");renderDecider();renderVerdict();
+    });
+  });
+}
+function renderVerdict(){
+  if(!ANS.level||!ANS.where){$("verdict").hidden=true;return;}
+  var v=$("verdict"),route,cls,body;
+  if(ANS.level==="app"){
+    route="Direct to the employer";cls="tint-p";
+    body="Apprenticeships are not UCAS. You apply to the employer like a job, positions open at any time of year, and every one has its own closing date. There is no single deadline to work to — which means you have to keep looking rather than applying once in January.";
+  } else if(ANS.level==="fe"){
+    route="Direct to the college";cls="tint-p";
+    body="Further Education courses do not go through UCAS. You apply on the college's own website — exactly as you did for the course you are on now. Find the course page and look for its apply button.";
+  } else if(ANS.level==="degree"&&ANS.where==="uni"){
+    route="UCAS";cls="tint-t";
+    body="This is the standard UCAS route. One application, up to five choices, £34.50, and the 13 January 2027 equal consideration deadline. Remember the college's internal deadline will be earlier, because your reference has to be written and attached before it is sent.";
+  } else if(ANS.level==="degree"&&ANS.where!=="uni"){
+    route="Probably UCAS — but check";cls="tint-y";
+    body="Degrees delivered at a college are often applied for through UCAS, but not always. Open the course page and read its “How to apply” section. If it gives you a UCAS code, it is UCAS. If it gives you an apply button, it is direct.";
+  } else if(ANS.where==="bmet"){
+    route="Check the course page — likely direct";cls="tint-y";
+    body="Belfast Met's Further Education courses are direct applications. Its Higher Education courses vary, so this one genuinely needs checking rather than assuming. Open the course page, find “How to apply”, and record what it says — that record is part of your AC1 evidence.";
+  } else {
+    route="Check the course page";cls="tint-y";
+    body="College-based HE can go either way. The course page is the only reliable answer, and checking it takes thirty seconds. Record what you find, including the deadline, because a direct application will have a different one from the UCAS calendar.";
+  }
+  v.className="verdict "+cls;
+  v.innerHTML='<span class="route">'+route+"</span><h4>"+route+"</h4><p>"+body+"</p>";
+  v.hidden=false;
+}
+
+/* ---------- tariff ---------- */
+var GRADES=[["D*D*D*",168],["D*D*D",160],["D*DD",152],["DDD",144],["DDM",128],
+            ["DMM",112],["MMM",96],["MMP",80],["MPP",64],["PPP",48]];
+var picked=null;
+function renderGrades(){
+  $("grades").innerHTML=GRADES.map(function(g){
+    return '<button class="gr" data-g="'+g[0]+'" aria-pressed="'+(picked===g[0])+'">'+g[0]+"</button>";
+  }).join("");
+  $("grades").querySelectorAll(".gr").forEach(function(b){
+    b.addEventListener("click",function(){picked=b.dataset.g;Snd.fx("pick");renderGrades();renderPts();});
+  });
+}
+function renderPts(){
+  var g=GRADES.filter(function(x){return x[0]===picked;})[0];
+  if(!g){$("pts").innerHTML='<div class="n">—</div><div class="l">UCAS tariff points</div><p>Pick a grade to see what it is worth.</p>';return;}
+  var i=GRADES.indexOf(g), up=i>0?GRADES[i-1]:null;
+  var extra = up ? "One grade higher ("+up[0]+") is worth "+up[1]+" — a difference of "+(up[1]-g[1])+" points." : "The top of the scale.";
+  $("pts").innerHTML='<div class="n">'+g[1]+'</div><div class="l">UCAS tariff points</div><p>'+esc(picked)+". "+extra+"</p>";
+}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+
+/* ---------- timeline ---------- */
+var DATES=[
+ ["28 Apr 2026","Course search opens for 2027 entry","You can start looking at courses and entry requirements.",""],
+ ["12 May 2026","Applications open","You can register on the UCAS Hub and begin filling in the form.",""],
+ ["1 Sep 2026","Completed applications can be sent","You need your reference attached before it can go.","now"],
+ ["15 Oct 2026","Oxford, Cambridge, medicine, dentistry, veterinary","An earlier deadline for those courses only. Unlikely to affect you.",""],
+ ["13 Jan 2027","Equal consideration deadline — the main one","Most undergraduate courses. Belfast Met's internal deadline will be earlier.","hot"],
+ ["25 Feb 2027","Extra opens","If you used all five choices and hold no offers, you can add another.",""],
+ ["30 Jun 2027","Last date to be sent to universities","After this, applications go automatically into Clearing.",""],
+ ["2 Jul 2027","Clearing opens","Vacancies appear in the search tool.",""],
+ ["23 Sep 2027","Final date for 2027 entry","The last point any 2027 application can be made.",""],
+ ["18 Oct 2027","Last date to add a Clearing choice","The end of the cycle.",""]
+];
+function renderTimeline(){
+  $("timeline").innerHTML=DATES.map(function(d){
+    return '<div class="ev '+d[3]+'"><div class="d">'+d[0]+'</div><div class="t">'+d[1]+'</div><div class="x">'+d[2]+"</div></div>";
+  }).join("");
+}
+
+/* ---------- checklist ---------- */
+var CHECKS=[
+ ["Three real, named courses","Institution and exact course title. Not “a games course”."],
+ ["How each one is applied for","UCAS or direct — taken from the course page, not assumed."],
+ ["Entry requirements and points for each","Compared against your own predicted grade."],
+ ["Every deadline, including internal ones","A direct application has its own date that is not on the UCAS calendar."],
+ ["What each course actually contains","The module list. Same name does not mean same course."],
+ ["Cost and how you would fund it","Tuition, living costs, whether you stay at home."],
+ ["A working link for every claim","Uncited research scores nothing."],
+ ["A paragraph saying what changed","What you assumed, what you found, what you are doing differently. This is the bit that is marked."]
+];
+function renderChecklist(){
+  $("checklist").innerHTML=CHECKS.map(function(c,i){
+    return '<div class="ci"><input type="checkbox" id="chk'+i+'"><label for="chk'+i+'"><b>'+c[0]+"</b><span>"+c[1]+"</span></label></div>";
+  }).join("");
+}
+
+/* ---------- pages ---------- */
+var PAGES=["p1","p2","p3","p4","p5","p6","p7"],
+    NAMES={p1:"What UCAS is",p2:"Which route",p3:"How to apply",p4:"Key dates",p5:"Your points",p6:"Your task",p7:"Glossary"},
+    seen={};
+function go(id){
+  PAGES.forEach(function(p){$(p).hidden=(p!==id);});
+  document.querySelectorAll(".nav-btn").forEach(function(b){
+    b.setAttribute("aria-current",String(b.dataset.p===id));});
+  window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+  if(!seen[id]){
+    seen[id]=true;
+    var n=Object.keys(seen).length;
+    $("progtxt").textContent=n+"/7";
+    document.querySelector(".progress-bar i").style.width=(n/7*100)+"%";
+    if(n===7){Snd.fx("done");toast("That's the whole section. Now go and find three real courses.","Complete");}
+    else{Snd.fx("unlock");toast(NAMES[id]);}
+  } else {Snd.fx("move");}
+}
+document.querySelectorAll(".nav-btn").forEach(function(b){
+  b.addEventListener("click",function(){go(b.dataset.p);});});
+
+/* ---------- boot ---------- */
+$("start").addEventListener("click",function(){
+  if(!Snd.on){var on=Snd.toggle();
+    $("sound").textContent=on?"♪ Sound on":"♪ Sound off";
+    $("sound").setAttribute("aria-pressed",String(on));}
+  $("title").style.display="none";
+  $("shell").hidden=false;
+  renderDecider();renderGrades();renderPts();renderTimeline();renderChecklist();renderGloss();
+  document.querySelectorAll("#p1 .card li").forEach(function(el){
+    if(el.innerHTML.indexOf("{{")>-1)el.innerHTML=gloss(el.innerHTML);});
+  go("p1");
+});
+</script>
+</body>
+</html>

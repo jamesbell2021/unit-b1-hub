@@ -18,10 +18,21 @@ A single self-contained HTML page that ties your whole B1 toolkit together: why 
   | 📄 The CV | AC3 | [bmet-the-cv](https://jamesbell2021.github.io/bmet-the-cv/) |
   | 🎙️ Interview Techniques | AC5 | [bmet-interview-techniques](https://jamesbell2021.github.io/bmet-interview-techniques/) |
   | 🗺️ The Roadmap | AC2 | [bmet-five-year-plan](https://jamesbell2021.github.io/bmet-five-year-plan/) |
+  | 🎓 UCAS Decoded | AC1 | [unit-b1-hub/ucas](https://jamesbell2021.github.io/unit-b1-hub/ucas/) |
+
+  **Note:** UCAS Decoded lives *inside this repo* at `ucas/`, not in its own repository, so its toolkit link is the relative path `./ucas/` rather than an absolute URL. If it is ever moved to a standalone repo, update that `url` value in `TOOLS` to match the others.
 
 - **04 The five criteria** — all five ACs with a Pass/Merit/Distinction toggle showing the same evidence graded at three levels.
 - **05 The local scene** — nine Northern Ireland studios, two local (non-games) entrepreneurs included specifically as a traceable alternative to "I admire Elon Musk," and four funding/support bodies, tied to an explicit AC1 task.
 - **06 Glossary** — around 70 searchable, filterable terms.
+
+## UCAS Decoded (`ucas/`)
+
+Covers the *College and UCAS research* deliverable for AC1. Seven sections: what UCAS is and isn't, an interactive route decider (UCAS vs direct application), the six application steps, the 2027 entry timeline, a BTEC-grade-to-tariff-points calculator, the B1 research task with a weak-vs-strong worked example, and a 20-term glossary.
+
+The teaching point students most often get wrong: **not every course goes through UCAS.** The app uses their own course code (`P00175-AE`) to show that a Belfast Met code is not a UCAS code, and that they already made a direct application without ever touching UCAS.
+
+**Accuracy:** dates, the £34.50 application fee and the tariff values were taken from [ucas.com](https://www.ucas.com/applying/applying-to-university/dates-and-deadlines-for-uni-applications) in October 2026 and change between cycles. Before reusing in a later year, check the equal consideration deadline, the fee, and the `GRADES` array in `ucas/index.html`.
 
 ## The Roadmap's link back here
 
