@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Make Your Case — Unit B1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F2E8; --ink:#1B1533;
+  --orange:#FF5A1F; --teal:#00A6A6; --yellow:#FFC93C; --pink:#F0468C;
+  --soft:#4A4166; --dim:#7C7395;
+  --shadow:5px 5px 0 var(--ink); --shadow-sm:3px 3px 0 var(--ink);
+  --border:3px solid var(--ink); --border-sm:2px solid var(--ink);
+  --disp:"Bricolage Grotesque",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;
+  background-image:radial-gradient(var(--ink) .5px,transparent .5px);background-size:22px 22px}
+h1,h2,h3,h4{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-height:1}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+button{font:inherit;cursor:pointer}
+a{color:var(--ink)}
+:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+
+.titlescreen{min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 20px;position:relative}
+.kicker{font-family:var(--mono);font-size:13px;letter-spacing:.22em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:7px 14px;margin-bottom:22px;display:inline-block}
+.titlescreen h1{font-size:clamp(48px,12vw,126px);margin:0;text-transform:uppercase}
+.titlescreen h1 em{font-style:normal;display:block;color:var(--orange);-webkit-text-stroke:2px var(--ink)}
+.titlescreen .sub{max-width:50ch;margin:24px 0 32px;font-size:18px}
+.blob{position:absolute;border:var(--border);z-index:-1}
+.b1{width:120px;height:120px;background:var(--teal);border-radius:50%;top:12%;left:8%}
+.b2{width:80px;height:80px;background:var(--pink);top:22%;right:11%;transform:rotate(14deg)}
+.b3{width:150px;height:44px;background:var(--orange);bottom:16%;left:14%;transform:rotate(-7deg)}
+.b4{width:60px;height:60px;background:var(--yellow);border-radius:50%;bottom:24%;right:16%}
+@media (max-width:640px){.blob{display:none}}
+
+.btn{background:var(--yellow);border:var(--border);box-shadow:var(--shadow);padding:15px 30px;font-family:var(--disp);font-weight:800;font-size:19px;text-transform:uppercase;transition:transform .1s,box-shadow .1s}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.btn-sm{padding:10px 18px;font-size:14px;box-shadow:var(--shadow-sm)}
+.btn-t{background:var(--teal);color:#fff}
+.btn-o{background:var(--orange);color:#fff}
+.btn-g{background:#fff}
+
+.nav{position:sticky;top:0;z-index:30;background:var(--ink);border-bottom:var(--border)}
+.nav-in{max-width:1100px;margin:0 auto;padding:9px 20px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.nav-btn{background:transparent;border:2px solid transparent;color:#C9C2E0;font-family:var(--mono);font-size:12px;padding:7px 10px;text-transform:uppercase}
+.nav-btn:hover{color:var(--paper);border-color:var(--soft)}
+.nav-btn[aria-current="true"]{background:var(--yellow);color:var(--ink);border-color:var(--yellow)}
+.nav-btn .n{color:var(--teal)}
+.progress{margin-left:auto;display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:#9A92B8}
+.progress-bar{width:62px;height:8px;background:#3A3255;border:2px solid #5A5178}
+.progress-bar i{display:block;height:100%;background:var(--teal);width:0;transition:width .4s}
+
+.page{padding:44px 0 80px}
+.page[hidden]{display:none}
+.tag{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:5px 11px;margin-bottom:14px}
+.page h2{font-size:clamp(28px,5.5vw,48px);margin:0 0 14px;text-transform:uppercase}
+.page h2 em{font-style:normal;color:var(--orange)}
+.page h3{font-size:22px;margin:34px 0 12px}
+.lede{font-size:17.5px;max-width:64ch;margin:0 0 26px}
+
+.card{background:#fff;border:var(--border);box-shadow:var(--shadow);padding:20px 22px;margin-bottom:16px}
+.card h4{font-size:18px;margin:0 0 8px}
+.card p:last-child,.card ul:last-child{margin-bottom:0}
+.card .big{font-family:var(--disp);font-weight:800;font-size:46px;line-height:.95;display:block;margin-bottom:4px}
+.tint-o{background:var(--orange);color:#fff}
+.tint-t{background:var(--teal);color:#fff}
+.tint-y{background:var(--yellow)}
+.tint-p{background:var(--pink);color:#fff}
+.tint-o a,.tint-t a,.tint-p a{color:#fff}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+@media (max-width:760px){.grid2{grid-template-columns:1fr}}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+
+table{width:100%;border-collapse:collapse;background:#fff;border:var(--border);box-shadow:var(--shadow);margin-bottom:16px;font-size:15px}
+th,td{padding:11px 13px;text-align:left;border-bottom:var(--border-sm);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:var(--paper);border-bottom:none}
+tr:last-child td{border-bottom:none}
+.tablewrap{overflow-x:auto}
+
+.steps{counter-reset:s;margin:0;padding:0;list-style:none}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 54px;margin-bottom:20px;min-height:40px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:40px;height:40px;background:var(--teal);color:#fff;border:var(--border-sm);display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-weight:800;font-size:18px}
+.steps li b{font-family:var(--disp);font-weight:700;display:block;font-size:17.5px;margin-bottom:3px}
+.steps.orange li::before{background:var(--orange)}
+
+/* quizzes */
+.quizbox{background:#fff;border:var(--border);box-shadow:var(--shadow);padding:22px 24px;max-width:800px}
+.qn{font-family:var(--mono);font-size:12px;color:var(--dim);margin:0 0 6px}
+.qq{font-family:var(--disp);font-weight:700;font-size:18.5px;margin:0 0 16px;line-height:1.3}
+.qq.quote{font-family:var(--body);font-weight:500;font-style:italic;font-size:17px;border-left:5px solid var(--teal);padding-left:14px}
+.opt{display:block;width:100%;text-align:left;background:var(--paper);border:var(--border-sm);padding:13px 15px;margin-bottom:9px;font-size:15px;line-height:1.5}
+.opt:hover{border-color:var(--orange)}
+.opt.right{background:var(--teal);color:#fff;border-color:var(--ink)}
+.opt.wrong{background:var(--pink);color:#fff;border-color:var(--ink)}
+.opt:disabled{cursor:default}
+.fb{border:2px dashed var(--ink);padding:14px 16px;font-size:15px;margin:6px 0 4px}
+.fb[hidden]{display:none}
+.fb b{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:5px;color:var(--orange)}
+.sortrow{display:flex;gap:8px;flex-wrap:wrap}
+.sortrow .opt{flex:1 1 180px;text-align:center;margin-bottom:0;font-family:var(--disp);font-weight:700}
+
+/* builder */
+.modes{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.mode{background:#fff;border:var(--border);box-shadow:var(--shadow-sm);padding:12px 18px;font-family:var(--disp);font-weight:700;font-size:16px}
+.mode[aria-pressed="true"]{background:var(--ink);color:#fff}
+.build{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+@media (max-width:980px){.build{grid-template-columns:1fr}}
+.pane{background:var(--paper);border:var(--border);box-shadow:var(--shadow);padding:20px}
+.preview-wrap{position:sticky;top:76px}
+@media (max-width:980px){.preview-wrap{position:static}}
+.field{margin-bottom:15px}
+.field label{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px}
+.field input,.field textarea{width:100%;border:var(--border-sm);background:#fff;padding:10px 12px;font:inherit;font-size:15px;color:var(--ink)}
+.field textarea{min-height:110px;resize:vertical;line-height:1.55}
+.field input:focus,.field textarea:focus{border-color:var(--orange);outline:none}
+.hint{font-size:13px;color:var(--dim);margin:5px 0 0;line-height:1.45}
+.hint b{color:var(--ink);font-weight:600}
+.cc{font-family:var(--mono);font-size:11.5px;margin-top:5px;display:flex;justify-content:space-between}
+.cc .ok{color:var(--teal)}
+.cc .no{color:var(--pink)}
+
+.letter{background:#fff;border:var(--border);box-shadow:var(--shadow);padding:30px 32px;font-family:"IBM Plex Sans",Arial,sans-serif;font-size:13.5px;line-height:1.6;color:#1a1a1a;min-height:300px}
+.letter p{margin:0 0 11px}
+.letter .meta{color:#666;font-size:12.5px}
+.letter .empty{color:#bbb;font-style:italic}
+.ucasbox{background:#fff;border:var(--border-sm);margin-bottom:12px}
+.ucasbox .qh{background:var(--ink);color:#fff;padding:8px 12px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:flex;justify-content:space-between;gap:10px}
+.ucasbox .qb{padding:12px 14px;font-size:13.5px;line-height:1.55;min-height:50px;white-space:pre-wrap;word-wrap:break-word}
+.ucasbox .qb .empty{color:#bbb;font-style:italic}
+.qh .pill{padding:1px 7px}
+.pill.ok{background:var(--teal)}
+.pill.no{background:var(--pink)}
+.ucastotal{background:var(--ink);color:#fff;border:var(--border);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:12.5px}
+.ucastotal b{font-family:var(--disp);font-size:22px;color:var(--yellow)}
+
+.score{background:var(--ink);color:#fff;border:var(--border);box-shadow:5px 5px 0 var(--orange);padding:18px 22px;margin-bottom:16px;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.score .big{font-family:var(--disp);font-weight:800;font-size:44px;line-height:1;color:var(--yellow)}
+.score p{margin:0;color:#C9C2E0;font-size:14.5px;flex:1;min-width:200px}
+.meter{height:10px;background:#3A3255;border:2px solid #5A5178;margin-top:8px}
+.meter i{display:block;height:100%;background:var(--teal);width:0;transition:width .35s}
+.diag{background:#fff;border:var(--border-sm);padding:11px 14px;margin-bottom:8px;border-left-width:7px;font-size:14px}
+.diag.good{border-left-color:var(--teal)}
+.diag.bad{border-left-color:var(--pink)}
+.diag.warn{border-left-color:var(--yellow)}
+.diag b{font-family:var(--disp);font-size:14.5px;display:block;margin-bottom:2px}
+.diag span{color:var(--soft)}
+
+.gl{background:none;border:none;padding:0;color:inherit;font:inherit;border-bottom:2px dotted var(--orange);cursor:help}
+.gl:hover{background:var(--yellow)}
+.pop{position:absolute;z-index:60;max-width:330px;background:var(--ink);color:#EDE9F7;border:var(--border);box-shadow:5px 5px 0 var(--orange);padding:14px 16px;font-size:14px;line-height:1.55}
+.pop[hidden]{display:none}
+.pop b{display:block;font-family:var(--disp);font-weight:700;color:#fff;margin-bottom:4px;font-size:16px}
+.search{width:100%;max-width:420px;border:var(--border);background:#fff;padding:12px 14px;font:inherit;box-shadow:var(--shadow-sm);margin-bottom:16px}
+.entry{border-bottom:var(--border-sm);padding:14px 0}
+.entry b{font-family:var(--disp);font-weight:700;font-size:17px;display:block}
+.entry p{margin:4px 0 0;font-size:15px}
+
+.lk{background:#fff;border:var(--border);box-shadow:var(--shadow-sm);padding:16px 18px;text-decoration:none;color:inherit;display:block;margin-bottom:12px}
+.lk:hover{border-color:var(--orange)}
+.lk b{font-family:var(--disp);font-size:16.5px;font-weight:700;display:block;color:var(--orange)}
+.lk .u{font-family:var(--mono);font-size:11.5px;color:var(--dim);display:block;margin:3px 0 7px;word-break:break-all}
+.lk span.d{font-size:14.5px;color:var(--soft)}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(140%);z-index:60;background:var(--ink);color:var(--paper);border:var(--border);box-shadow:5px 5px 0 var(--orange);padding:12px 20px;transition:transform .35s cubic-bezier(.2,.8,.3,1);text-align:center}
+.toast.up{transform:translateX(-50%) translateY(0)}
+.toast .l{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--yellow);text-transform:uppercase}
+.toast .m{font-family:var(--disp);font-weight:700;font-size:16px}
+.sound-btn{position:fixed;right:14px;bottom:14px;z-index:50;background:var(--ink);color:var(--paper);border:var(--border);box-shadow:4px 4px 0 var(--teal);padding:9px 15px;font-family:var(--mono);font-size:12px;text-transform:uppercase}
+#saveState{font-family:var(--mono);font-size:11px;color:var(--dim);margin-left:8px}
+
+.site-footer{border-top:var(--border);padding:24px 0 90px;font-size:13.5px;color:var(--soft)}
+.site-footer p{margin:0 0 8px;max-width:76ch}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+#printArea{display:none}
+@media print{
+  body{background:#fff;background-image:none}
+  .nav,.sound-btn,.toast,.pop,.titlescreen,.page,.site-footer{display:none!important}
+  #printArea{display:block!important}
+  #printArea .letter,#printArea .ucasbox{border:none;box-shadow:none;padding:0}
+  @page{size:A4;margin:18mm}
+}
+</style>
+</head>
+<body>
+
+<button class="sound-btn" id="sound" aria-pressed="false">♪ Sound off</button>
+<div class="toast" id="toast"><div class="l">Unlocked</div><div class="m"></div></div>
+<div class="pop" id="pop" hidden role="dialog"></div>
+
+<div class="titlescreen" id="title">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span>
+  <span class="kicker">Unit B1 · AC3 · AC5 · Personal statement &amp; cover letter</span>
+  <h1>Make your<em>case</em></h1>
+  <p class="sub">Three documents with confusingly similar names, three completely different jobs. Work out which is which, learn what makes each one land, then write a real one — to a real studio, about a real game, that someone will actually read.</p>
+  <button class="btn" id="start">▶ Press start</button>
+</div>
+
+<div id="shell" hidden>
+<nav class="nav"><div class="nav-in">
+  <button class="nav-btn" data-p="p1"><span class="n">01</span> Three things</button>
+  <button class="nav-btn" data-p="p2"><span class="n">02</span> UCAS statement</button>
+  <button class="nav-btn" data-p="p3"><span class="n">03</span> Cover letter</button>
+  <button class="nav-btn" data-p="p4"><span class="n">04</span> Openings</button>
+  <button class="nav-btn" data-p="p5"><span class="n">05</span> Build yours</button>
+  <button class="nav-btn" data-p="p6"><span class="n">06</span> The real one</button>
+  <button class="nav-btn" data-p="p7"><span class="n">07</span> Glossary</button>
+  <div class="progress"><span id="progtxt">0/7</span><div class="progress-bar"><i></i></div></div>
+</div></nav>
+
+<!-- ============ 01 ============ -->
+<section class="page" id="p1" hidden><div class="wrap">
+  <span class="tag">01 — Three things</span>
+  <h2>Same name, <em>three jobs</em></h2>
+  <p class="lede">"Personal statement" gets used for two different documents, and "cover letter" gets confused with both. They are not interchangeable. Sending the wrong one — or writing one as if it were another — is one of the most common mistakes in an application, and it is entirely avoidable.</p>
+
+  <div class="grid3">
+    <div class="card tint-t">
+      <span class="mono">For a university or college course</span>
+      <h4 style="font-size:21px;margin-top:8px">UCAS personal statement</h4>
+      <p><strong>Three answers in three boxes.</strong> At least 350 characters each, 4,000 in total. About the <em>subject</em> — why you want to study it and what has prepared you.</p>
+      <p style="margin-top:8px"><strong>One</strong> statement goes to all five of your choices, so it cannot name a university.</p>
+    </div>
+    <div class="card tint-y">
+      <span class="mono">At the top of your CV</span>
+      <h4 style="font-size:21px;margin-top:8px">CV profile</h4>
+      <p><strong>Three or four lines.</strong> Who you are and what you do, compressed. Sometimes also called a personal statement, which is where the confusion starts.</p>
+      <p style="margin-top:8px">Says what you do within the first eight words. Tailored lightly for each application.</p>
+    </div>
+    <div class="card tint-o">
+      <span class="mono">With a job or role application</span>
+      <h4 style="font-size:21px;margin-top:8px">Cover letter</h4>
+      <p><strong>One page. Addressed to a person.</strong> Why <em>this</em> role, at <em>this</em> studio, and why you. Rewritten from scratch for every application.</p>
+      <p style="margin-top:8px">The only one of the three that names who you're writing to and asks for something.</p>
+    </div>
+  </div>
+
+  <h3>The one-line test</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Question</th><th>UCAS statement</th><th>CV profile</th><th>Cover letter</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Who reads it?</strong></td><td>Admissions tutors at up to five places</td><td>Anyone who opens your CV</td><td>One named person</td></tr>
+      <tr><td><strong>What is it about?</strong></td><td>The subject you want to study</td><td>You, in a sentence</td><td>This role, at this place</td></tr>
+      <tr><td><strong>Can it name the organisation?</strong></td><td><strong>No</strong> — it goes to all five</td><td>Rarely</td><td><strong>It has to</strong></td></tr>
+      <tr><td><strong>How long?</strong></td><td>Up to 4,000 characters</td><td>Three or four lines</td><td>One page, roughly 250–400 words</td></tr>
+      <tr><td><strong>How often rewritten?</strong></td><td>Once per cycle</td><td>Lightly, per application</td><td>Every single time</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Sort them</h3>
+  <p class="lede" style="margin-bottom:16px">Five real sentences. Which document did each one come from?</p>
+  <div class="quizbox" id="sortquiz"></div>
+</div></section>
+
+<!-- ============ 02 ============ -->
+<section class="page" id="p2" hidden><div class="wrap">
+  <span class="tag">02 — UCAS statement</span>
+  <h2>Three questions, <em>not an essay</em></h2>
+  <p class="lede">Since 2026 entry, UCAS no longer asks for one free-flowing essay. You answer three separate questions in three separate boxes. Older advice online — including from teachers who applied years ago — will tell you to write a single statement with a strong opening hook. That advice is now out of date.</p>
+
+  <div class="grid3">
+    <div class="card"><span class="big" style="color:var(--teal)">3</span><h4>questions</h4><p>Each in its own box. Answer the question that is asked, not the one you wish had been asked.</p></div>
+    <div class="card"><span class="big" style="color:var(--orange)">350</span><h4>characters minimum</h4><p>Per answer. Characters, not words — that's roughly 55–60 words. A short answer simply will not be accepted.</p></div>
+    <div class="card"><span class="big" style="color:var(--pink)">4,000</span><h4>characters total</h4><p>Across all three. Spaces count. UCAS shows a live counter for each box and for the whole thing.</p></div>
+  </div>
+
+  <h3>What each question is really asking</h3>
+  <ol class="steps">
+    <li><b>Why do you want to study this subject or course?</b> The moment it clicked, and what you've done about it since. Show you've looked at what the course actually teaches — the modules, not the title. Connect it to where you're heading.</li>
+    <li><b>How have your qualifications and studies prepared you?</b> Skills, not grades. Your grades are already on the form. What did your BTEC projects actually teach you to do — scoping, teamwork, debugging, iterating on feedback? Name the project.</li>
+    <li><b>What experiences outside education have prepared you, and how?</b> Jobs, jams, communities, caring responsibilities, things you built for yourself. The <strong>how</strong> is the part that counts — what you learned, not a list of what you did.</li>
+  </ol>
+
+  <div class="card tint-p">
+    <h4>Because it goes to five places, it cannot name any of them</h4>
+    <p>Every one of your choices sees the same three answers. Write "I want to study at Ulster because…" and the other four read that too. Write about the <strong>subject</strong> instead, and make sure all five courses are close enough that one set of answers fits them all.</p>
+  </div>
+
+  <h3>Phrases admissions tutors are tired of</h3>
+  <div class="grid2">
+    <div class="card">
+      <h4>Cut these</h4>
+      <ul>
+        <li>"Ever since I was young…"</li>
+        <li>"I have always had a passion for…"</li>
+        <li>"From a young age I have been fascinated…"</li>
+        <li>"This world-class university…"</li>
+        <li>Any quote from someone famous</li>
+      </ul>
+    </div>
+    <div class="card tint-t">
+      <h4>Replace them with</h4>
+      <p>One specific moment you could actually describe — a project, a problem, a build that went wrong. Anyone can claim a passion. Only you can describe the afternoon you rebuilt a jump mechanic three times because the first two felt floaty.</p>
+    </div>
+  </div>
+
+  <a class="lk" href="https://hecate.qub.ac.uk/home/student-blog/applying/ucas-personal-statement.html" target="_blank" rel="noopener">
+    <b>Queen's University Belfast — the new UCAS personal statement →</b><span class="u">hecate.qub.ac.uk/home/student-blog/applying/ucas-personal-statement.html</span>
+    <span class="d">A local university explaining the three-question format, with advice for each answer.</span></a>
+  <a class="lk" href="https://www.ucas.com/applying/applying-to-university/writing-your-personal-statement" target="_blank" rel="noopener">
+    <b>UCAS — writing your personal statement →</b><span class="u">ucas.com/applying/applying-to-university/writing-your-personal-statement</span>
+    <span class="d">The official page, including UCAS's own statement builder and guidance on using AI tools.</span></a>
+</div></section>
+
+<!-- ============ 03 ============ -->
+<section class="page" id="p3" hidden><div class="wrap">
+  <span class="tag">03 — Cover letter</span>
+  <h2>One page, <em>one person</em></h2>
+  <p class="lede">A cover letter is the opposite of a UCAS statement. It goes to one organisation, it names them, it names the person reading it, and it asks for something. If it could be sent unchanged to another studio, it isn't finished.</p>
+
+  <h3>The shape of it</h3>
+  <ol class="steps orange">
+    <li><b>Address a real person</b> "Dear Thomas", "Dear Ms Rivers". Find the name — it's usually on the studio site, the advert or LinkedIn. "Dear Hiring Manager" is acceptable if there's genuinely no name. "Dear Sir/Madam" and "To whom it may concern" read as though you didn't look.</li>
+    <li><b>Open with the role and the reason — together</b> Not "I am writing to apply for…" — they know, it's in the subject line. Say what you're applying for and why <em>them</em> in the same sentence: something specific about their game, their art, their team.</li>
+    <li><b>Prove it, once</b> One or two pieces of evidence that match what they asked for. A named project, a tool, a number. This is not your CV again — pick the one thing that best answers their advert and explain why it's relevant.</li>
+    <li><b>Show you've done your homework</b> One line that could only be written about this studio. A game they made, a talk someone gave, a decision you noticed. This is the line that proves the letter wasn't sent to forty places.</li>
+    <li><b>Close by making the next step easy</b> When you're available, what you can send, how to reach you. "I hope to hear from you" leaves them to do the work. "I can send a playable build and I'm free any weekday after 3pm" doesn't.</li>
+  </ol>
+
+  <div class="grid2">
+    <div class="card">
+      <h4>Length</h4>
+      <p>One page. Roughly 250–400 words. If yours is longer, the reader is doing work you should have done. If it's under 150, there probably isn't enough evidence in it.</p>
+    </div>
+    <div class="card">
+      <h4>Format</h4>
+      <p>PDF, matching the look of your CV — same typeface, same accent colour, same header. It's part of your identity, so it should look like it came from the same person.</p>
+    </div>
+  </div>
+
+  <div class="card tint-y">
+    <h4>The test before you send it</h4>
+    <p>Swap the studio name for a different studio. If the letter still makes sense, it is generic — and generic letters are the ones people stop reading after two lines. Every good cover letter breaks when you change the name.</p>
+  </div>
+</div></section>
+
+<!-- ============ 04 ============ -->
+<section class="page" id="p4" hidden><div class="wrap">
+  <span class="tag">04 — Openings</span>
+  <h2>Where most of them <em>die</em></h2>
+  <p class="lede">Readers decide whether to keep going within the first couple of lines. Six real weak sentences, each with a stronger rewrite. Pick the one that would make you keep reading — and read the explanation either way, because that's where the skill is.</p>
+  <div class="quizbox" id="openquiz"></div>
+</div></section>
+
+<!-- ============ 05 ============ -->
+<section class="page" id="p5" hidden><div class="wrap">
+  <span class="tag">05 — Build yours</span>
+  <h2>Write it <em>properly</em></h2>
+  <p class="lede">Pick the document, write in the boxes, watch the preview build beside you. The checks are mechanical — they catch the things reviewers notice first, not whether your writing is good. That part is still yours.</p>
+
+  <div class="modes" id="modes">
+    <button class="mode" data-m="cover" aria-pressed="true">✉ Cover letter</button>
+    <button class="mode" data-m="ucas" aria-pressed="false">🎓 UCAS statement</button>
+    <span id="saveState">not saved</span>
+  </div>
+
+  <div class="score" id="score"></div>
+
+  <div class="build">
+    <div class="pane" id="form"></div>
+    <div class="preview-wrap">
+      <div id="preview"></div>
+      <div id="checks" style="margin-top:14px"></div>
+      <p style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-sm btn-t" id="copyBtn">Copy text</button>
+        <button class="btn btn-sm btn-g" id="dlBtn">Download .txt</button>
+        <button class="btn btn-sm btn-g" id="printBtn">Print / PDF</button>
+      </p>
+    </div>
+  </div>
+</div></section>
+
+<!-- ============ 06 ============ -->
+<section class="page" id="p6" hidden><div class="wrap">
+  <span class="tag">06 — The real one</span>
+  <h2>A real letter, to a <em>real studio</em></h2>
+  <p class="lede" id="ptIntro"></p>
+
+  <div class="grid2">
+    <div class="card tint-o" id="ptGame"></div>
+    <div class="card" id="ptRole"></div>
+  </div>
+
+  <h3>Why this one first</h3>
+  <div class="grid3">
+    <div class="card"><h4>It's short</h4><p>A playtester letter is a few paragraphs. It's the right size for a first real cover letter — long enough to get the structure right, short enough to get it right in a lesson.</p></div>
+    <div class="card"><h4>Someone reads it</h4><p>Most first letters go into the void. This one goes to a named person who will actually read it and decide. That changes how carefully you write.</p></div>
+    <div class="card"><h4>It's practice for the next one</h4><p>Get the shape right here, on something low-stakes, before you write to an external studio where you only get one go.</p></div>
+  </div>
+
+  <h3>What a strong playtester letter shows</h3>
+  <ul class="steps" style="list-style:none">
+    <li><b>What kind of player you are</b> The genres you play, and specifically anything close to this one — squad games, strategy, games with formations or unit control. Be honest; a good playtester isn't the best player, it's the most observant one.</li>
+    <li><b>That you can explain what you notice</b> Playtesting is only useful if you can say what happened and why it felt wrong. If you've written bug reports, given feedback in a jam, or written clear notes in your reflective log, say so.</li>
+    <li><b>That you'll actually turn up</b> When you're available, and that you understand feedback has to be specific to be any use.</li>
+  </ul>
+
+  <div class="card tint-t">
+    <h4>Start it in the builder</h4>
+    <p>This fills the recipient, studio and role into the cover letter builder for you. You write everything else.</p>
+    <p style="margin-top:12px"><button class="btn btn-sm btn-g" id="useReal">Open the builder with this application →</button></p>
+  </div>
+
+  <div class="card tint-p" id="ptSend"></div>
+</div></section>
+
+<!-- ============ 07 ============ -->
+<section class="page" id="p7" hidden><div class="wrap">
+  <span class="tag">07 — Glossary</span>
+  <h2>Application words, <em>decoded</em></h2>
+  <input id="search" class="search" type="search" placeholder="Search a term…" aria-label="Search glossary">
+  <div id="glist"></div>
+</div></section>
+
+<footer class="site-footer"><div class="wrap">
+  <p>Unit B1 — Personal Progression. BTEC Level 3 National Extended Diploma in Creative Media Practice (Game Development), Belfast Met, Castlereagh. Covers the personal statement and cover letter deliverable (AC3, AC5), and supports the real application (AC4).</p>
+  <p>The UCAS personal statement format and limits were checked against Queen's University Belfast and ucas.com in October 2026. Check the current format on ucas.com before you apply. Everything you write here stays in your own browser; nothing is uploaded.</p>
+</div></footer>
+</div>
+
+<div id="printArea"></div>
+
+<script>
+/* =============================================================
+   EDIT HERE — the real application in section 06.
+   Change anything you'd rather students didn't see, or update
+   how they should send it.
+   ============================================================= */
+var PLAYTEST = {
+  game:      "Forged in Formation",
+  studio:    "3BL",
+  recipient: "James Bell",
+  role:      "Volunteer playtester",
+  pitch:     "A top-down squad game: recruit wandering followers, then switch them between Column, Line and Square formations to survive hazards and dodge enemy volley fire. Pick the wrong formation and you lose followers. Set around the 1798 Rebellion.",
+  release:   "Releasing on Steam on Thursday 3 December 2026.",
+  extra:     "Some of the followers are voiced by Belfast Met students.",
+  send:      "Your tutor will tell you how to submit it. Save it as a PDF named Firstname-Lastname-Playtester.pdf.",
+  counts:    "It is real practice for the application you send for B1 (AC4), and a strong one can go in your evidence for AC3 and AC5."
+};
+/* ============================================================= */
+
+var $=function(i){return document.getElementById(i);};
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+
+/* ---------- audio ---------- */
+var Snd={ctx:null,on:false,mus:null,timer:null,
+ boot:function(){if(this.ctx)return;var C=window.AudioContext||window.webkitAudioContext;if(!C)return;
+  this.ctx=new C();this.mus=this.ctx.createGain();this.mus.gain.value=.11;this.mus.connect(this.ctx.destination);},
+ hz:function(n){return 440*Math.pow(2,(n-69)/12);},
+ note:function(n,at,dur,type,vol,dest){if(!this.on||!this.ctx)return;
+  var o=this.ctx.createOscillator(),g=this.ctx.createGain();
+  o.type=type||"square";o.frequency.value=this.hz(n);
+  g.gain.setValueAtTime(0,at);g.gain.linearRampToValueAtTime(vol,at+.01);
+  g.gain.exponentialRampToValueAtTime(.0001,at+dur);
+  o.connect(g);g.connect(dest||this.ctx.destination);o.start(at);o.stop(at+dur+.05);},
+ fx:function(k){if(!this.on||!this.ctx)return;var t=this.ctx.currentTime;
+  var bank={blip:[[81,0,.05,"square",.12]],move:[[74,0,.04,"square",.10]],
+   pick:[[76,0,.06,"square",.12],[83,.05,.09,"square",.10]],
+   open:[[69,0,.05,"triangle",.13],[76,.05,.08,"triangle",.11]],
+   right:[[76,0,.07,"square",.12],[83,.07,.14,"square",.11]],
+   wrong:[[52,0,.14,"sawtooth",.14],[47,.10,.20,"sawtooth",.12]],
+   unlock:[[72,0,.08,"square",.13],[76,.08,.08,"square",.13],[79,.16,.08,"square",.13],[84,.24,.28,"square",.14],[60,.24,.34,"triangle",.11]],
+   done:[[72,0,.1,"square",.14],[76,.1,.1,"square",.14],[79,.2,.1,"square",.14],[84,.3,.1,"square",.14],[88,.4,.45,"square",.15],[48,.4,.5,"triangle",.12]]};
+  var s=bank[k]||[];for(var i=0;i<s.length;i++){var n=s[i];this.note(n[0],t+n[1],n[2],n[3],n[4]);}},
+ loop:function(){if(!this.on||!this.ctx)return;var self=this,b=.34,t0=this.ctx.currentTime+.05;
+  var bars=[[48,[60,64,67]],[53,[65,69,72]],[55,[67,71,74]],[52,[64,67,71]]];
+  bars.forEach(function(ch,i){var s=t0+i*b*8;
+   for(var k=0;k<8;k+=2) self.note(ch[0]-12,s+k*b,b*1.35,"triangle",.15,self.mus);
+   var arp=[ch[1][0],ch[1][2],ch[1][1],ch[1][2],ch[1][0]+12,ch[1][2],ch[1][1],ch[1][0]];
+   arp.forEach(function(n,j){self.note(n,s+j*b,.19,"square",.05,self.mus);});});
+  this.timer=setTimeout(function(){self.loop();},4*8*b*1000);},
+ toggle:function(){this.boot();if(!this.ctx)return false;
+  if(this.ctx.state==="suspended")this.ctx.resume();
+  this.on=!this.on;if(this.on){this.loop();this.fx("blip");}else{clearTimeout(this.timer);}
+  return this.on;}};
+$("sound").addEventListener("click",function(){var on=Snd.toggle();
+  this.textContent=on?"♪ Sound on":"♪ Sound off";this.setAttribute("aria-pressed",String(on));});
+
+var tt;
+function toast(m,l){var t=$("toast");t.querySelector(".m").textContent=m;
+  t.querySelector(".l").textContent=l||"Unlocked";t.classList.add("up");
+  clearTimeout(tt);tt=setTimeout(function(){t.classList.remove("up");},2500);}
+
+/* ---------- glossary ---------- */
+var TERMS={
+ ps:["UCAS personal statement","Three written answers, at least 350 characters each and 4,000 in total, sent with a UCAS application. About the subject you want to study. One statement goes to all five choices."],
+ profile:["CV profile","Three or four lines at the top of a CV saying who you are and what you do. Sometimes also called a personal statement, which is why the two get confused."],
+ cover:["Cover letter","A one-page letter sent with a job or role application, addressed to a named person and written for one specific organisation. Rewritten every time."],
+ chars:["Characters","Every letter, space and punctuation mark. UCAS limits are in characters, not words — 4,000 characters is roughly 600–650 words."],
+ tailor:["Tailoring","Rewriting a document for one specific application, so it refers to what that organisation actually does and asked for. The opposite of sending the same letter to forty places."],
+ cta:["Call to action","The closing line of a cover letter that makes the next step easy — when you're available, what you can send, how to reach you."],
+ recipient:["Recipient","The named person you are writing to. Finding their name is part of the research, and using it is the first sign the letter was written for them."],
+ spec:["Speculative application","Writing to a studio that hasn't advertised a role, asking whether they'd consider you. Works far better in a small local scene than in a big city."],
+ playtest:["Playtesting","Watching real people play a game and recording what confuses or breaks for them. A good playtester is observant and specific, not necessarily the best player."],
+ bugreport:["Bug report","A written description of a problem that lets someone else reproduce it: what you did, what you expected, what actually happened."],
+ cliche:["Cliché","A phrase used so often it no longer means anything — “passionate”, “hardworking”, “ever since I was young”. Readers skip straight past them."],
+ evidence:["Evidence","Something checkable that backs up a claim — a named project, a number, a tool, a result. “I'm good at teamwork” is a claim. “I led the five-person team that shipped Low Tide” is evidence."],
+ register:["Register","How formal your writing is. A cover letter is professional but not stiff; a devlog can be casual. Choosing the right one deliberately is part of AC5."],
+ pdf:["PDF","A file format that looks identical on every computer. Send applications as PDFs — Word files reflow and break on someone else's machine."]
+};
+function gloss(h){return String(h).replace(/\{\{(\w+)\|(.*?)\}\}/g,function(m,k,t){
+  return TERMS[k]?'<button class="gl" data-t="'+k+'">'+t+'</button>':t;});}
+var popOpen=null;
+function closePop(){$("pop").hidden=true;popOpen=null;}
+document.addEventListener("click",function(e){
+  var b=e.target.closest(".gl");
+  if(!b){if(!e.target.closest("#pop"))closePop();return;}
+  e.preventDefault();e.stopPropagation();
+  if(popOpen===b){closePop();return;}
+  var t=TERMS[b.dataset.t],p=$("pop");
+  p.innerHTML="<b>"+t[0]+"</b>"+t[1];p.hidden=false;
+  var r=b.getBoundingClientRect(),w=Math.min(330,window.innerWidth-24),x=r.left+window.scrollX;
+  p.style.width=w+"px";
+  if(x+w>window.innerWidth-12)x=window.innerWidth-w-12;
+  p.style.left=Math.max(12,x)+"px";p.style.top=(r.bottom+window.scrollY+8)+"px";
+  popOpen=b;Snd.fx("open");
+},true);
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closePop();});
+window.addEventListener("scroll",function(){if(popOpen)closePop();},{passive:true});
+function renderGloss(){
+  var q=$("search").value.toLowerCase().trim();
+  var keys=Object.keys(TERMS).filter(function(k){
+    return !q||(TERMS[k][0]+" "+TERMS[k][1]).toLowerCase().indexOf(q)>-1;
+  }).sort(function(a,b){return TERMS[a][0].localeCompare(TERMS[b][0]);});
+  $("glist").innerHTML=keys.length?keys.map(function(k){
+    return '<div class="entry"><b>'+TERMS[k][0]+"</b><p>"+TERMS[k][1]+"</p></div>";
+  }).join(""):'<div class="entry"><p>Nothing matches that. Try a shorter word.</p></div>';
+}
+$("search").addEventListener("input",renderGloss);
+
+/* ---------- quiz engine ---------- */
+function makeQuiz(el,data,opts){
+  var i=0,score=0;
+  function draw(){
+    if(i>=data.length){
+      var m=score===data.length?opts.msgs[0]:(score>=data.length-2?opts.msgs[1]:opts.msgs[2]);
+      $(el).innerHTML='<p class="qq">'+score+" out of "+data.length+'</p><p style="font-size:16px">'+m+
+        '</p><button class="btn btn-sm" id="'+el+'-again" style="margin-top:10px">Try again</button>';
+      $(el+"-again").addEventListener("click",function(){i=0;score=0;Snd.fx("blip");draw();});
+      return;
+    }
+    var q=data[i];
+    var choices=q.a.map(function(t,k){return '<button class="opt" data-i="'+k+'">'+esc(t)+"</button>";}).join("");
+    $(el).innerHTML='<p class="qn">'+opts.label+" "+(i+1)+" of "+data.length+" · score "+score+"</p>"+
+      '<p class="qq'+(opts.quote?" quote":"")+'">'+esc(q.q)+"</p>"+
+      (opts.prompt?'<p style="font-size:14px;color:var(--dim);margin:-6px 0 12px">'+opts.prompt+"</p>":"")+
+      (opts.row?'<div class="sortrow">'+choices+"</div>":choices)+
+      '<div class="fb" id="'+el+'-fb" hidden></div>';
+    $(el).querySelectorAll(".opt").forEach(function(b){
+      b.addEventListener("click",function(){
+        var k=+b.dataset.i,ok=(k===q.r);
+        if(ok)score++;
+        Snd.fx(ok?"right":"wrong");
+        $(el).querySelectorAll(".opt").forEach(function(x){
+          x.disabled=true;
+          if(+x.dataset.i===q.r)x.classList.add("right");
+          else if(x===b)x.classList.add("wrong");});
+        var fb=$(el+"-fb");
+        fb.innerHTML="<b>"+(ok?"Correct":"Not quite")+"</b>"+q.fb+
+          '<div style="margin-top:12px"><button class="btn btn-sm" id="'+el+'-next">'+
+          (i===data.length-1?"See your score":"Next")+"</button></div>";
+        fb.hidden=false;
+        $(el+"-next").addEventListener("click",function(){i++;draw();});
+      });
+    });
+  }
+  draw();
+}
+
+var SORT=[
+ {q:"“Your stylised mobile puzzle games are why I'd like to join your QA team.”",a:["UCAS statement","CV profile","Cover letter"],r:2,
+  fb:"It names the studio's own work and the role. A UCAS statement can't name a place — it goes to five — and a CV profile is about you, not them."},
+ {q:"“Gameplay programmer working in Unity and C#, with two finished jam games.”",a:["UCAS statement","CV profile","Cover letter"],r:1,
+  fb:"Compressed, about you, says what you do in the first few words. That's a CV profile."},
+ {q:"“Studying level design would let me understand why some spaces feel tense and others don't.”",a:["UCAS statement","CV profile","Cover letter"],r:0,
+  fb:"It's about wanting to study a subject — that's UCAS question one. It names no institution, which is exactly right for something going to five."},
+ {q:"“I'd welcome the chance to talk about the role — I'm free most weekday afternoons.”",a:["UCAS statement","CV profile","Cover letter"],r:2,
+  fb:"A call to action asking for a next step. Only a cover letter asks for something."},
+ {q:"“My BTEC group projects taught me how to cut scope without losing the core idea.”",a:["UCAS statement","CV profile","Cover letter"],r:0,
+  fb:"How your studies prepared you, in terms of a skill rather than a grade — that's UCAS question two."}
+];
+
+var OPEN=[
+ {q:"Cover letter, first line: “I am writing to apply for the Junior Environment Artist position advertised on your website.”",
+  a:["“I am writing to express my interest in the Junior Environment Artist position, which I saw advertised on your website.”",
+     "“I'm applying for the Junior Environment Artist role because your stylised interiors are the closest thing I've found to the work I want to make — I've attached three modular kits built in that direction.”"],r:1,
+  fb:"They already know what you're applying for — it's in the subject line. The strong version spends its first sentence on why them and what you've got, which is the only thing they don't already know."},
+ {q:"UCAS question one: “I have always had a passion for video games ever since I was young.”",
+  a:["“Rebuilding the jump in a platformer three times, because the first two felt floaty, is when I realised I care more about why a game feels right than about playing it.”",
+     "“I have been passionate about video games for as long as I can remember, and I would love to turn this into a career.”"],r:0,
+  fb:"Almost every games applicant claims a lifelong passion, so it identifies nobody. A specific moment is checkable and can only be yours."},
+ {q:"CV profile: “Hardworking and motivated individual looking for an opportunity in the games industry.”",
+  a:["“Dedicated and enthusiastic games student with excellent communication skills, seeking a role in games.”",
+     "“Level 3 games development student specialising in gameplay programming in C# and Unity, with two finished playable projects.”"],r:1,
+  fb:"The strong one says what you do within eight words. The weak rewrite just swaps one set of clichés for another — “dedicated” is “hardworking” in a different coat."},
+ {q:"UCAS question two: “I am predicted DDM in my BTEC, which shows I am a good student.”",
+  a:["“Our first group game had twelve planned mechanics; we shipped three that actually worked. Learning to cut scope without losing the core idea is the skill I most want to develop.”",
+     "“My BTEC has given me a strong foundation and I am on track for excellent grades.”"],r:0,
+  fb:"Question two asks how your studies prepared you — skills, not grades. Your predicted grade is already elsewhere on the form, so repeating it wastes characters you need."},
+ {q:"Cover letter, closing line: “I hope to hear from you soon. Thank you for your time.”",
+  a:["“I can send a playable build of either project, and I'm free for a call any weekday after 3pm.”",
+     "“I look forward to hearing from you at your earliest convenience. Kind regards.”"],r:0,
+  fb:"A close should make the next step easy. The weak versions leave the reader to work out what happens next; the strong one hands it to them."},
+ {q:"UCAS question three: “I have a part-time job at a supermarket.”",
+  a:["“I also work part-time at a supermarket, where I serve customers and stack shelves.”",
+     "“Working Saturdays at a supermarket taught me to stay calm when three things go wrong at once — which turns out to be most of what a game jam is.”"],r:1,
+  fb:"Question three asks how an experience prepared you. Listing duties answers a question nobody asked; saying what you learned and why it's useful answers the real one."}
+];
+
+/* ---------- builder ---------- */
+var S={mode:"cover",
+  cover:{to:"",org:"",role:"",open:"",body:"",close:"",sign:""},
+  ucas:{q1:"",q2:"",q3:""}};
+function save(){try{localStorage.setItem("b1make",JSON.stringify(S));$("saveState").textContent="saved in this browser";}
+  catch(e){$("saveState").textContent="not saved — copy it out before you close";}}
+function load(){try{var r=localStorage.getItem("b1make");if(r){var o=JSON.parse(r);if(o&&o.cover&&o.ucas){S=o;}}}catch(e){}}
+
+var COVER_F=[
+ ["to","Who you're writing to","input","Their name. “Dear Thomas” or “Dear Ms Rivers”. Find it on the studio site, the advert, or LinkedIn."],
+ ["org","Studio or organisation","input","Exactly as they write it."],
+ ["role","Role you're applying for","input","Word for word from the advert."],
+ ["open","Opening paragraph","area","The role <b>and</b> why them, together. Something specific about their work. Not “I am writing to apply…”."],
+ ["body","Your evidence","area","One or two things that match what they asked for — a named project, a tool, a number. Then one line that could only be written about this studio."],
+ ["close","Closing paragraph","area","Make the next step easy: when you're free, what you can send, how to reach you."],
+ ["sign","Your name","input",""]
+];
+var UCAS_F=[
+ ["q1","1. Why do you want to study this subject or course?","The moment it clicked, and what you've done about it since. About the subject — don't name a university."],
+ ["q2","2. How have your qualifications and studies prepared you?","Skills, not grades. Name a project and what it taught you to do."],
+ ["q3","3. What experiences outside education have prepared you, and how?","Jobs, jams, communities, things you built. The <b>how</b> — what you learned — is the part that counts."]
+];
+
+function renderForm(){
+  var h="";
+  if(S.mode==="cover"){
+    COVER_F.forEach(function(f){
+      var v=esc(S.cover[f[0]]);
+      h+='<div class="field"><label>'+f[1]+"</label>"+
+        (f[2]==="area"?'<textarea data-k="'+f[0]+'">'+v+"</textarea>":'<input type="text" data-k="'+f[0]+'" value="'+v+'">')+
+        (f[3]?'<p class="hint">'+f[3]+"</p>":"")+"</div>";
+    });
+  } else {
+    h+='<p class="hint" style="margin:0 0 14px">Three boxes, as on the real form. At least <b>350 characters</b> each, <b>4,000</b> in total.</p>';
+    UCAS_F.forEach(function(f){
+      h+='<div class="field"><label>'+f[1]+'</label><textarea data-k="'+f[0]+'" style="min-height:150px">'+esc(S.ucas[f[0]])+"</textarea>"+
+        '<div class="cc" id="cc-'+f[0]+'"></div><p class="hint">'+f[2]+"</p></div>";
+    });
+  }
+  $("form").innerHTML=h;
+  $("form").querySelectorAll("[data-k]").forEach(function(el){
+    el.addEventListener("input",function(){
+      (S.mode==="cover"?S.cover:S.ucas)[el.dataset.k]=el.value;
+      save();renderPreview();renderChecks();if(S.mode==="ucas")renderCounters();
+    });
+  });
+  if(S.mode==="ucas")renderCounters();
+}
+function renderCounters(){
+  ["q1","q2","q3"].forEach(function(k){
+    var n=(S.ucas[k]||"").length,ok=n>=350,el=$("cc-"+k);
+    if(el)el.innerHTML='<span class="'+(ok?"ok":"no")+'">'+n+" characters</span><span>"+(ok?"✓ over the minimum":(350-n)+" more needed")+"</span>";
+  });
+}
+
+function letterHTML(c){
+  var today=new Date().toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"});
+  function para(t,ph){return t?"<p>"+esc(t).replace(/\n+/g,"</p><p>")+"</p>":'<p class="empty">'+ph+"</p>";}
+  return '<div class="letter"><p class="meta">'+today+"</p>"+
+    (c.org?'<p class="meta">'+esc(c.org)+"</p>":"")+
+    (c.role?'<p class="meta"><strong>Re: '+esc(c.role)+"</strong></p>":"")+
+    "<p>Dear "+(c.to?esc(c.to):'<span class="empty">[name]</span>')+",</p>"+
+    para(c.open,"Your opening — the role and why them.")+
+    para(c.body,"Your evidence.")+
+    para(c.close,"Your close — make the next step easy.")+
+    "<p>Yours sincerely,</p><p><strong>"+(c.sign?esc(c.sign):'<span class="empty">Your name</span>')+"</strong></p></div>";
+}
+function ucasHTML(u){
+  var total=(u.q1||"").length+(u.q2||"").length+(u.q3||"").length;
+  return UCAS_F.map(function(f){
+    var t=u[f[0]]||"",n=t.length,ok=n>=350;
+    return '<div class="ucasbox"><div class="qh"><span>'+esc(f[1])+'</span><span class="pill '+(ok?"ok":"no")+'">'+n+"</span></div>"+
+      '<div class="qb">'+(t?esc(t):'<span class="empty">Not written yet.</span>')+"</div></div>";
+  }).join("")+
+  '<div class="ucastotal"><span>Total characters</span><span><b>'+total+"</b> / 4,000"+(total>4000?" — over the limit":"")+"</span></div>";
+}
+function renderPreview(){$("preview").innerHTML=S.mode==="cover"?letterHTML(S.cover):ucasHTML(S.ucas);}
+
+/* ---------- checks ---------- */
+var CLICHE=["hardworking","hard working","hard-working","passionate","passion for","team player","go-getter","think outside the box",
+  "excellent communication","motivated individual","dedicated individual","ever since i was","from a young age","since i was young",
+  "since i was little","for as long as i can remember","world class","world-class","i have always","lifelong","dream of"];
+var TOOLS=["unreal","unity","blender","maya","substance","photoshop","krita","zbrush","godot","c++","c#","python","javascript","blueprint",
+  "git","github","wwise","fmod","reaper","audacity","figma","aseprite","premiere","after effects","gimp","visual studio"];
+function words(t){return (t||"").trim().split(/\s+/).filter(Boolean).length;}
+function hasCliche(t){t=(t||"").toLowerCase();return CLICHE.filter(function(c){return t.indexOf(c)>-1;});}
+
+function coverChecks(c){
+  var all=[c.open,c.body,c.close].join(" "), low=all.toLowerCase(), out=[];
+  var to=(c.to||"").trim();
+  if(!to) out.push(["bad","Named recipient","Nobody is named. Find the person who'll read it."]);
+  else if(/sir|madam|whom it may concern/i.test(to)) out.push(["bad","Named recipient","“"+to+"” reads as though you didn't look. Find a name."]);
+  else if(/hiring manager|recruit/i.test(to)) out.push(["warn","Named recipient","Acceptable if there's genuinely no name to find — but a real name is better."]);
+  else out.push(["good","Named recipient","Addressed to a person."]);
+
+  var org=(c.org||"").trim();
+  out.push(org&&low.indexOf(org.toLowerCase())>-1
+    ? ["good","Names the studio","The studio's name appears in the letter itself."]
+    : ["bad","Names the studio",org?"You've filled in the studio but never mention it in the letter. Swap the name and it still works — that's the problem.":"No studio named."]);
+
+  var role=(c.role||"").trim();
+  out.push(role&&(c.open||"").toLowerCase().indexOf(role.toLowerCase().split(" ")[0])>-1
+    ? ["good","Role in the opening","The opening says what you're applying for."]
+    : ["warn","Role in the opening","Say which role in your first paragraph."]);
+
+  out.push(/^\s*(i am writing|i'm writing|i write)/i.test(c.open||"")
+    ? ["bad","An opening that earns its place","“I am writing to…” tells them something they already know. Lead with why them."]
+    : (c.open?["good","An opening that earns its place","Doesn't open on a stock phrase."]:["bad","An opening that earns its place","No opening yet."]));
+
+  var cl=hasCliche(all);
+  out.push(cl.length?["bad","No clichés","Found: “"+cl.join("”, “")+"”. Replace each with something you could prove."]:["good","No clichés","None of the stock phrases found."]);
+
+  var ev=/\d/.test(c.body||"")||TOOLS.some(function(t){return (c.body||"").toLowerCase().indexOf(t)>-1;});
+  out.push(ev?["good","Specific evidence","There's a number or a named tool in your evidence."]:["bad","Specific evidence","No numbers or named tools. A claim without evidence is just an opinion of yourself."]);
+
+  out.push(/available|free |call|chat|discuss|send|happy to|meet|interview|reach me|contact me/i.test(c.close||"")
+    ? ["good","A close that asks for something","The next step is easy for them."]
+    : ["bad","A close that asks for something","Tell them when you're free, what you can send, or how to reach you."]);
+
+  var w=words(all);
+  out.push(w>=150&&w<=400?["good","Length","About "+w+" words — the right size for one page."]
+    :w<150?["warn","Length","About "+w+" words. Under 150 usually means there isn't enough evidence yet."]
+    :["warn","Length","About "+w+" words. Over 400 starts asking the reader to do your editing."]);
+  return out;
+}
+function ucasChecks(u){
+  var out=[], total=(u.q1||"").length+(u.q2||"").length+(u.q3||"").length;
+  ["q1","q2","q3"].forEach(function(k,i){
+    var n=(u[k]||"").length;
+    out.push(n>=350?["good","Answer "+(i+1)+" meets the minimum",n+" characters."]
+      :["bad","Answer "+(i+1)+" meets the minimum",n+" characters — needs at least 350, or UCAS won't accept it."]);
+  });
+  out.push(total<=4000?["good","Within 4,000 characters",total+" in total."]:["bad","Within 4,000 characters",total+" — cut "+(total-4000)+"."]);
+  var cl=hasCliche(u.q1+" "+u.q2+" "+u.q3);
+  out.push(cl.length?["bad","No clichés","Found: “"+cl.join("”, “")+"”. Admissions tutors read these all day."]:["good","No clichés","None of the stock phrases found."]);
+  out.push(/university of|at ulster|at queen|at queens|your university|this university/i.test(u.q1+" "+u.q2+" "+u.q3)
+    ? ["bad","Doesn't name a university","It goes to all five of your choices — naming one means the other four read it too."]
+    : ["good","Doesn't name a university","Correct — it's about the subject, not one place."]);
+  out.push(/project|built|made|team|learn|taught|skill|design|code|program/i.test(u.q2||"")
+    ? ["good","Answer 2 is about skills","You've written about what you can do, not just your grades."]
+    : ["warn","Answer 2 is about skills","Name a project and what it taught you. Your grades are already on the form."]);
+  out.push(/learn|taught me|realis|realiz|showed me|helped me|means i|made me|so now i/i.test(u.q3||"")
+    ? ["good","Answer 3 reflects","You've said what the experience taught you."]
+    : ["warn","Answer 3 reflects","Say what you learned and why it's useful — not just what you did."]);
+  return out;
+}
+function renderChecks(){
+  var list=S.mode==="cover"?coverChecks(S.cover):ucasChecks(S.ucas);
+  var pass=list.filter(function(c){return c[0]==="good";}).length, pct=Math.round(pass/list.length*100);
+  $("score").innerHTML='<span class="big">'+pass+"/"+list.length+"</span>"+
+    "<p>checks passed. These catch what a reader notices first — they can't tell you whether your writing is good. That part is yours."+
+    '<span class="meter" style="display:block"><i style="width:'+pct+'%"></i></span></p>';
+  $("checks").innerHTML=list.map(function(c){
+    return '<div class="diag '+c[0]+'"><b>'+c[1]+"</b><span>"+c[2]+"</span></div>";}).join("");
+}
+function setMode(m){
+  S.mode=m;save();
+  $("modes").querySelectorAll(".mode").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.m===m));});
+  renderForm();renderPreview();renderChecks();Snd.fx("pick");
+}
+$("modes").querySelectorAll(".mode").forEach(function(b){b.addEventListener("click",function(){setMode(b.dataset.m);});});
+
+/* ---------- export ---------- */
+function plainText(){
+  if(S.mode==="cover"){var c=S.cover;
+    return ["Dear "+(c.to||"[name]")+",","",c.open,"",c.body,"",c.close,"","Yours sincerely,",c.sign].join("\n");}
+  var u=S.ucas;
+  return UCAS_F.map(function(f){return f[1]+"\n\n"+(u[f[0]]||"")+"\n";}).join("\n");
+}
+$("copyBtn").addEventListener("click",function(){
+  var t=plainText();
+  function ok(){toast("Copied — paste it wherever you need it","Done");}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(ok,fallback);}else{fallback();}
+  function fallback(){var a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();
+    try{document.execCommand("copy");ok();}catch(e){toast("Couldn't copy — select the text and copy it yourself","Hmm");}
+    document.body.removeChild(a);}
+});
+$("dlBtn").addEventListener("click",function(){
+  var blob=new Blob([plainText()],{type:"text/plain"}),a=document.createElement("a");
+  var who=(S.cover.sign||"my").replace(/\s+/g,"-");
+  a.href=URL.createObjectURL(blob);a.download=who+"-"+(S.mode==="cover"?"cover-letter":"ucas-statement")+".txt";
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  setTimeout(function(){URL.revokeObjectURL(a.href);},2000);toast("Downloaded","Done");
+});
+$("printBtn").addEventListener("click",function(){
+  $("printArea").innerHTML=S.mode==="cover"?letterHTML(S.cover):ucasHTML(S.ucas);window.print();
+});
+
+/* ---------- section 06 ---------- */
+function renderReal(){
+  $("ptIntro").innerHTML="There's a live application open right now, and it's a good first cover letter to write. "+
+    esc(PLAYTEST.studio)+" is recruiting <strong>"+esc(PLAYTEST.role.toLowerCase())+"s</strong> for <strong>"+esc(PLAYTEST.game)+"</strong>. To apply, you write a short covering letter.";
+  $("ptGame").innerHTML='<span class="mono">The game</span><h4 style="font-size:22px;margin-top:8px">'+esc(PLAYTEST.game)+"</h4>"+
+    "<p>"+esc(PLAYTEST.pitch)+"</p><p style=\"margin-top:8px\"><strong>"+esc(PLAYTEST.release)+"</strong></p>"+
+    (PLAYTEST.extra?'<p style="margin-top:8px">'+esc(PLAYTEST.extra)+"</p>":"");
+  $("ptRole").innerHTML='<span class="mono">The application</span><h4 style="font-size:22px;margin-top:8px">'+esc(PLAYTEST.role)+"</h4>"+
+    "<p><strong>Write to:</strong> "+esc(PLAYTEST.recipient)+"<br><strong>Studio:</strong> "+esc(PLAYTEST.studio)+"</p>"+
+    '<p style="margin-top:8px">A short covering letter — a few paragraphs. Use the shape from section 03.</p>';
+  $("ptSend").innerHTML="<h4>Sending it, and what it counts towards</h4><p>"+esc(PLAYTEST.send)+"</p><p style=\"margin-top:8px\">"+esc(PLAYTEST.counts)+"</p>";
+}
+$("useReal").addEventListener("click",function(){
+  S.cover.to=S.cover.to||PLAYTEST.recipient.split(" ")[0];
+  S.cover.org=PLAYTEST.studio;
+  S.cover.role=PLAYTEST.role+" — "+PLAYTEST.game;
+  setMode("cover");go("p5");toast("Recipient, studio and role filled in. The rest is yours.","Ready");
+});
+
+/* ---------- pages ---------- */
+var PAGES=["p1","p2","p3","p4","p5","p6","p7"],
+    NAMES={p1:"Three things",p2:"UCAS statement",p3:"Cover letter",p4:"Openings",p5:"Build yours",p6:"The real one",p7:"Glossary"},seen={};
+function go(id){
+  PAGES.forEach(function(p){$(p).hidden=(p!==id);});
+  document.querySelectorAll(".nav-btn").forEach(function(b){b.setAttribute("aria-current",String(b.dataset.p===id));});
+  window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+  if(!seen[id]){seen[id]=true;var n=Object.keys(seen).length;
+    $("progtxt").textContent=n+"/7";document.querySelector(".progress-bar i").style.width=(n/7*100)+"%";
+    if(n===7){Snd.fx("done");toast("That's the whole session. Now write the real one.","Complete");}
+    else{Snd.fx("unlock");toast(NAMES[id]);}
+  } else Snd.fx("move");
+}
+document.querySelectorAll(".nav-btn").forEach(function(b){b.addEventListener("click",function(){go(b.dataset.p);});});
+
+$("start").addEventListener("click",function(){
+  if(!Snd.on){var on=Snd.toggle();$("sound").textContent=on?"♪ Sound on":"♪ Sound off";$("sound").setAttribute("aria-pressed",String(on));}
+  $("title").style.display="none";$("shell").hidden=false;
+  load();
+  makeQuiz("sortquiz",SORT,{label:"Sentence",quote:true,row:true,
+    msgs:["All five. You can tell them apart — which is more than most applicants manage.","Close. The ones people mix up are the CV profile and UCAS question one.","Worth another go. Ask of each: who reads it, and can it name the organisation?"]});
+  makeQuiz("openquiz",OPEN,{label:"Opening",prompt:"Which rewrite would make you keep reading?",
+    msgs:["All six. You can spot a strong opening — now write one.","Good. Every stronger option either names something specific or tells the reader something they didn't already know.","Worth another look. The pattern: specific beats general, and a reason beats a claim."]});
+  renderReal();renderGloss();
+  $("modes").querySelectorAll(".mode").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.m===S.mode));});
+  renderForm();renderPreview();renderChecks();
+  go("p1");
+});
+</script>
+</body>
+</html>
