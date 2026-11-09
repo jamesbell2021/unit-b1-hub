@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hot Seat — Unit B1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --paper:#F7F2E8; --ink:#1B1533;
+  --orange:#FF5A1F; --teal:#00A6A6; --yellow:#FFC93C; --pink:#F0468C;
+  --soft:#4A4166; --dim:#7C7395;
+  --shadow:5px 5px 0 var(--ink); --shadow-sm:3px 3px 0 var(--ink);
+  --border:3px solid var(--ink); --border-sm:2px solid var(--ink);
+  --disp:"Bricolage Grotesque",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;
+  background-image:radial-gradient(var(--ink) .5px,transparent .5px);background-size:22px 22px}
+h1,h2,h3,h4{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-height:1}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+button{font:inherit;cursor:pointer}
+a{color:var(--ink)}
+:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+
+.titlescreen{min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 20px;position:relative}
+.kicker{font-family:var(--mono);font-size:13px;letter-spacing:.22em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:7px 14px;margin-bottom:22px;display:inline-block}
+.titlescreen h1{font-size:clamp(48px,12vw,126px);margin:0;text-transform:uppercase}
+.titlescreen h1 em{font-style:normal;display:block;color:var(--orange);-webkit-text-stroke:2px var(--ink)}
+.titlescreen .sub{max-width:50ch;margin:24px 0 32px;font-size:18px}
+.blob{position:absolute;border:var(--border);z-index:-1}
+.b1{width:120px;height:120px;background:var(--teal);border-radius:50%;top:12%;left:8%}
+.b2{width:80px;height:80px;background:var(--pink);top:22%;right:11%;transform:rotate(14deg)}
+.b3{width:150px;height:44px;background:var(--orange);bottom:16%;left:14%;transform:rotate(-7deg)}
+.b4{width:60px;height:60px;background:var(--yellow);border-radius:50%;bottom:24%;right:16%}
+@media (max-width:640px){.blob{display:none}}
+
+.btn{background:var(--yellow);border:var(--border);box-shadow:var(--shadow);padding:15px 30px;font-family:var(--disp);font-weight:800;font-size:19px;text-transform:uppercase;transition:transform .1s,box-shadow .1s}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.btn-sm{padding:10px 18px;font-size:14px;box-shadow:var(--shadow-sm)}
+.btn-t{background:var(--teal);color:#fff}
+.btn-o{background:var(--orange);color:#fff}
+.btn-g{background:#fff}
+
+.nav{position:sticky;top:0;z-index:30;background:var(--ink);border-bottom:var(--border)}
+.nav-in{max-width:1100px;margin:0 auto;padding:9px 20px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.nav-btn{background:transparent;border:2px solid transparent;color:#C9C2E0;font-family:var(--mono);font-size:12px;padding:7px 10px;text-transform:uppercase}
+.nav-btn:hover{color:var(--paper);border-color:var(--soft)}
+.nav-btn[aria-current="true"]{background:var(--yellow);color:var(--ink);border-color:var(--yellow)}
+.nav-btn .n{color:var(--teal)}
+.progress{margin-left:auto;display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:#9A92B8}
+.progress-bar{width:62px;height:8px;background:#3A3255;border:2px solid #5A5178}
+.progress-bar i{display:block;height:100%;background:var(--teal);width:0;transition:width .4s}
+
+.page{padding:44px 0 80px}
+.page[hidden]{display:none}
+.tag{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:5px 11px;margin-bottom:14px}
+.page h2{font-size:clamp(28px,5.5vw,48px);margin:0 0 14px;text-transform:uppercase}
+.page h2 em{font-style:normal;color:var(--orange)}
+.page h3{font-size:22px;margin:34px 0 12px}
+.lede{font-size:17.5px;max-width:64ch;margin:0 0 26px}
+
+.card{background:#fff;border:var(--border);box-shadow:var(--shadow);padding:20px 22px;margin-bottom:16px}
+.card h4{font-size:18px;margin:0 0 8px}
+.card p:last-child,.card ul:last-child{margin-bottom:0}
+.card .big{font-family:var(--disp);font-weight:800;font-size:46px;line-height:.95;display:block;margin-bottom:4px}
+.tint-o{background:var(--orange);color:#fff}
+.tint-t{background:var(--teal);color:#fff}
+.tint-y{background:var(--yellow)}
+.tint-p{background:var(--pink);color:#fff}
+.tint-o a,.tint-t a,.tint-p a{color:#fff}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+@media (max-width:760px){.grid2{grid-template-columns:1fr}}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+
+table{width:100%;border-collapse:collapse;background:#fff;border:var(--border);box-shadow:var(--shadow);margin-bottom:16px;font-size:15px}
+th,td{padding:11px 13px;text-align:left;border-bottom:var(--border-sm);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:var(--paper);border-bottom:none}
+tr:last-child td{border-bottom:none}
+.tablewrap{overflow-x:auto}
+
+.steps{counter-reset:s;margin:0;padding:0;list-style:none}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 54px;margin-bottom:20px;min-height:40px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:40px;height:40px;background:var(--teal);color:#fff;border:var(--border-sm);display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-weight:800;font-size:18px}
+.steps li b{font-family:var(--disp);font-weight:700;display:block;font-size:17.5px;margin-bottom:3px}
+.steps.orange li::before{background:var(--orange)}
+
+/* quizzes */
+.quizbox{background:#fff;border:var(--border);box-shadow:var(--shadow);padding:22px 24px;max-width:800px}
+.qn{font-family:var(--mono);font-size:12px;color:var(--dim);margin:0 0 6px}
+.qq{font-family:var(--disp);font-weight:700;font-size:18.5px;margin:0 0 16px;line-height:1.3}
+.qq.quote{font-family:var(--body);font-weight:500;font-style:italic;font-size:17px;border-left:5px solid var(--teal);padding-left:14px}
+.opt{display:block;width:100%;text-align:left;background:var(--paper);border:var(--border-sm);padding:13px 15px;margin-bottom:9px;font-size:15px;line-height:1.5}
+.opt:hover{border-color:var(--orange)}
+.opt.right{background:var(--teal);color:#fff;border-color:var(--ink)}
+.opt.wrong{background:var(--pink);color:#fff;border-color:var(--ink)}
+.opt:disabled{cursor:default}
+.fb{border:2px dashed var(--ink);padding:14px 16px;font-size:15px;margin:6px 0 4px}
+.fb[hidden]{display:none}
+.fb b{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:5px;color:var(--orange)}
+.sortrow{display:flex;gap:8px;flex-wrap:wrap}
+.sortrow .opt{flex:1 1 180px;text-align:center;margin-bottom:0;font-family:var(--disp);font-weight:700}
+
+/* builder */
+.modes{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.mode{background:#fff;border:var(--border);box-shadow:var(--shadow-sm);padding:12px 18px;font-family:var(--disp);font-weight:700;font-size:16px}
+.mode[aria-pressed="true"]{background:var(--ink);color:#fff}
+.build{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+@media (max-width:980px){.build{grid-template-columns:1fr}}
+.pane{background:var(--paper);border:var(--border);box-shadow:var(--shadow);padding:20px}
+.preview-wrap{position:sticky;top:76px}
+@media (max-width:980px){.preview-wrap{position:static}}
+.field{margin-bottom:15px}
+.field label{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px}
+.field input,.field textarea{width:100%;border:var(--border-sm);background:#fff;padding:10px 12px;font:inherit;font-size:15px;color:var(--ink)}
+.field textarea{min-height:110px;resize:vertical;line-height:1.55}
+.field input:focus,.field textarea:focus{border-color:var(--orange);outline:none}
+.hint{font-size:13px;color:var(--dim);margin:5px 0 0;line-height:1.45}
+.hint b{color:var(--ink);font-weight:600}
+.cc{font-family:var(--mono);font-size:11.5px;margin-top:5px;display:flex;justify-content:space-between}
+.cc .ok{color:var(--teal)}
+.cc .no{color:var(--pink)}
+
+.letter{background:#fff;border:var(--border);box-shadow:var(--shadow);padding:30px 32px;font-family:"IBM Plex Sans",Arial,sans-serif;font-size:13.5px;line-height:1.6;color:#1a1a1a;min-height:300px}
+.letter p{margin:0 0 11px}
+.letter .meta{color:#666;font-size:12.5px}
+.letter .empty{color:#bbb;font-style:italic}
+.ucasbox{background:#fff;border:var(--border-sm);margin-bottom:12px}
+.ucasbox .qh{background:var(--ink);color:#fff;padding:8px 12px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:flex;justify-content:space-between;gap:10px}
+.ucasbox .qb{padding:12px 14px;font-size:13.5px;line-height:1.55;min-height:50px;white-space:pre-wrap;word-wrap:break-word}
+.ucasbox .qb .empty{color:#bbb;font-style:italic}
+.qh .pill{padding:1px 7px}
+.pill.ok{background:var(--teal)}
+.pill.no{background:var(--pink)}
+.ucastotal{background:var(--ink);color:#fff;border:var(--border);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:12.5px}
+.ucastotal b{font-family:var(--disp);font-size:22px;color:var(--yellow)}
+
+.score{background:var(--ink);color:#fff;border:var(--border);box-shadow:5px 5px 0 var(--orange);padding:18px 22px;margin-bottom:16px;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.score .big{font-family:var(--disp);font-weight:800;font-size:44px;line-height:1;color:var(--yellow)}
+.score p{margin:0;color:#C9C2E0;font-size:14.5px;flex:1;min-width:200px}
+.meter{height:10px;background:#3A3255;border:2px solid #5A5178;margin-top:8px}
+.meter i{display:block;height:100%;background:var(--teal);width:0;transition:width .35s}
+.diag{background:#fff;border:var(--border-sm);padding:11px 14px;margin-bottom:8px;border-left-width:7px;font-size:14px}
+.diag.good{border-left-color:var(--teal)}
+.diag.bad{border-left-color:var(--pink)}
+.diag.warn{border-left-color:var(--yellow)}
+.diag b{font-family:var(--disp);font-size:14.5px;display:block;margin-bottom:2px}
+.diag span{color:var(--soft)}
+
+.gl{background:none;border:none;padding:0;color:inherit;font:inherit;border-bottom:2px dotted var(--orange);cursor:help}
+.gl:hover{background:var(--yellow)}
+.pop{position:absolute;z-index:60;max-width:330px;background:var(--ink);color:#EDE9F7;border:var(--border);box-shadow:5px 5px 0 var(--orange);padding:14px 16px;font-size:14px;line-height:1.55}
+.pop[hidden]{display:none}
+.pop b{display:block;font-family:var(--disp);font-weight:700;color:#fff;margin-bottom:4px;font-size:16px}
+.search{width:100%;max-width:420px;border:var(--border);background:#fff;padding:12px 14px;font:inherit;box-shadow:var(--shadow-sm);margin-bottom:16px}
+.entry{border-bottom:var(--border-sm);padding:14px 0}
+.entry b{font-family:var(--disp);font-weight:700;font-size:17px;display:block}
+.entry p{margin:4px 0 0;font-size:15px}
+
+.lk{background:#fff;border:var(--border);box-shadow:var(--shadow-sm);padding:16px 18px;text-decoration:none;color:inherit;display:block;margin-bottom:12px}
+.lk:hover{border-color:var(--orange)}
+.lk b{font-family:var(--disp);font-size:16.5px;font-weight:700;display:block;color:var(--orange)}
+.lk .u{font-family:var(--mono);font-size:11.5px;color:var(--dim);display:block;margin:3px 0 7px;word-break:break-all}
+.lk span.d{font-size:14.5px;color:var(--soft)}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(140%);z-index:60;background:var(--ink);color:var(--paper);border:var(--border);box-shadow:5px 5px 0 var(--orange);padding:12px 20px;transition:transform .35s cubic-bezier(.2,.8,.3,1);text-align:center}
+.toast.up{transform:translateX(-50%) translateY(0)}
+.toast .l{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--yellow);text-transform:uppercase}
+.toast .m{font-family:var(--disp);font-weight:700;font-size:16px}
+.sound-btn{position:fixed;right:14px;bottom:14px;z-index:50;background:var(--ink);color:var(--paper);border:var(--border);box-shadow:4px 4px 0 var(--teal);padding:9px 15px;font-family:var(--mono);font-size:12px;text-transform:uppercase}
+#saveState{font-family:var(--mono);font-size:11px;color:var(--dim);margin-left:8px}
+
+.site-footer{border-top:var(--border);padding:24px 0 90px;font-size:13.5px;color:var(--soft)}
+.site-footer p{margin:0 0 8px;max-width:76ch}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+#printArea{display:none}
+@media print{
+  body{background:#fff;background-image:none}
+  .nav,.sound-btn,.toast,.pop,.titlescreen,.page,.site-footer{display:none!important}
+  #printArea{display:block!important}
+  #printArea .letter,#printArea .ucasbox{border:none;box-shadow:none;padding:0}
+  @page{size:A4;margin:18mm}
+}
+
+/* interview extras */
+.qcard{background:#fff;border:var(--border);box-shadow:var(--shadow);margin-bottom:14px}
+.qcard summary{list-style:none;cursor:pointer;padding:16px 20px;display:flex;gap:14px;align-items:baseline}
+.qcard summary::-webkit-details-marker{display:none}
+.qcard summary .qno{font-family:var(--mono);font-size:12px;color:var(--orange);min-width:30px}
+.qcard summary .qt{font-family:var(--disp);font-weight:700;font-size:18px;line-height:1.3;flex:1}
+.qcard summary .qtag{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;background:var(--paper);border:var(--border-sm);padding:2px 7px;white-space:nowrap}
+.qcard[open] summary{border-bottom:var(--border-sm)}
+.qbody{padding:16px 20px 18px}
+.qbody h5{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;margin:12px 0 5px}
+.qbody h5:first-child{margin-top:0}
+.ans{border-left:6px solid var(--pink);padding:8px 12px;background:var(--paper);font-size:15px;margin:0}
+.ans.good{border-left-color:var(--teal)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.chip{background:#fff;border:var(--border-sm);padding:7px 13px;font-family:var(--mono);font-size:12px;text-transform:uppercase}
+.chip[aria-pressed="true"]{background:var(--ink);color:#fff}
+.star{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+@media (max-width:760px){.star{grid-template-columns:1fr 1fr}}
+.star .card{margin:0;text-align:center}
+.star .big{font-size:56px}
+.drill{background:var(--ink);color:#fff;border:var(--border);box-shadow:5px 5px 0 var(--orange);padding:26px;max-width:820px}
+.drill .dq{font-family:var(--disp);font-weight:800;font-size:clamp(22px,3.6vw,32px);line-height:1.15;margin:8px 0 18px}
+.drill .clock{font-family:var(--disp);font-weight:800;font-size:64px;color:var(--yellow);line-height:1}
+.drill .meta{font-family:var(--mono);font-size:12px;color:#C9C2E0;text-transform:uppercase;letter-spacing:.1em}
+.drill .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;align-items:center}
+.drill .hint{color:#C9C2E0;font-size:14.5px;margin:0}
+.check{display:flex;gap:12px;align-items:flex-start;background:#fff;border:var(--border-sm);padding:11px 14px;margin-bottom:8px;cursor:pointer}
+.check input{width:20px;height:20px;accent-color:var(--teal);margin-top:2px;flex:none}
+.check.done{background:#E3F4F2}
+.check span b{display:block;font-family:var(--disp);font-size:15.5px}
+.check span{font-size:14px;color:var(--soft)}
+.advert{background:#fff;border:var(--border);box-shadow:var(--shadow);padding:26px 28px;max-width:860px}
+.advert .co{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange)}
+.advert h3{margin:6px 0 4px;font-size:30px}
+.advert ul{margin:6px 0 12px}
+.tracks{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 4px}
+.tracks span{background:var(--yellow);border:var(--border-sm);padding:3px 9px;font-family:var(--mono);font-size:11.5px;text-transform:uppercase}
+.timeline{display:grid;grid-template-columns:repeat(5,1fr);border:var(--border);box-shadow:var(--shadow);background:#fff;margin-bottom:16px}
+.timeline div{padding:14px;border-right:var(--border-sm)}
+.timeline div:last-child{border-right:none}
+.timeline b{font-family:var(--disp);font-size:26px;display:block}
+.timeline span{font-size:13.5px;color:var(--soft)}
+@media (max-width:760px){.timeline{grid-template-columns:1fr 1fr}.timeline div{border-bottom:var(--border-sm)}}
+</style>
+</head>
+<body>
+
+<button class="sound-btn" id="sound" aria-pressed="false">♪ Sound off</button>
+<div class="toast" id="toast"><div class="l">Unlocked</div><div class="m"></div></div>
+<div class="pop" id="pop" hidden role="dialog"></div>
+
+<div class="titlescreen" id="title">
+  <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span>
+  <span class="kicker">Unit B1 · AC5 · AC4 · Interview skills</span>
+  <h1>Hot<em>seat</em></h1>
+  <p class="sub">Your CV got you through the door. The next twenty minutes decide the rest. Learn what interviewers are really asking, prepare answers you can actually say out loud, sort out what to wear — then sit in front of a real panel and do it.</p>
+  <button class="btn" id="start">▶ Press start</button>
+</div>
+
+<div id="shell" hidden>
+<nav class="nav"><div class="nav-in">
+  <a class="nav-btn" href="../" style="text-decoration:none">← B1 hub</a>
+  <button class="nav-btn" data-p="p1"><span class="n">01</span> What it's for</button>
+  <button class="nav-btn" data-p="p2"><span class="n">02</span> Prepare</button>
+  <button class="nav-btn" data-p="p3"><span class="n">03</span> What to wear</button>
+  <button class="nav-btn" data-p="p4"><span class="n">04</span> The questions</button>
+  <button class="nav-btn" data-p="p5"><span class="n">05</span> Practise</button>
+  <button class="nav-btn" data-p="p6"><span class="n">06</span> On the day</button>
+  <button class="nav-btn" data-p="p7"><span class="n">07</span> Your interview</button>
+  <button class="nav-btn" data-p="p8"><span class="n">08</span> Glossary</button>
+  <div class="progress"><span id="progtxt">0/8</span><div class="progress-bar"><i></i></div></div>
+</div></nav>
+
+<!-- ============ 01 ============ -->
+<section class="page" id="p1" hidden><div class="wrap">
+  <span class="tag">01 — What it's for</span>
+  <h2>They're asking <em>three things</em></h2>
+  <p class="lede">Every question in every interview, however it's dressed up, is one of three questions underneath. Once you can hear which one is being asked, you know what your answer has to prove.</p>
+  <div class="grid3">
+    <div class="card tint-t"><span class="big">1</span><h4>Can you do the job?</h4><p>Skills, tools, evidence. Your portfolio and your projects. "Talk me through…", "How would you…", "What tools do you use…"</p></div>
+    <div class="card tint-o"><span class="big">2</span><h4>Will you fit the team?</h4><p>How you work with people, handle feedback and cope when things break. "Tell me about a time…" questions live here.</p></div>
+    <div class="card tint-y"><span class="big">3</span><h4>Do you actually want this?</h4><p>Motivation and homework. "Why us?", "Why this role?", "What do you know about what we make?"</p></div>
+  </div>
+  <h3>What most candidates get wrong</h3>
+  <div class="grid2">
+    <div class="card"><h4>They answer the question they wish they'd been asked</h4><p>Asked about teamwork, they talk about their favourite game. Listen to the question, then answer <em>that</em> question first.</p></div>
+    <div class="card"><h4>They claim instead of prove</h4><p>"I'm a good team player" is a claim. "On Low Tide, I merged everyone's levels every Friday so nobody lost a week's work" is proof. Panels score proof.</p></div>
+    <div class="card"><h4>They haven't looked at the company</h4><p>Not knowing what the studio makes is the fastest way to lose an interview. Ten minutes on their website before you go in is enough to avoid it.</p></div>
+    <div class="card"><h4>They have no questions at the end</h4><p>"No, I think you've covered everything" sounds like you're not that interested. Always bring two questions.</p></div>
+  </div>
+  <div class="card tint-p"><h4>An interview goes both ways</h4><p>You're also finding out whether you want to work there. That's not just a nice thought — remembering it makes you calmer, and calm candidates come across better.</p></div>
+</div></section>
+
+<!-- ============ 02 ============ -->
+<section class="page" id="p2" hidden><div class="wrap">
+  <span class="tag">02 — Prepare</span>
+  <h2>Preparation is <em>most of it</em></h2>
+  <p class="lede">You can't predict every question, but you can walk in with your research done, five stories ready and two questions to ask. Tick these off as you go — your ticks save in this browser.</p>
+  <div id="prepList"></div>
+
+  <h3>The STAR method</h3>
+  <p class="lede" style="margin-bottom:14px">For any "tell me about a time…" question. It stops you rambling and makes sure you finish on the bit that matters: what happened because of what you did.</p>
+  <div class="star">
+    <div class="card"><span class="big" style="color:var(--teal)">S</span><h4>Situation</h4><p>Where and when. One sentence.</p></div>
+    <div class="card"><span class="big" style="color:var(--orange)">T</span><h4>Task</h4><p>What needed to happen, and your part in it.</p></div>
+    <div class="card"><span class="big" style="color:var(--pink)">A</span><h4>Action</h4><p>What <strong>you</strong> did. "I", not "we". The longest part.</p></div>
+    <div class="card"><span class="big" style="color:var(--ink)">R</span><h4>Result</h4><p>What changed, and what you learned.</p></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h4>Without STAR</h4><p class="ans">"Yeah, we had a group project and there were some problems with people not doing their bit, but we sorted it out in the end and it was fine."</p></div>
+    <div class="card"><h4>With STAR</h4><p class="ans good"><strong>S</strong> In our first-year group game, two weeks before the deadline, we had three different versions of the level and none of them worked together. <strong>T</strong> I was responsible for the build. <strong>A</strong> I set up one shared project, gave everyone their own sub-level, and merged them every Friday in a ten-minute meeting. <strong>R</strong> We handed in on time with one working build, and I now set up shared projects on day one.</p></div>
+  </div>
+
+  <h3>Build your five stories</h3>
+  <p class="lede" style="margin-bottom:14px">Five real situations will cover nearly every behavioural question. Write a line for each part. You can reuse the same story for different questions.</p>
+  <div id="stories"></div>
+  <p style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-sm btn-g" id="printStories">Print my stories</button><span id="saveState" class="mono" style="align-self:center;color:var(--dim)"></span></p>
+</div></section>
+
+<!-- ============ 03 ============ -->
+<section class="page" id="p3" hidden><div class="wrap">
+  <span class="tag">03 — What to wear</span>
+  <h2>One step <em>above the team</em></h2>
+  <p class="lede">Most games studios are casual — hoodies and trainers on a normal day. That doesn't mean you turn up to the interview in one. The rule is simple: dress one step smarter than the people who work there. Nobody has ever lost a job for being slightly too smart; plenty have lost one for looking like they didn't care.</p>
+  <div class="grid3">
+    <div class="card tint-t"><span class="mono">Games studio · creative agency</span><h4 style="font-size:20px;margin-top:8px">Smart casual</h4><ul><li>Clean, plain top or shirt, no slogans</li><li>Dark jeans or chinos with no rips</li><li>Clean shoes or plain trainers</li><li>An optional jumper or overshirt</li></ul></div>
+    <div class="card tint-y"><span class="mono">College · university · larger company</span><h4 style="font-size:20px;margin-top:8px">Smart</h4><ul><li>Shirt or blouse</li><li>Trousers or a skirt, not jeans</li><li>Proper shoes</li><li>A jacket if you have one; a tie is not usually needed</li></ul></div>
+    <div class="card tint-o"><span class="mono">Not sure?</span><h4 style="font-size:20px;margin-top:8px">Go smarter</h4><p>Look at the studio's website or LinkedIn photos to see what the team wears. If you still can't tell, go smart. You can always take a jacket off.</p></div>
+  </div>
+  <h3>The bits people forget</h3>
+  <div class="grid2">
+    <div class="card"><h4>Clean beats expensive</h4><p>Nobody expects new clothes. They do notice creases, stains and a strong smell of last night's chippy. Sort it the night before.</p></div>
+    <div class="card"><h4>Be comfortable</h4><p>Wear something you've worn before. A brand-new shirt that's too tight or shoes that hurt will make you fidget.</p></div>
+    <div class="card"><h4>Take the hat off</h4><p>Caps, beanies and headphones round your neck all come off before you go in. Phone on silent and in your bag, not on the table.</p></div>
+    <div class="card"><h4>Show who you are — a little</h4><p>A plain top with a small, subtle detail is fine at a games studio. A t-shirt from their own game is a risk. It might charm them or look like you're trying too hard.</p></div>
+  </div>
+  <h3>Online interviews</h3>
+  <div class="grid2">
+    <div class="card"><h4>Dress the same</h4><p>At least from the waist up, and do the whole outfit so you don't forget if you have to stand up. Test your camera the day before.</p></div>
+    <div class="card"><h4>Set the scene</h4><p>Light in front of you, not behind. Camera at eye level. A plain or tidy background. Headphones with a mic. Close everything else and turn off notifications.</p></div>
+  </div>
+</div></section>
+
+<!-- ============ 04 ============ -->
+<section class="page" id="p4" hidden><div class="wrap">
+  <span class="tag">04 — The questions</span>
+  <h2>The ones that <em>always come up</em></h2>
+  <p class="lede">Twenty of the most common interview questions: the general ones every employer asks, and the games ones you'll get at a studio. Open any question to see what it's really asking, a weak answer, and a stronger one.</p>
+  <div class="filters" id="filters"></div>
+  <div id="qlist"></div>
+</div></section>
+
+<!-- ============ 05 ============ -->
+<section class="page" id="p5" hidden><div class="wrap">
+  <span class="tag">05 — Practise</span>
+  <h2>Say it <em>out loud</em></h2>
+  <p class="lede">Answers that sound good in your head fall apart when you say them. Pick a question at random, answer it out loud to a partner (or your phone's recorder) within the time limit, then swap. Your partner listens for the three things underneath.</p>
+  <div class="drill" id="drill">
+    <span class="meta" id="dmeta">Press deal to get a question</span>
+    <p class="dq" id="dq">Ready when you are.</p>
+    <div class="row">
+      <span class="clock" id="clock">2:00</span>
+      <button class="btn btn-sm" id="deal">Deal a question</button>
+      <button class="btn btn-sm btn-t" id="go">Start timer</button>
+      <button class="btn btn-sm btn-g" id="reveal">What's it asking?</button>
+    </div>
+    <p class="hint" id="dhint" style="margin-top:14px"></p>
+  </div>
+  <h3>The listener's job</h3>
+  <div class="grid3">
+    <div class="card"><h4>Did they answer the question?</h4><p>The actual question, in the first sentence or two — not a warm-up story.</p></div>
+    <div class="card"><h4>Was there proof?</h4><p>A named project, a tool, a number, a result. Count them.</p></div>
+    <div class="card"><h4>Did it end well?</h4><p>On a result or what they learned, not trailing off with "…so yeah."</p></div>
+  </div>
+</div></section>
+
+<!-- ============ 06 ============ -->
+<section class="page" id="p6" hidden><div class="wrap">
+  <span class="tag">06 — On the day</span>
+  <h2>From the door <em>to the handshake</em></h2>
+  <ol class="steps">
+    <li><b>Arrive ten minutes early</b> Not thirty — that makes them feel rushed. Know where you're going, and leave time for buses being buses.</li>
+    <li><b>Be polite to everyone</b> The person on reception may be asked what you were like. Often they are.</li>
+    <li><b>The first minute</b> Stand when they come to meet you, smile, say hello and use their name if you know it. Sit when you're invited to.</li>
+    <li><b>While answering</b> Sit back in the chair with your feet flat and your hands still on the table or your lap. Look at the person who asked, and glance at the rest of the panel too.</li>
+    <li><b>Take a breath before you answer</b> A two-second pause looks thoughtful, not stuck. "That's a good question — let me think for a second" is completely fine.</li>
+    <li><b>If you don't know</b> Say so, then say how you'd find out. "I haven't used Perforce, but I've used Git every day, and I'd expect the ideas to carry over" is better than guessing.</li>
+    <li><b>Your questions</b> Ask the two you prepared. If they've already been answered, say so and ask a follow-up.</li>
+    <li><b>Leave well</b> Thank them, say you'd like the job if you would, and ask what happens next. A short thank-you email the same day is a good touch.</li>
+  </ol>
+  <h3>Nerves</h3>
+  <div class="grid2">
+    <div class="card tint-t"><h4>Everyone has them</h4><p>Panels expect it and allow for it. Shaky hands for the first minute won't count against you. What counts is whether you recover and answer.</p></div>
+    <div class="card"><h4>What helps</h4><ul><li>Practise out loud the day before (section 05)</li><li>Breathe in for four seconds and out for six before you go in</li><li>Bring water</li><li>Have your notes in your bag. You can look at them before you go in.</li></ul></div>
+  </div>
+  <h3>Questions worth asking them</h3>
+  <div class="grid2">
+    <div class="card"><ul><li>"What would a good first three months look like for someone in this role?"</li><li>"How does the team give feedback on work?"</li><li>"What's the project the team is most excited about right now?"</li></ul></div>
+    <div class="card"><ul><li>"What do the best people in this role do differently?"</li><li>"Is there anything in my application you'd like me to say more about?"</li><li>"What happens next, and when should I expect to hear?"</li></ul></div>
+  </div>
+  <div class="card tint-p"><h4>Avoid asking first about…</h4><p>Pay, holidays or "how soon can I work from home". Those are fair questions, but they belong once an offer is on the table, not in your first interview.</p></div>
+</div></section>
+
+<!-- ============ 07 ============ -->
+<section class="page" id="p7" hidden><div class="wrap">
+  <span class="tag">07 — Your interview</span>
+  <h2>The role you're <em>applying for</em></h2>
+  <p class="lede">This is the job you'll be interviewed for. It isn't real, but the panel will treat it as if it were: a three-person panel, real questions, and scored feedback afterwards. Read the advert the way you'd read a real one, and prepare against it.</p>
+  <div class="advert" id="advert"></div>
+  <h3>How it runs</h3>
+  <div class="timeline">
+    <div><b>2 min</b><span>Welcome and introductions</span></div>
+    <div><b>10 min</b><span>Six questions from the panel</span></div>
+    <div><b>2 min</b><span>Your questions for them</span></div>
+    <div><b>1 min</b><span>Close</span></div>
+    <div><b>5 min</b><span>Panel scores, then feedback to you</span></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h4>Bring</h4><ul><li>Your CV, printed (you're expected to know it)</li><li>Your portfolio or website on a laptop or phone, ready to show one piece</li><li>Two questions for the panel, written down</li><li>Your five STAR stories, for reading before you go in</li></ul></div>
+    <div class="card"><h4>You'll be scored on</h4><ul><li>Preparation and knowledge of the role</li><li>Evidence of skill (your work)</li><li>Teamwork and handling feedback</li><li>Motivation</li><li>Communication: clear, full answers in the right register</li><li>Professional presence: arrival, dress, manner</li></ul></div>
+  </div>
+  <div class="card tint-y"><h4>Why this counts</h4><p>The recorded mock interview is evidence for <strong>AC5 Communication</strong>. Arriving prepared, on time and dressed for it is evidence for <strong>AC4 Professional practice</strong>. Write it up in your reflective log the same day: what went well, what the panel said, and what you'd do differently. Never write what without why.</p></div>
+</div></section>
+
+<!-- ============ 08 ============ -->
+<section class="page" id="p8" hidden><div class="wrap">
+  <span class="tag">08 — Glossary</span>
+  <h2>Interview words, <em>decoded</em></h2>
+  <input id="search" class="search" type="search" placeholder="Search a term…" aria-label="Search glossary">
+  <div id="glist"></div>
+</div></section>
+
+<footer class="site-footer"><div class="wrap">
+  <p>Unit B1 — Personal Progression. BTEC Level 3 National Extended Diploma in Creative Media Practice (Game Development), Belfast Met, Castlereagh. Supports the recorded presentation and mock interview deliverable (AC5, AC4).</p>
+  <p>Anchorlight Games is a fictional studio made up for this exercise. Anything you type here stays in your own browser and is not uploaded.</p>
+</div></footer>
+</div>
+<div id="printArea"></div>
+
+<script>
+/* =============================================================
+   EDIT HERE — the imaginary role in section 07.
+   ============================================================= */
+var ROLE = {
+  studio:   "Anchorlight Games",
+  where:    "Belfast · on-site, with one remote day a week",
+  title:    "Junior Game Developer (Trainee)",
+  intro:    "We're a 22-person studio making stylised action games for PC and console. We're taking on two trainees who'll spend their first year working across a live project alongside senior developers.",
+  tracks:   ["Programming","Art","Design","Audio","QA"],
+  doing:    ["Building features, assets or levels for our current project, with a senior developer as your mentor","Taking part in daily stand-ups and weekly playtests","Fixing bugs and acting on feedback from leads","Keeping your work organised in our version control system"],
+  need:     ["A finished project you can show and talk through, in your chosen track","Working knowledge of at least one engine or tool used in games (Unreal, Unity, Blender, Godot, Audition or similar)","Evidence that you can work in a team and take feedback","Clear written and spoken communication"],
+  nice:     ["A game jam entry","Experience with Git or other version control","An interest in the kind of games we make"],
+  apply:    "Interviews will be held at the studio by a three-person panel."
+};
+/* ============================================================= */
+
+var $=function(i){return document.getElementById(i);};
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+
+/* ---------- audio ---------- */
+var Snd={ctx:null,on:false,mus:null,timer:null,
+ boot:function(){if(this.ctx)return;var C=window.AudioContext||window.webkitAudioContext;if(!C)return;
+  this.ctx=new C();this.mus=this.ctx.createGain();this.mus.gain.value=.11;this.mus.connect(this.ctx.destination);},
+ hz:function(n){return 440*Math.pow(2,(n-69)/12);},
+ note:function(n,at,dur,type,vol,dest){if(!this.on||!this.ctx)return;
+  var o=this.ctx.createOscillator(),g=this.ctx.createGain();
+  o.type=type||"square";o.frequency.value=this.hz(n);
+  g.gain.setValueAtTime(0,at);g.gain.linearRampToValueAtTime(vol,at+.01);
+  g.gain.exponentialRampToValueAtTime(.0001,at+dur);
+  o.connect(g);g.connect(dest||this.ctx.destination);o.start(at);o.stop(at+dur+.05);},
+ fx:function(k){if(!this.on||!this.ctx)return;var t=this.ctx.currentTime;
+  var bank={blip:[[81,0,.05,"square",.12]],move:[[74,0,.04,"square",.10]],
+   pick:[[76,0,.06,"square",.12],[83,.05,.09,"square",.10]],
+   open:[[69,0,.05,"triangle",.13],[76,.05,.08,"triangle",.11]],
+   right:[[76,0,.07,"square",.12],[83,.07,.14,"square",.11]],
+   wrong:[[52,0,.14,"sawtooth",.14],[47,.10,.20,"sawtooth",.12]],
+   unlock:[[72,0,.08,"square",.13],[76,.08,.08,"square",.13],[79,.16,.08,"square",.13],[84,.24,.28,"square",.14],[60,.24,.34,"triangle",.11]],
+   done:[[72,0,.1,"square",.14],[76,.1,.1,"square",.14],[79,.2,.1,"square",.14],[84,.3,.1,"square",.14],[88,.4,.45,"square",.15],[48,.4,.5,"triangle",.12]]};
+  var s=bank[k]||[];for(var i=0;i<s.length;i++){var n=s[i];this.note(n[0],t+n[1],n[2],n[3],n[4]);}},
+ loop:function(){if(!this.on||!this.ctx)return;var self=this,b=.34,t0=this.ctx.currentTime+.05;
+  var bars=[[48,[60,64,67]],[53,[65,69,72]],[55,[67,71,74]],[52,[64,67,71]]];
+  bars.forEach(function(ch,i){var s=t0+i*b*8;
+   for(var k=0;k<8;k+=2) self.note(ch[0]-12,s+k*b,b*1.35,"triangle",.15,self.mus);
+   var arp=[ch[1][0],ch[1][2],ch[1][1],ch[1][2],ch[1][0]+12,ch[1][2],ch[1][1],ch[1][0]];
+   arp.forEach(function(n,j){self.note(n,s+j*b,.19,"square",.05,self.mus);});});
+  this.timer=setTimeout(function(){self.loop();},4*8*b*1000);},
+ toggle:function(){this.boot();if(!this.ctx)return false;
+  if(this.ctx.state==="suspended")this.ctx.resume();
+  this.on=!this.on;if(this.on){this.loop();this.fx("blip");}else{clearTimeout(this.timer);}
+  return this.on;}};
+$("sound").addEventListener("click",function(){var on=Snd.toggle();
+  this.textContent=on?"♪ Sound on":"♪ Sound off";this.setAttribute("aria-pressed",String(on));});
+
+var tt;
+function toast(m,l){var t=$("toast");t.querySelector(".m").textContent=m;
+  t.querySelector(".l").textContent=l||"Unlocked";t.classList.add("up");
+  clearTimeout(tt);tt=setTimeout(function(){t.classList.remove("up");},2500);}
+
+
+
+var TERMS={
+ star:["STAR method","Situation, Task, Action, Result. A way to structure an answer to any “tell me about a time…” question, so it ends on what happened because of what you did."],
+ behav:["Behavioural question","A question about what you did in a real past situation (“Tell me about a time…”). It assumes past behaviour predicts future behaviour."],
+ tech:["Technical question","A question that tests whether you can do the work: tools, methods, how you'd solve a problem."],
+ motive:["Motivation question","“Why us?”, “Why this role?”. It checks you've done your homework and actually want the job."],
+ panel:["Panel interview","An interview with two or more interviewers. Usually one chairs and each asks questions on a different area."],
+ chair:["Chair","The panel member who runs the interview: welcomes you, keeps time, and closes."],
+ rubric:["Scoring rubric","The criteria a panel scores every candidate against, so decisions are fair and comparable."],
+ probe:["Follow-up probe","A follow-up question asking you to go deeper: “What did you do specifically?”, “What would you change?”"],
+ smart:["Smart casual","Neat and clean, but not a suit: a plain shirt or top, dark jeans or chinos with no rips, clean shoes."],
+ register:["Register","How formal your language is. An interview calls for professional but natural language. Not slang, not stiff."],
+ breakdown:["Breakdown","An explanation of how a piece of work was made: your role, tools, process and decisions."],
+ weakness:["Weakness question","“What's your biggest weakness?” It checks self-awareness: a real weakness, and what you're doing about it."],
+ competency:["Competency","A skill or behaviour the employer needs, like teamwork or problem solving. Behavioural questions are built around competencies."],
+ thankyou:["Thank-you email","A short email after the interview thanking the panel for their time. Optional, but it leaves a good final impression."]
+};
+function gloss(h){return String(h).replace(/\{\{(\w+)\|(.*?)\}\}/g,function(m,k,t){
+  return TERMS[k]?'<button class="gl" data-t="'+k+'">'+t+'</button>':t;});}
+var popOpen=null;
+function closePop(){$("pop").hidden=true;popOpen=null;}
+document.addEventListener("click",function(e){
+  var b=e.target.closest(".gl");
+  if(!b){if(!e.target.closest("#pop"))closePop();return;}
+  e.preventDefault();e.stopPropagation();
+  if(popOpen===b){closePop();return;}
+  var t=TERMS[b.dataset.t],p=$("pop");
+  p.innerHTML="<b>"+t[0]+"</b>"+t[1];p.hidden=false;
+  var r=b.getBoundingClientRect(),w=Math.min(330,window.innerWidth-24),x=r.left+window.scrollX;
+  p.style.width=w+"px";
+  if(x+w>window.innerWidth-12)x=window.innerWidth-w-12;
+  p.style.left=Math.max(12,x)+"px";p.style.top=(r.bottom+window.scrollY+8)+"px";
+  popOpen=b;Snd.fx("open");
+},true);
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closePop();});
+window.addEventListener("scroll",function(){if(popOpen)closePop();},{passive:true});
+
+function renderGloss(){
+  var q=$("search").value.toLowerCase().trim();
+  var keys=Object.keys(TERMS).filter(function(k){return !q||(TERMS[k][0]+" "+TERMS[k][1]).toLowerCase().indexOf(q)>-1;})
+    .sort(function(a,b){return TERMS[a][0].localeCompare(TERMS[b][0]);});
+  $("glist").innerHTML=keys.length?keys.map(function(k){return '<div class="entry"><b>'+TERMS[k][0]+"</b><p>"+TERMS[k][1]+"</p></div>";}).join(""):'<div class="entry"><p>Nothing matches that.</p></div>';
+}
+$("search").addEventListener("input",renderGloss);
+
+/* ---------- storage ---------- */
+var S={prep:{},stories:{}};
+function save(){try{localStorage.setItem("b1hotseat",JSON.stringify(S));$("saveState").textContent="saved in this browser";}catch(e){$("saveState").textContent="not saved — copy your notes out";}}
+function load(){try{var r=localStorage.getItem("b1hotseat");if(r){var o=JSON.parse(r);if(o&&o.prep&&o.stories)S=o;}}catch(e){}}
+
+/* ---------- 02 prep ---------- */
+var PREP=[
+ ["Read the advert twice","Highlight every skill and requirement. Each one is a likely question."],
+ ["Research the studio","What have they made? Who works there? What's their latest news? Play or watch something they made."],
+ ["Know your own CV","Anything on it is fair game. Be ready to talk about every line for a minute."],
+ ["Pick one piece of work to show","The piece that best matches the role. Practise a two-minute breakdown of it."],
+ ["Write five STAR stories","Use the builder below. They cover most “tell me about a time” questions."],
+ ["Prepare your 60-second “about me”","Who you are, what you do, what you're looking for. Not your life story."],
+ ["Write two questions to ask them","See section 06 for ideas."],
+ ["Practise out loud","Do at least five questions in section 05 with a partner."],
+ ["Sort the logistics","Where, when, who you're meeting, how you're getting there, what you're wearing."]
+];
+function renderPrep(){
+  $("prepList").innerHTML=PREP.map(function(p,i){var d=!!S.prep[i];
+    return '<label class="check'+(d?' done':'')+'"><input type="checkbox" data-i="'+i+'"'+(d?' checked':'')+'><span><b>'+p[0]+'</b>'+p[1]+'</span></label>';}).join("");
+  $("prepList").querySelectorAll("input").forEach(function(c){c.addEventListener("change",function(){
+    S.prep[c.dataset.i]=c.checked;save();c.parentNode.classList.toggle("done",c.checked);Snd.fx(c.checked?"pick":"move");
+    if(PREP.every(function(_,i){return S.prep[i];}))toast("Fully prepared. Now go and do it.","Ready");});});
+}
+var STORIES=[["team","A time you worked in a team"],["problem","A time something went wrong and you fixed it"],["feedback","A time you got feedback and acted on it"],["proud","The piece of work you're most proud of"],["pressure","A time you had a tight deadline"]];
+function renderStories(){
+  var h="";
+  STORIES.forEach(function(s){var v=S.stories[s[0]]||{};
+    h+='<div class="card"><h4>'+s[1]+'</h4><div class="grid2">';
+    ["S","T","A","R"].forEach(function(k){h+='<div class="field" style="margin:0"><label>'+{S:"Situation",T:"Task",A:"Action — what you did",R:"Result"}[k]+'</label><textarea data-s="'+s[0]+'" data-k="'+k+'" style="min-height:64px">'+esc(v[k]||"")+'</textarea></div>';});
+    h+='</div></div>';});
+  $("stories").innerHTML=h;
+  $("stories").querySelectorAll("textarea").forEach(function(t){t.addEventListener("input",function(){
+    var s=t.dataset.s;S.stories[s]=S.stories[s]||{};S.stories[s][t.dataset.k]=t.value;save();});});
+}
+$("printStories").addEventListener("click",function(){
+  var h='<h1 style="font-family:sans-serif">My interview stories</h1>';
+  STORIES.forEach(function(s){var v=S.stories[s[0]]||{};h+='<h3 style="font-family:sans-serif">'+s[1]+'</h3>';
+    ["S","T","A","R"].forEach(function(k){h+='<p style="font-family:sans-serif"><b>'+k+':</b> '+esc(v[k]||"")+'</p>';});});
+  $("printArea").innerHTML='<div class="letter">'+h+'</div>';window.print();});
+
+/* ---------- 04 questions ---------- */
+var Q=[
+ {c:"Opening",q:"Tell me about yourself.",ask:"Can you summarise yourself clearly, and is it relevant to this job?",
+  bad:"Well, I was born in Belfast, I went to primary school in… I like games and football and I've got a dog.",
+  good:"I'm a second-year games development student at Belfast Met, specialising in gameplay programming. This year I built a top-down shooter in Unreal with a team of four. I did the enemy AI and the build pipeline. I'm looking for a role where I can learn from senior developers on a real project, which is why this traineeship stood out."},
+ {c:"Motivation",q:"Why do you want to work here?",ask:"Have you done your homework, and do you actually want this job rather than any job?",
+  bad:"I just really love games and I need a job.",
+  good:"I played your last game and liked how the combat reads instantly even with loads on screen. That's the kind of feedback design I want to get better at. You also take on trainees and mentor them, and that's exactly the step I need next."},
+ {c:"Motivation",q:"Why this role?",ask:"Do you understand what the job involves day to day?",
+  bad:"It sounds fun.",
+  good:"The advert says I'd be fixing bugs, acting on feedback and working in version control. That's what I enjoyed most in my group projects: making something work properly, not just look finished."},
+ {c:"Behavioural",q:"Tell me about a time you worked in a team.",ask:"Will you fit in? What do you actually do in a team?",
+  bad:"We did a group project and it went well. We all got on.",
+  good:"Use STAR. Name the project and your role. Describe one thing you specifically did that helped the team (sharing a build, sorting a conflict, covering a gap), then the result."},
+ {c:"Behavioural",q:"Tell me about a time something went wrong.",ask:"How do you handle problems? Do you take responsibility?",
+  bad:"Nothing's really gone wrong for me.",
+  good:"A real problem, what you did about it, and what you'd do differently now. Owning a mistake looks stronger than pretending you've never made one."},
+ {c:"Behavioural",q:"Tell me about a time you got critical feedback.",ask:"Can you take feedback without getting defensive, and do you act on it?",
+  bad:"My tutor didn't like my level but I thought it was fine.",
+  good:"Name the feedback, how you felt honestly (briefly), what you changed, and what the result was. Ideally show a before and after."},
+ {c:"Behavioural",q:"How do you handle a tight deadline?",ask:"Can you prioritise and cut scope, or do you panic or overwork?",
+  bad:"I just stay up all night and get it done.",
+  good:"Describe a real deadline where you listed what was essential, cut or simplified the rest, told people early, and delivered something that worked."},
+ {c:"Self",q:"What's your biggest weakness?",ask:"Are you self-aware, and are you working on it?",
+  bad:"I'm a perfectionist. I work too hard.",
+  good:"A real but not job-critical weakness and what you're doing about it: “I used to leave writing up my work until the end, so my logs were rushed. Now I write a short entry at the end of every session.”"},
+ {c:"Self",q:"What's your greatest strength?",ask:"Do you know what you're good at, and can you prove it?",
+  bad:"I'm hardworking and passionate.",
+  good:"One strength that's relevant to the role, plus a specific example that proves it."},
+ {c:"Self",q:"Where do you see yourself in five years?",ask:"Are you ambitious, and will you stay long enough to be worth training?",
+  bad:"Running my own studio.",
+  good:"Connect it to the role: “I'd like to be a solid mid-level programmer, trusted to own a feature from start to finish, and maybe mentoring a trainee myself.” Your five-year plan from B1 is perfect for this."},
+ {c:"Games",q:"Talk me through a piece of work in your portfolio.",ask:"Can you do the job, and can you explain your own decisions?",
+  bad:"So this is my level. It's got some enemies and stuff. I made it in Unreal.",
+  good:"Two minutes. What it is, your role, the tools, one problem you solved and how, and what you'd improve. Have it open and ready on screen."},
+ {c:"Games",q:"What's a game you've played recently, and what would you change about it?",ask:"Do you think critically about games, not just play them?",
+  bad:"I play loads of Fortnite. I wouldn't change anything, it's class.",
+  good:"Pick something specific, praise one design decision, then suggest one change and explain why it would improve the player's experience."},
+ {c:"Games",q:"What tools and engines are you comfortable with?",ask:"Can you hit the ground running? Are you honest about your level?",
+  bad:"All of them.",
+  good:"Name your main tools with an honest level for each and something you've made in it. “Confident in Unreal Blueprints, I've shipped two jam games. Comfortable in Blender for props. Beginner in C++.”"},
+ {c:"Games",q:"How do you keep your skills up to date?",ask:"Will you keep learning without being told to?",
+  bad:"I just learn in class.",
+  good:"Specific habits: a tutorial channel, a game jam, a devlog you follow, a small side project. Name them."},
+ {c:"Games",q:"How would you handle a bug you can't fix?",ask:"Are you methodical, and will you ask for help at the right time?",
+  bad:"I'd keep trying until it worked.",
+  good:"Reproduce it, isolate it, check the obvious, search for it, time-box it, then ask a colleague with a clear description of what you've already tried."},
+ {c:"Games",q:"What do you know about the games we make?",ask:"Did you do any research at all?",
+  bad:"Erm, I think you make shooters?",
+  good:"Name at least one of their games, what it's like and one thing you noticed about it. Five minutes of research covers this."},
+ {c:"Situational",q:"A senior developer says your work isn't good enough. What do you do?",ask:"How do you react to criticism from someone more experienced?",
+  bad:"I'd tell them I worked really hard on it.",
+  good:"Listen, ask what specifically needs to change and what good looks like, make the changes, and check back. Thank them."},
+ {c:"Situational",q:"A teammate isn't pulling their weight. What do you do?",ask:"Can you deal with conflict maturely?",
+  bad:"I'd tell the boss.",
+  good:"Talk to them first, privately. Find out if something's wrong and offer help. Only escalate if it keeps affecting the project, and focus on the work, not the person."},
+ {c:"Closing",q:"Why should we hire you?",ask:"Can you sum up your case in thirty seconds?",
+  bad:"Because I really want it.",
+  good:"Three things that match the advert, each with a one-line piece of proof. Then say you want the job."},
+ {c:"Closing",q:"Do you have any questions for us?",ask:"Are you genuinely interested? Have you thought about the job?",
+  bad:"No, I think you've covered everything.",
+  good:"Always ask two. See section 06 for questions that work."}
+];
+var CATS=["All","Opening","Motivation","Behavioural","Self","Games","Situational","Closing"],cat="All";
+function renderQ(){
+  $("filters").innerHTML=CATS.map(function(c){return '<button class="chip" data-c="'+c+'" aria-pressed="'+(c===cat)+'">'+c+'</button>';}).join("");
+  $("filters").querySelectorAll(".chip").forEach(function(b){b.addEventListener("click",function(){cat=b.dataset.c;Snd.fx("move");renderQ();});});
+  $("qlist").innerHTML=Q.map(function(x,i){ if(cat!=="All"&&x.c!==cat)return "";
+    return '<details class="qcard"><summary><span class="qno">'+String(i+1).padStart(2,"0")+'</span><span class="qt">'+esc(x.q)+'</span><span class="qtag">'+x.c+'</span></summary><div class="qbody">'+
+      '<h5>What it’s really asking</h5><p>'+esc(x.ask)+'</p><h5>Weak answer</h5><p class="ans">'+esc(x.bad)+'</p><h5>Stronger</h5><p class="ans good">'+esc(x.good)+'</p></div></details>';}).join("");
+  $("qlist").querySelectorAll("details").forEach(function(d){d.addEventListener("toggle",function(){if(d.open)Snd.fx("open");});});
+}
+
+/* ---------- 05 drill ---------- */
+var cur=null,left=120,tick=null;
+function fmt(s){return Math.floor(s/60)+":"+String(s%60).padStart(2,"0");}
+$("deal").addEventListener("click",function(){
+  clearInterval(tick);tick=null;left=120;$("clock").textContent=fmt(left);
+  var n;do{n=Math.floor(Math.random()*Q.length);}while(cur!==null&&Q.length>1&&n===cur);cur=n;
+  $("dq").textContent=Q[n].q;$("dmeta").textContent=Q[n].c+" question";$("dhint").textContent="";$("go").textContent="Start timer";Snd.fx("pick");});
+$("go").addEventListener("click",function(){
+  if(cur===null){toast("Deal a question first","Hold on");return;}
+  if(tick){clearInterval(tick);tick=null;this.textContent="Resume";return;}
+  this.textContent="Pause";Snd.fx("blip");var self=this;
+  tick=setInterval(function(){left--;$("clock").textContent=fmt(Math.max(0,left));
+    if(left===30)Snd.fx("move");
+    if(left<=0){clearInterval(tick);tick=null;self.textContent="Start timer";Snd.fx("done");toast("Time. Partner: what was the proof?","Stop");}},1000);});
+$("reveal").addEventListener("click",function(){if(cur===null)return;$("dhint").innerHTML="<strong>Really asking:</strong> "+esc(Q[cur].ask)+"<br><strong>Aim for:</strong> "+esc(Q[cur].good);Snd.fx("open");});
+
+/* ---------- 07 advert ---------- */
+function li(a){return "<ul>"+a.map(function(x){return "<li>"+esc(x)+"</li>";}).join("")+"</ul>";}
+function renderAdvert(){
+  $("advert").innerHTML='<span class="co">'+esc(ROLE.studio)+' · '+esc(ROLE.where)+'</span><h3>'+esc(ROLE.title)+'</h3><p>'+esc(ROLE.intro)+'</p>'+
+   '<p class="mono" style="margin-bottom:0">Choose your track</p><div class="tracks">'+ROLE.tracks.map(function(t){return "<span>"+esc(t)+"</span>";}).join("")+'</div>'+
+   '<h4 style="margin-top:14px">What you’ll do</h4>'+li(ROLE.doing)+'<h4>What you need</h4>'+li(ROLE.need)+'<h4>Nice to have</h4>'+li(ROLE.nice)+'<p style="margin:0"><em>'+esc(ROLE.apply)+'</em></p>';
+}
+
+/* ---------- pages ---------- */
+var PAGES=["p1","p2","p3","p4","p5","p6","p7","p8"],NAMES={p1:"What it's for",p2:"Prepare",p3:"What to wear",p4:"The questions",p5:"Practise",p6:"On the day",p7:"Your interview",p8:"Glossary"},seen={};
+function go(id){
+  PAGES.forEach(function(p){$(p).hidden=(p!==id);});
+  document.querySelectorAll(".nav-btn[data-p]").forEach(function(b){b.setAttribute("aria-current",String(b.dataset.p===id));});
+  window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+  if(!seen[id]){seen[id]=true;var n=Object.keys(seen).length;$("progtxt").textContent=n+"/8";document.querySelector(".progress-bar i").style.width=(n/8*100)+"%";
+    if(n===8){Snd.fx("done");toast("Whole session done. See you in the hot seat.","Complete");}else{Snd.fx("unlock");toast(NAMES[id]);}}
+  else Snd.fx("move");
+}
+document.querySelectorAll(".nav-btn[data-p]").forEach(function(b){b.addEventListener("click",function(){go(b.dataset.p);});});
+$("start").addEventListener("click",function(){
+  if(!Snd.on){var on=Snd.toggle();$("sound").textContent=on?"♪ Sound on":"♪ Sound off";$("sound").setAttribute("aria-pressed",String(on));}
+  $("title").style.display="none";$("shell").hidden=false;
+  load();renderPrep();renderStories();renderQ();renderAdvert();renderGloss();go("p1");
+});
+</script>
+</body>
+</html>

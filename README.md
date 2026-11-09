@@ -20,6 +20,7 @@ A single self-contained HTML page that ties your whole B1 toolkit together: why 
   | 🗺️ The Roadmap | AC2 | [bmet-five-year-plan](https://jamesbell2021.github.io/bmet-five-year-plan/) |
   | 🎓 UCAS Decoded | AC1 | [unit-b1-hub/ucas](https://jamesbell2021.github.io/unit-b1-hub/ucas/) |
   | ✉️ Make Your Case | AC3 · AC5 | [unit-b1-hub/statements](https://jamesbell2021.github.io/unit-b1-hub/statements/) |
+  | 🪑 Hot Seat | AC5 · AC4 | [unit-b1-hub/interview](https://jamesbell2021.github.io/unit-b1-hub/interview/) |
 
   **Note:** UCAS Decoded and Make Your Case live *inside this repo* at `ucas/` and `statements/`, not in their own repositories, so their toolkit links are relative paths (`./ucas/`, `./statements/`) rather than absolute URLs. If it is ever moved to a standalone repo, update that `url` value in `TOOLS` to match the others.
 
@@ -42,6 +43,12 @@ Covers the *personal statement and cover letter* deliverable (AC3, AC5) and supp
 **Section 06 is configurable.** The `PLAYTEST` object at the top of the script in `statements/index.html` holds the real application (currently playtester recruitment for *Forged in Formation*, addressed to James Bell at 3BL). Edit the recipient, how to submit, and what it counts towards, or swap the whole application.
 
 **Accuracy:** the UCAS format (three questions, 350-character minimum per answer, 4,000 total) was checked against [Queen's University Belfast](https://hecate.qub.ac.uk/home/student-blog/applying/ucas-personal-statement.html) and ucas.com in October 2026. Check ucas.com before reuse in a later cycle.
+
+## Hot Seat (`interview/`)
+
+The interview skills session for the recorded mock interview deliverable (AC5, AC4). Eight sections: the three things every question is really asking; preparation checklist, STAR method and a five-story builder (saved locally, printable); what to wear, including online interviews; 20 common questions with weak and stronger answers, filterable by type; a timed two-minute practice drill for pairs; on the day, including nerves and questions to ask; the imaginary role (Anchorlight Games, Junior Game Developer trainee); and a glossary. The role is set in the `ROLE` object at the top of the script.
+
+**Panel pack (`interview/panel.html`)** is for the interview panel: the course lead as chair plus two student panellists. It is not linked from the student navigation. It covers roles, the 20-minute running order, ground rules for student panellists, six core questions with listen-for notes and probes, six spare questions, a 1–4 rubric across six criteria (total out of 24, with a guide to how totals read against AC5), and a scoring form that saves each candidate in that browser, prints a feedback sheet per candidate, prints blank scoring sheets, and exports all scores as CSV. Use the same laptop for the whole session.
 
 ## The Roadmap's link back here
 

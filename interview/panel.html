@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel Pack — Unit B1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --paper:#F7F2E8; --ink:#1B1533;
+  --orange:#FF5A1F; --teal:#00A6A6; --yellow:#FFC93C; --pink:#F0468C;
+  --soft:#4A4166; --dim:#7C7395;
+  --shadow:5px 5px 0 var(--ink); --shadow-sm:3px 3px 0 var(--ink);
+  --border:3px solid var(--ink); --border-sm:2px solid var(--ink);
+  --disp:"Bricolage Grotesque",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;
+  background-image:radial-gradient(var(--ink) .5px,transparent .5px);background-size:22px 22px}
+h1,h2,h3,h4{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-height:1}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+button{font:inherit;cursor:pointer}
+a{color:var(--ink)}
+:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+
+.titlescreen{min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 20px;position:relative}
+.kicker{font-family:var(--mono);font-size:13px;letter-spacing:.22em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:7px 14px;margin-bottom:22px;display:inline-block}
+.titlescreen h1{font-size:clamp(48px,12vw,126px);margin:0;text-transform:uppercase}
+.titlescreen h1 em{font-style:normal;display:block;color:var(--orange);-webkit-text-stroke:2px var(--ink)}
+.titlescreen .sub{max-width:50ch;margin:24px 0 32px;font-size:18px}
+.blob{position:absolute;border:var(--border);z-index:-1}
+.b1{width:120px;height:120px;background:var(--teal);border-radius:50%;top:12%;left:8%}
+.b2{width:80px;height:80px;background:var(--pink);top:22%;right:11%;transform:rotate(14deg)}
+.b3{width:150px;height:44px;background:var(--orange);bottom:16%;left:14%;transform:rotate(-7deg)}
+.b4{width:60px;height:60px;background:var(--yellow);border-radius:50%;bottom:24%;right:16%}
+@media (max-width:640px){.blob{display:none}}
+
+.btn{background:var(--yellow);border:var(--border);box-shadow:var(--shadow);padding:15px 30px;font-family:var(--disp);font-weight:800;font-size:19px;text-transform:uppercase;transition:transform .1s,box-shadow .1s}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.btn-sm{padding:10px 18px;font-size:14px;box-shadow:var(--shadow-sm)}
+.btn-t{background:var(--teal);color:#fff}
+.btn-o{background:var(--orange);color:#fff}
+.btn-g{background:#fff}
+
+.nav{position:sticky;top:0;z-index:30;background:var(--ink);border-bottom:var(--border)}
+.nav-in{max-width:1100px;margin:0 auto;padding:9px 20px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.nav-btn{background:transparent;border:2px solid transparent;color:#C9C2E0;font-family:var(--mono);font-size:12px;padding:7px 10px;text-transform:uppercase}
+.nav-btn:hover{color:var(--paper);border-color:var(--soft)}
+.nav-btn[aria-current="true"]{background:var(--yellow);color:var(--ink);border-color:var(--yellow)}
+.nav-btn .n{color:var(--teal)}
+.progress{margin-left:auto;display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:#9A92B8}
+.progress-bar{width:62px;height:8px;background:#3A3255;border:2px solid #5A5178}
+.progress-bar i{display:block;height:100%;background:var(--teal);width:0;transition:width .4s}
+
+.page{padding:44px 0 80px}
+.page[hidden]{display:none}
+.tag{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:5px 11px;margin-bottom:14px}
+.page h2{font-size:clamp(28px,5.5vw,48px);margin:0 0 14px;text-transform:uppercase}
+.page h2 em{font-style:normal;color:var(--orange)}
+.page h3{font-size:22px;margin:34px 0 12px}
+.lede{font-size:17.5px;max-width:64ch;margin:0 0 26px}
+
+.card{background:#fff;border:var(--border);box-shadow:var(--shadow);padding:20px 22px;margin-bottom:16px}
+.card h4{font-size:18px;margin:0 0 8px}
+.card p:last-child,.card ul:last-child{margin-bottom:0}
+.card .big{font-family:var(--disp);font-weight:800;font-size:46px;line-height:.95;display:block;margin-bottom:4px}
+.tint-o{background:var(--orange);color:#fff}
+.tint-t{background:var(--teal);color:#fff}
+.tint-y{background:var(--yellow)}
+.tint-p{background:var(--pink);color:#fff}
+.tint-o a,.tint-t a,.tint-p a{color:#fff}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+@media (max-width:760px){.grid2{grid-template-columns:1fr}}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+
+table{width:100%;border-collapse:collapse;background:#fff;border:var(--border);box-shadow:var(--shadow);margin-bottom:16px;font-size:15px}
+th,td{padding:11px 13px;text-align:left;border-bottom:var(--border-sm);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:var(--paper);border-bottom:none}
+tr:last-child td{border-bottom:none}
+.tablewrap{overflow-x:auto}
+
+.steps{counter-reset:s;margin:0;padding:0;list-style:none}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 54px;margin-bottom:20px;min-height:40px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:40px;height:40px;background:var(--teal);color:#fff;border:var(--border-sm);display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-weight:800;font-size:18px}
+.steps li b{font-family:var(--disp);font-weight:700;display:block;font-size:17.5px;margin-bottom:3px}
+.steps.orange li::before{background:var(--orange)}
+
+/* quizzes */
+.quizbox{background:#fff;border:var(--border);box-shadow:var(--shadow);padding:22px 24px;max-width:800px}
+.qn{font-family:var(--mono);font-size:12px;color:var(--dim);margin:0 0 6px}
+.qq{font-family:var(--disp);font-weight:700;font-size:18.5px;margin:0 0 16px;line-height:1.3}
+.qq.quote{font-family:var(--body);font-weight:500;font-style:italic;font-size:17px;border-left:5px solid var(--teal);padding-left:14px}
+.opt{display:block;width:100%;text-align:left;background:var(--paper);border:var(--border-sm);padding:13px 15px;margin-bottom:9px;font-size:15px;line-height:1.5}
+.opt:hover{border-color:var(--orange)}
+.opt.right{background:var(--teal);color:#fff;border-color:var(--ink)}
+.opt.wrong{background:var(--pink);color:#fff;border-color:var(--ink)}
+.opt:disabled{cursor:default}
+.fb{border:2px dashed var(--ink);padding:14px 16px;font-size:15px;margin:6px 0 4px}
+.fb[hidden]{display:none}
+.fb b{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:5px;color:var(--orange)}
+.sortrow{display:flex;gap:8px;flex-wrap:wrap}
+.sortrow .opt{flex:1 1 180px;text-align:center;margin-bottom:0;font-family:var(--disp);font-weight:700}
+
+/* builder */
+.modes{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.mode{background:#fff;border:var(--border);box-shadow:var(--shadow-sm);padding:12px 18px;font-family:var(--disp);font-weight:700;font-size:16px}
+.mode[aria-pressed="true"]{background:var(--ink);color:#fff}
+.build{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+@media (max-width:980px){.build{grid-template-columns:1fr}}
+.pane{background:var(--paper);border:var(--border);box-shadow:var(--shadow);padding:20px}
+.preview-wrap{position:sticky;top:76px}
+@media (max-width:980px){.preview-wrap{position:static}}
+.field{margin-bottom:15px}
+.field label{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px}
+.field input,.field textarea{width:100%;border:var(--border-sm);background:#fff;padding:10px 12px;font:inherit;font-size:15px;color:var(--ink)}
+.field textarea{min-height:110px;resize:vertical;line-height:1.55}
+.field input:focus,.field textarea:focus{border-color:var(--orange);outline:none}
+.hint{font-size:13px;color:var(--dim);margin:5px 0 0;line-height:1.45}
+.hint b{color:var(--ink);font-weight:600}
+.cc{font-family:var(--mono);font-size:11.5px;margin-top:5px;display:flex;justify-content:space-between}
+.cc .ok{color:var(--teal)}
+.cc .no{color:var(--pink)}
+
+.letter{background:#fff;border:var(--border);box-shadow:var(--shadow);padding:30px 32px;font-family:"IBM Plex Sans",Arial,sans-serif;font-size:13.5px;line-height:1.6;color:#1a1a1a;min-height:300px}
+.letter p{margin:0 0 11px}
+.letter .meta{color:#666;font-size:12.5px}
+.letter .empty{color:#bbb;font-style:italic}
+.ucasbox{background:#fff;border:var(--border-sm);margin-bottom:12px}
+.ucasbox .qh{background:var(--ink);color:#fff;padding:8px 12px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:flex;justify-content:space-between;gap:10px}
+.ucasbox .qb{padding:12px 14px;font-size:13.5px;line-height:1.55;min-height:50px;white-space:pre-wrap;word-wrap:break-word}
+.ucasbox .qb .empty{color:#bbb;font-style:italic}
+.qh .pill{padding:1px 7px}
+.pill.ok{background:var(--teal)}
+.pill.no{background:var(--pink)}
+.ucastotal{background:var(--ink);color:#fff;border:var(--border);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:12.5px}
+.ucastotal b{font-family:var(--disp);font-size:22px;color:var(--yellow)}
+
+.score{background:var(--ink);color:#fff;border:var(--border);box-shadow:5px 5px 0 var(--orange);padding:18px 22px;margin-bottom:16px;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.score .big{font-family:var(--disp);font-weight:800;font-size:44px;line-height:1;color:var(--yellow)}
+.score p{margin:0;color:#C9C2E0;font-size:14.5px;flex:1;min-width:200px}
+.meter{height:10px;background:#3A3255;border:2px solid #5A5178;margin-top:8px}
+.meter i{display:block;height:100%;background:var(--teal);width:0;transition:width .35s}
+.diag{background:#fff;border:var(--border-sm);padding:11px 14px;margin-bottom:8px;border-left-width:7px;font-size:14px}
+.diag.good{border-left-color:var(--teal)}
+.diag.bad{border-left-color:var(--pink)}
+.diag.warn{border-left-color:var(--yellow)}
+.diag b{font-family:var(--disp);font-size:14.5px;display:block;margin-bottom:2px}
+.diag span{color:var(--soft)}
+
+.gl{background:none;border:none;padding:0;color:inherit;font:inherit;border-bottom:2px dotted var(--orange);cursor:help}
+.gl:hover{background:var(--yellow)}
+.pop{position:absolute;z-index:60;max-width:330px;background:var(--ink);color:#EDE9F7;border:var(--border);box-shadow:5px 5px 0 var(--orange);padding:14px 16px;font-size:14px;line-height:1.55}
+.pop[hidden]{display:none}
+.pop b{display:block;font-family:var(--disp);font-weight:700;color:#fff;margin-bottom:4px;font-size:16px}
+.search{width:100%;max-width:420px;border:var(--border);background:#fff;padding:12px 14px;font:inherit;box-shadow:var(--shadow-sm);margin-bottom:16px}
+.entry{border-bottom:var(--border-sm);padding:14px 0}
+.entry b{font-family:var(--disp);font-weight:700;font-size:17px;display:block}
+.entry p{margin:4px 0 0;font-size:15px}
+
+.lk{background:#fff;border:var(--border);box-shadow:var(--shadow-sm);padding:16px 18px;text-decoration:none;color:inherit;display:block;margin-bottom:12px}
+.lk:hover{border-color:var(--orange)}
+.lk b{font-family:var(--disp);font-size:16.5px;font-weight:700;display:block;color:var(--orange)}
+.lk .u{font-family:var(--mono);font-size:11.5px;color:var(--dim);display:block;margin:3px 0 7px;word-break:break-all}
+.lk span.d{font-size:14.5px;color:var(--soft)}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(140%);z-index:60;background:var(--ink);color:var(--paper);border:var(--border);box-shadow:5px 5px 0 var(--orange);padding:12px 20px;transition:transform .35s cubic-bezier(.2,.8,.3,1);text-align:center}
+.toast.up{transform:translateX(-50%) translateY(0)}
+.toast .l{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--yellow);text-transform:uppercase}
+.toast .m{font-family:var(--disp);font-weight:700;font-size:16px}
+.sound-btn{position:fixed;right:14px;bottom:14px;z-index:50;background:var(--ink);color:var(--paper);border:var(--border);box-shadow:4px 4px 0 var(--teal);padding:9px 15px;font-family:var(--mono);font-size:12px;text-transform:uppercase}
+#saveState{font-family:var(--mono);font-size:11px;color:var(--dim);margin-left:8px}
+
+.site-footer{border-top:var(--border);padding:24px 0 90px;font-size:13.5px;color:var(--soft)}
+.site-footer p{margin:0 0 8px;max-width:76ch}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+#printArea{display:none}
+@media print{
+  body{background:#fff;background-image:none}
+  .nav,.sound-btn,.toast,.pop,.titlescreen,.page,.site-footer{display:none!important}
+  #printArea{display:block!important}
+  #printArea .letter,#printArea .ucasbox{border:none;box-shadow:none;padding:0}
+  @page{size:A4;margin:18mm}
+}
+
+.ptq{background:#fff;border:var(--border);box-shadow:var(--shadow-sm);padding:16px 18px;margin-bottom:12px}
+.ptq .who{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border:var(--border-sm);display:inline-block;margin-bottom:6px}
+.who.c{background:var(--yellow)} .who.a{background:var(--teal);color:#fff} .who.b{background:var(--pink);color:#fff}
+.ptq b.q{display:block;font-family:var(--disp);font-size:18px;margin-bottom:6px;line-height:1.3}
+.ptq p{margin:4px 0;font-size:14.5px}
+.ptq .lab{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--dim)}
+.rub td:first-child{font-family:var(--disp);font-weight:700}
+.sc{display:flex;gap:6px}
+.sc button{width:40px;height:40px;border:var(--border-sm);background:#fff;font-family:var(--disp);font-weight:800;font-size:17px}
+.sc button[aria-pressed="true"]{background:var(--ink);color:#fff}
+.crit{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;background:#fff;border:var(--border-sm);padding:10px 14px;margin-bottom:8px}
+.crit b{font-family:var(--disp)}
+.crit span{display:block;font-size:13px;color:var(--soft)}
+.cands{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.cands button{background:#fff;border:var(--border-sm);padding:6px 11px;font-family:var(--mono);font-size:12px}
+.cands button[aria-pressed="true"]{background:var(--orange);color:#fff}
+.total{background:var(--ink);color:#fff;border:var(--border);padding:14px 18px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:12px 0}
+.total b{font-family:var(--disp);font-size:34px;color:var(--yellow)}
+@media print{.sheet{page-break-after:always}}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"><div class="l">Saved</div><div class="m"></div></div>
+
+<nav class="nav"><div class="nav-in">
+  <a class="nav-btn" href="./" style="text-decoration:none">← Hot Seat</a>
+  <button class="nav-btn" data-p="p1" aria-current="true"><span class="n">01</span> Running it</button>
+  <button class="nav-btn" data-p="p2"><span class="n">02</span> Questions</button>
+  <button class="nav-btn" data-p="p3"><span class="n">03</span> Scoring</button>
+  <button class="nav-btn" data-p="p4"><span class="n">04</span> Score a candidate</button>
+</div></nav>
+
+<section class="page" id="p1"><div class="wrap">
+  <span class="tag">Panel pack — staff and student panellists</span>
+  <h2>Running the <em>mock interviews</em></h2>
+  <p class="lede">A three-person panel interviews each candidate for the Anchorlight Games trainee role. Everyone gets the same six core questions, in the same order, scored against the same six criteria. That's what makes it fair, and it's what makes the feedback worth having.</p>
+  <div class="grid3">
+    <div class="card tint-y"><span class="mono">Chair</span><h4 style="font-size:20px;margin-top:6px">James Bell</h4><p>Welcomes the candidate, introduces the panel, asks the opening and motivation questions, keeps time, invites the candidate's questions and closes.</p></div>
+    <div class="card tint-t"><span class="mono">Panellist A · student</span><h4 style="font-size:20px;margin-top:6px">Skills and work</h4><p>Asks the portfolio and technical questions. Listens for evidence: named projects, tools, decisions.</p></div>
+    <div class="card tint-p"><span class="mono">Panellist B · student</span><h4 style="font-size:20px;margin-top:6px">People and behaviour</h4><p>Asks the teamwork and feedback questions. Listens for STAR: what <em>they</em> did, and the result.</p></div>
+  </div>
+  <h3>Timings for each candidate: 20 minutes</h3>
+  <table><thead><tr><th>Time</th><th>What happens</th><th>Who</th></tr></thead><tbody>
+    <tr><td>0:00</td><td>Candidate collected from the waiting area, welcomed, panel introduced</td><td>Chair</td></tr>
+    <tr><td>0:02</td><td>Six core questions, with follow-up probes if an answer is thin</td><td>All, in order</td></tr>
+    <tr><td>0:12</td><td>"Do you have any questions for us?"</td><td>Chair</td></tr>
+    <tr><td>0:14</td><td>Close: thank them and explain they'll get feedback after the panel confers</td><td>Chair</td></tr>
+    <tr><td>0:15</td><td>Candidate steps out. Panel scores independently, then agrees one score per criterion</td><td>All</td></tr>
+    <tr><td>0:18</td><td>Candidate back in for two minutes of feedback: one strength, one thing to work on</td><td>Chair, with a panellist</td></tr>
+  </tbody></table>
+  <p class="lede" style="font-size:15.5px">At 20 minutes a candidate, plan for three an hour. A class of 15 needs about five hours, so spread it across two sessions and rotate who sits on the panel.</p>
+  <h3>Ground rules for student panellists</h3>
+  <div class="grid2">
+    <div class="card"><ul><li><strong>Same questions for everyone.</strong> Don't drop hints to friends or skip questions for anyone.</li><li><strong>Score on what you heard,</strong> not on who the person is or how well you know them.</li><li><strong>Score on your own first,</strong> then agree with the panel. Disagreement is normal. Talk it through.</li></ul></div>
+    <div class="card"><ul><li><strong>Keep it confidential.</strong> Don't discuss anyone's scores outside the room.</li><li><strong>Stay in role.</strong> Professional, friendly and no laughing. Treat it as if it were real.</li><li><strong>Feedback is specific and kind:</strong> "Your portfolio walkthrough was clear because…", not "you were good".</li></ul></div>
+  </div>
+  <div class="card tint-t"><h4>Panellists get evidence too</h4><p>Sitting on the panel, writing notes and giving structured feedback is good <strong>AC5 Communication</strong> evidence for the two student panellists. They should write it up in their reflective logs: what they looked for, and what they learned about interviews from the other side of the table.</p></div>
+  <h3>Room set-up</h3>
+  <ul class="steps"><li><b>Waiting area outside</b> Candidates wait outside and are collected, as at a real interview. Arrival and manner count towards the professional presence score.</li><li><b>Panel on one side, candidate opposite</b> Water for everyone. Space to show a laptop or phone.</li><li><b>Recording</b> Camera behind the panel, on the candidate. Record only with the candidate's consent, and give them an alternative if they decline.</li></ul>
+  <p><button class="btn btn-sm btn-g" id="printBlank">Print blank scoring sheets (one per panellist)</button></p>
+</div></section>
+
+<section class="page" id="p2" hidden><div class="wrap">
+  <span class="tag">02 — Questions</span>
+  <h2>Six core questions, <em>in this order</em></h2>
+  <p class="lede">Ask them as written. Use the probes only if an answer is thin. The "listen for" notes tell you what a strong answer contains.</p>
+  <div id="coreQ"></div>
+  <h3>Spare questions</h3>
+  <p class="lede" style="margin-bottom:12px">Use one if a candidate finishes very quickly, or swap one in for a candidate with a different track. Use the same swap for everyone in that track.</p>
+  <div id="spareQ"></div>
+</div></section>
+
+<section class="page" id="p3" hidden><div class="wrap">
+  <span class="tag">03 — Scoring</span>
+  <h2>Six criteria, <em>scored 1 to 4</em></h2>
+  <p class="lede">Score each criterion separately. The total is out of 24. The bands on the right are a guide to how the performance would read against the AC5 grade descriptors. The final grade decision stays with the assessor, across all the B1 evidence.</p>
+  <div class="tablewrap"><table class="rub"><thead><tr><th>Criterion</th><th>1 · Not yet</th><th>2 · Developing</th><th>3 · Good</th><th>4 · Strong</th></tr></thead><tbody id="rubric"></tbody></table></div>
+  <table><thead><tr><th>Total</th><th>Reads like</th></tr></thead><tbody>
+    <tr><td>6–11</td><td>Not yet at Pass. Answers are short or off the question, with little evidence. Needs another practice before a real interview.</td></tr>
+    <tr><td>12–16</td><td>Pass level. Answers the questions and communicates clearly with some evidence.</td></tr>
+    <tr><td>17–20</td><td>Merit level. Full answers with relevant evidence and the right vocabulary. Has clearly prepared.</td></tr>
+    <tr><td>21–24</td><td>Distinction level. Has researched the studio, gives structured answers with strong evidence, and asks insightful questions.</td></tr>
+  </tbody></table>
+</div></section>
+
+<section class="page" id="p4" hidden><div class="wrap">
+  <span class="tag">04 — Score a candidate</span>
+  <h2>Agreed <em>panel score</em></h2>
+  <p class="lede">After scoring independently, enter the panel's agreed scores here. Everything saves in this browser on this machine, so use the same laptop all session. Print each candidate's sheet as their feedback and evidence.</p>
+  <div class="cands" id="cands"></div>
+  <div class="pane">
+    <div class="grid2">
+      <div class="field"><label>Candidate name</label><input id="cName" type="text"></div>
+      <div class="field"><label>Track</label><input id="cTrack" type="text" placeholder="Programming, Art, Design, Audio or QA"></div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label>Date</label><input id="cDate" type="text"></div>
+      <div class="field"><label>Panel</label><input id="cPanel" type="text" placeholder="James Bell, plus the two student panellists"></div>
+    </div>
+    <div id="critForm"></div>
+    <div class="total" id="tot"></div>
+    <div class="field"><label>Notes on answers</label><textarea id="cNotes" style="min-height:120px"></textarea></div>
+    <div class="grid2">
+      <div class="field"><label>Strength — what they did well, and why it worked</label><textarea id="cStr"></textarea></div>
+      <div class="field"><label>Work on — one specific thing to improve</label><textarea id="cImp"></textarea></div>
+    </div>
+    <p style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-sm btn-t" id="saveC">Save candidate</button>
+      <button class="btn btn-sm btn-g" id="newC">New candidate</button>
+      <button class="btn btn-sm btn-g" id="printC">Print feedback sheet</button>
+      <button class="btn btn-sm btn-g" id="csv">Download all as CSV</button>
+      <button class="btn btn-sm btn-g" id="delC">Delete this candidate</button>
+    </p>
+  </div>
+</div></section>
+
+<div id="printArea"></div>
+<script>
+var $=function(i){return document.getElementById(i);};
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+var tt;function toast(m,l){var t=$("toast");t.querySelector(".m").textContent=m;t.querySelector(".l").textContent=l||"Saved";t.classList.add("up");clearTimeout(tt);tt=setTimeout(function(){t.classList.remove("up");},2200);}
+
+var CORE=[
+ {w:"c",who:"Chair",q:"Tell us a bit about yourself and why you've applied for this traineeship.",
+  look:"A short, relevant summary of course, specialism, one project and why this role. Under 90 seconds. Not a life story.",
+  probe:"What made you choose your track?"},
+ {w:"c",who:"Chair",q:"What do you know about Anchorlight Games, and why do you want to work here rather than anywhere else?",
+  look:"Has read the advert. Picks out the stylised action games, the mentoring and the live project, and connects them to their own goals.",
+  probe:"What would you hope to learn in your first year?"},
+ {w:"a",who:"Panellist A",q:"Show us one piece of work from your portfolio and talk us through how you made it.",
+  look:"Has it ready on screen. Covers their role, tools, one problem and how they solved it, and what they'd improve. Says “I” for their own part.",
+  probe:"If you had another week on it, what would you change and why?"},
+ {w:"a",who:"Panellist A",q:"You've hit a problem in your work that you can't solve. Talk us through what you do.",
+  look:"A method: reproduce, isolate, research, time-box, then ask for help with a clear description of what they've tried. Bonus for a real example.",
+  probe:"When would you decide it's time to ask someone?"},
+ {w:"b",who:"Panellist B",q:"Tell us about a time you worked as part of a team. What did you do, and how did it go?",
+  look:"STAR. A named project, their specific contribution, and a result. Honest about any difficulty.",
+  probe:"What would you do differently in that team now?"},
+ {w:"b",who:"Panellist B",q:"Tell us about a time you got feedback on your work that you didn't agree with at first. What happened?",
+  look:"Stays calm and reflective. Explains what the feedback was, what they changed, and the result. Ideally shows a before and after.",
+  probe:"How do you like to receive feedback?"}
+];
+var SPARE=[
+ {q:"What's a game you've played recently, and what's one thing you'd change about it?",look:"Specific, critical, explains why the change helps the player."},
+ {q:"What tools or engines are you most confident in, and which are you still learning?",look:"Honest levels, with something made in each."},
+ {q:"Tell us about a time you had a tight deadline.",look:"Prioritising and cutting scope, not just working all night."},
+ {q:"Where do you see yourself in five years?",look:"Connects to their B1 five-year plan and to this role."},
+ {q:"A teammate isn't doing their share. What do you do?",look:"Talks to them privately first. Focuses on the work. Escalates only if needed."},
+ {q:"Why should we offer you the traineeship?",look:"Three reasons matched to the advert, each with proof."}
+];
+var CRIT=[
+ ["prep","Preparation and knowledge of the role","Knows the advert and the studio","Little or no knowledge of the role or studio","Some awareness, mostly general","Clear knowledge of the role and studio, linked to own goals","Detailed research used naturally throughout, including in their questions"],
+ ["skill","Evidence of skill","Portfolio, tools, problem solving","Talks generally with no work shown","Shows work but explains it vaguely","Clear walkthrough with their role, tools and decisions","Confident, critical walkthrough including what they'd improve and why"],
+ ["team","Teamwork and feedback","STAR examples, owns their part","No real example","An example, but mostly “we” with no result","A clear STAR example with their own actions and a result","Reflective STAR examples showing what they learned and changed"],
+ ["motive","Motivation","Wants this job, not any job","Generic or unclear","Some enthusiasm, little reasoning","Clear reasons tied to the role","Compelling, specific reasons tied to the studio, role and their plan"],
+ ["comm","Communication","Clear, full answers, right register","Very short or off-topic answers","Answers the question but thin or rambling","Full, structured answers in a professional register with the right terminology","Concise, well-structured and engaging, with confident use of sector vocabulary"],
+ ["pres","Professional presence","Arrival, dress, manner, their questions","Late or unprepared, no questions","On time, but little eye contact or engagement, and a weak question","Well presented and engaged, with good questions","Polished and composed throughout, and asks insightful questions"]
+];
+function renderQ(){
+  $("coreQ").innerHTML=CORE.map(function(x,i){return '<div class="ptq"><span class="who '+x.w+'">'+(i+1)+' · '+x.who+'</span><b class="q">'+esc(x.q)+'</b><p><span class="lab">Listen for</span><br>'+esc(x.look)+'</p><p><span class="lab">Probe</span><br>'+esc(x.probe)+'</p></div>';}).join("");
+  $("spareQ").innerHTML=SPARE.map(function(x){return '<div class="ptq"><b class="q">'+esc(x.q)+'</b><p><span class="lab">Listen for</span><br>'+esc(x.look)+'</p></div>';}).join("");
+  $("rubric").innerHTML=CRIT.map(function(c){return "<tr><td>"+c[1]+"<br><span style='font-family:var(--body);font-weight:400;font-size:13px;color:var(--soft)'>"+c[2]+"</span></td><td>"+c[3]+"</td><td>"+c[4]+"</td><td>"+c[5]+"</td><td>"+c[6]+"</td></tr>";}).join("");
+}
+
+/* ---------- scoring ---------- */
+var DB={list:[]},curI=-1,cur=null;
+function blank(){return {name:"",track:"",date:new Date().toLocaleDateString("en-GB"),panel:"",scores:{},notes:"",str:"",imp:""};}
+function loadDB(){try{var r=localStorage.getItem("b1panel");if(r){var o=JSON.parse(r);if(o&&o.list)DB=o;}}catch(e){}}
+function saveDB(){try{localStorage.setItem("b1panel",JSON.stringify(DB));return true;}catch(e){toast("Couldn't save. Download the CSV now","Warning");return false;}}
+function total(c){return CRIT.reduce(function(a,k){return a+(c.scores[k[0]]||0);},0);}
+function band(t,c){var n=CRIT.filter(function(k){return c.scores[k[0]];}).length;if(n<6)return "Score all six criteria";return t<=11?"Not yet at Pass":t<=16?"Pass level":t<=20?"Merit level":"Distinction level";}
+function renderCands(){
+  $("cands").innerHTML=DB.list.map(function(c,i){return '<button data-i="'+i+'" aria-pressed="'+(i===curI)+'">'+esc(c.name||"Unnamed")+' · '+total(c)+'</button>';}).join("")||'<span class="mono" style="color:var(--dim)">No candidates saved yet</span>';
+  $("cands").querySelectorAll("button").forEach(function(b){b.addEventListener("click",function(){open(+b.dataset.i);});});
+}
+function renderForm(){
+  ["name","track","date","panel","notes","str","imp"].forEach(function(k){$({name:"cName",track:"cTrack",date:"cDate",panel:"cPanel",notes:"cNotes",str:"cStr",imp:"cImp"}[k]).value=cur[k]||"";});
+  $("critForm").innerHTML=CRIT.map(function(c){return '<div class="crit"><div><b>'+c[1]+'</b><span>'+c[2]+'</span></div><div class="sc">'+[1,2,3,4].map(function(n){return '<button data-k="'+c[0]+'" data-n="'+n+'" aria-pressed="'+(cur.scores[c[0]]===n)+'">'+n+'</button>';}).join("")+'</div></div>';}).join("");
+  $("critForm").querySelectorAll("button").forEach(function(b){b.addEventListener("click",function(){read();cur.scores[b.dataset.k]=+b.dataset.n;renderForm();});});
+  var t=total(cur);$("tot").innerHTML='<b>'+t+' / 24</b><span>'+band(t,cur)+'</span>';
+}
+function read(){cur.name=$("cName").value;cur.track=$("cTrack").value;cur.date=$("cDate").value;cur.panel=$("cPanel").value;cur.notes=$("cNotes").value;cur.str=$("cStr").value;cur.imp=$("cImp").value;}
+function open(i){curI=i;cur=JSON.parse(JSON.stringify(DB.list[i]));renderForm();renderCands();}
+$("saveC").addEventListener("click",function(){read();if(!cur.name.trim()){toast("Add the candidate's name first","Hold on");return;}
+  if(curI<0){DB.list.push(cur);curI=DB.list.length-1;}else DB.list[curI]=cur;cur=JSON.parse(JSON.stringify(cur));
+  if(saveDB())toast(DB.list[curI].name+" saved");renderCands();});
+$("newC").addEventListener("click",function(){var p=cur?($("cPanel").value):"";curI=-1;cur=blank();cur.panel=p;renderForm();renderCands();});
+$("delC").addEventListener("click",function(){if(curI<0)return;if(!confirm("Delete "+(DB.list[curI].name||"this candidate")+"?"))return;DB.list.splice(curI,1);saveDB();curI=-1;cur=blank();renderForm();renderCands();});
+function sheet(c,blankSheet){
+  var rows=CRIT.map(function(k){return '<tr><td style="padding:6px;border:1px solid #999"><b>'+k[1]+'</b></td><td style="padding:6px;border:1px solid #999;text-align:center;width:60px">'+(blankSheet?"":(c.scores[k[0]]||"–"))+'</td></tr>';}).join("");
+  var t=total(c);
+  return '<div class="sheet" style="font-family:Arial,sans-serif;font-size:13px;color:#111"><h2 style="margin:0">Mock interview — '+(blankSheet?"panel scoring sheet":"feedback")+'</h2><p style="margin:4px 0 12px">Anchorlight Games · Junior Game Developer (Trainee) · Unit B1 AC5 / AC4</p>'+
+   '<p><b>Candidate:</b> '+esc(c.name||"__________________")+' &nbsp; <b>Track:</b> '+esc(c.track||"__________")+' &nbsp; <b>Date:</b> '+esc(c.date||"________")+'</p><p><b>Panel:</b> '+esc(c.panel||"____________________________")+'</p>'+
+   '<table style="border-collapse:collapse;width:100%;margin:10px 0"><tr><th style="text-align:left;padding:6px;border:1px solid #999">Criterion</th><th style="padding:6px;border:1px solid #999">Score (1–4)</th></tr>'+rows+
+   '<tr><td style="padding:6px;border:1px solid #999"><b>Total</b></td><td style="padding:6px;border:1px solid #999;text-align:center">'+(blankSheet?"/24":t+"/24")+'</td></tr></table>'+
+   (blankSheet?"":'<p><b>Reads like:</b> '+band(t,c)+'</p>')+
+   '<p><b>Notes:</b><br>'+(blankSheet?"<br><br><br><br><br>":esc(c.notes).replace(/\n/g,"<br>"))+'</p><p><b>Strength:</b><br>'+(blankSheet?"<br><br><br>":esc(c.str))+'</p><p><b>Work on:</b><br>'+(blankSheet?"<br><br><br>":esc(c.imp))+'</p>'+
+   '<p style="font-size:11px;color:#555">Panel scores are formative practice. Final B1 grades are decided by the assessor across all evidence.</p></div>';
+}
+$("printC").addEventListener("click",function(){read();$("printArea").innerHTML=sheet(cur,false);window.print();});
+$("printBlank").addEventListener("click",function(){var b=blank();b.date="";$("printArea").innerHTML=sheet(b,true)+sheet(b,true)+sheet(b,true);window.print();});
+$("csv").addEventListener("click",function(){
+  var head=["Name","Track","Date","Panel"].concat(CRIT.map(function(k){return k[1];})).concat(["Total","Band","Strength","Work on","Notes"]);
+  var rows=DB.list.map(function(c){var t=total(c);return [c.name,c.track,c.date,c.panel].concat(CRIT.map(function(k){return c.scores[k[0]]||"";})).concat([t,band(t,c),c.str,c.imp,c.notes]);});
+  var csv=[head].concat(rows).map(function(r){return r.map(function(v){return '"'+String(v==null?"":v).replace(/"/g,'""')+'"';}).join(",");}).join("\r\n");
+  var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="mock-interview-scores.csv";document.body.appendChild(a);a.click();a.remove();toast("CSV downloaded","Done");});
+
+var PAGES=["p1","p2","p3","p4"];
+document.querySelectorAll(".nav-btn[data-p]").forEach(function(b){b.addEventListener("click",function(){
+  PAGES.forEach(function(p){$(p).hidden=(p!==b.dataset.p);});
+  document.querySelectorAll(".nav-btn[data-p]").forEach(function(x){x.setAttribute("aria-current",String(x===b));});window.scrollTo(0,0);});});
+renderQ();loadDB();cur=blank();renderForm();renderCands();
+</script>
+</body>
+</html>
