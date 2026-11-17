@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Panel Briefing — Unit B1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --paper:#F7F2E8; --ink:#1B1533;
+  --orange:#FF5A1F; --teal:#00A6A6; --yellow:#FFC93C; --pink:#F0468C;
+  --soft:#4A4166; --dim:#7C7395;
+  --shadow:5px 5px 0 var(--ink); --shadow-sm:3px 3px 0 var(--ink);
+  --border:3px solid var(--ink); --border-sm:2px solid var(--ink);
+  --disp:"Bricolage Grotesque",system-ui,sans-serif;
+  --body:"IBM Plex Sans",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;
+  background-image:radial-gradient(var(--ink) .5px,transparent .5px);background-size:22px 22px}
+h1,h2,h3,h4{font-family:var(--disp);font-weight:800;letter-spacing:-.02em;line-height:1}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+button{font:inherit;cursor:pointer}
+a{color:var(--ink)}
+:focus-visible{outline:3px solid var(--pink);outline-offset:3px}
+
+.titlescreen{min-height:100svh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:40px 20px;position:relative}
+.kicker{font-family:var(--mono);font-size:13px;letter-spacing:.22em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:7px 14px;margin-bottom:22px;display:inline-block}
+.titlescreen h1{font-size:clamp(48px,12vw,126px);margin:0;text-transform:uppercase}
+.titlescreen h1 em{font-style:normal;display:block;color:var(--orange);-webkit-text-stroke:2px var(--ink)}
+.titlescreen .sub{max-width:50ch;margin:24px 0 32px;font-size:18px}
+.blob{position:absolute;border:var(--border);z-index:-1}
+.b1{width:120px;height:120px;background:var(--teal);border-radius:50%;top:12%;left:8%}
+.b2{width:80px;height:80px;background:var(--pink);top:22%;right:11%;transform:rotate(14deg)}
+.b3{width:150px;height:44px;background:var(--orange);bottom:16%;left:14%;transform:rotate(-7deg)}
+.b4{width:60px;height:60px;background:var(--yellow);border-radius:50%;bottom:24%;right:16%}
+@media (max-width:640px){.blob{display:none}}
+
+.btn{background:var(--yellow);border:var(--border);box-shadow:var(--shadow);padding:15px 30px;font-family:var(--disp);font-weight:800;font-size:19px;text-transform:uppercase;transition:transform .1s,box-shadow .1s}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.btn-sm{padding:10px 18px;font-size:14px;box-shadow:var(--shadow-sm)}
+.btn-t{background:var(--teal);color:#fff}
+.btn-o{background:var(--orange);color:#fff}
+.btn-g{background:#fff}
+
+.nav{position:sticky;top:0;z-index:30;background:var(--ink);border-bottom:var(--border)}
+.nav-in{max-width:1100px;margin:0 auto;padding:9px 20px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.nav-btn{background:transparent;border:2px solid transparent;color:#C9C2E0;font-family:var(--mono);font-size:12px;padding:7px 10px;text-transform:uppercase}
+.nav-btn:hover{color:var(--paper);border-color:var(--soft)}
+.nav-btn[aria-current="true"]{background:var(--yellow);color:var(--ink);border-color:var(--yellow)}
+.nav-btn .n{color:var(--teal)}
+.progress{margin-left:auto;display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:#9A92B8}
+.progress-bar{width:62px;height:8px;background:#3A3255;border:2px solid #5A5178}
+.progress-bar i{display:block;height:100%;background:var(--teal);width:0;transition:width .4s}
+
+.page{padding:44px 0 80px}
+.page[hidden]{display:none}
+.tag{display:inline-block;font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;background:var(--ink);color:var(--paper);padding:5px 11px;margin-bottom:14px}
+.page h2{font-size:clamp(28px,5.5vw,48px);margin:0 0 14px;text-transform:uppercase}
+.page h2 em{font-style:normal;color:var(--orange)}
+.page h3{font-size:22px;margin:34px 0 12px}
+.lede{font-size:17.5px;max-width:64ch;margin:0 0 26px}
+
+.card{background:#fff;border:var(--border);box-shadow:var(--shadow);padding:20px 22px;margin-bottom:16px}
+.card h4{font-size:18px;margin:0 0 8px}
+.card p:last-child,.card ul:last-child{margin-bottom:0}
+.card .big{font-family:var(--disp);font-weight:800;font-size:46px;line-height:.95;display:block;margin-bottom:4px}
+.tint-o{background:var(--orange);color:#fff}
+.tint-t{background:var(--teal);color:#fff}
+.tint-y{background:var(--yellow)}
+.tint-p{background:var(--pink);color:#fff}
+.tint-o a,.tint-t a,.tint-p a{color:#fff}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+@media (max-width:760px){.grid2{grid-template-columns:1fr}}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+
+table{width:100%;border-collapse:collapse;background:#fff;border:var(--border);box-shadow:var(--shadow);margin-bottom:16px;font-size:15px}
+th,td{padding:11px 13px;text-align:left;border-bottom:var(--border-sm);vertical-align:top}
+th{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:var(--paper);border-bottom:none}
+tr:last-child td{border-bottom:none}
+.tablewrap{overflow-x:auto}
+
+.steps{counter-reset:s;margin:0;padding:0;list-style:none}
+.steps li{counter-increment:s;position:relative;padding:0 0 0 54px;margin-bottom:20px;min-height:40px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:40px;height:40px;background:var(--teal);color:#fff;border:var(--border-sm);display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-weight:800;font-size:18px}
+.steps li b{font-family:var(--disp);font-weight:700;display:block;font-size:17.5px;margin-bottom:3px}
+.steps.orange li::before{background:var(--orange)}
+
+/* quizzes */
+.quizbox{background:#fff;border:var(--border);box-shadow:var(--shadow);padding:22px 24px;max-width:800px}
+.qn{font-family:var(--mono);font-size:12px;color:var(--dim);margin:0 0 6px}
+.qq{font-family:var(--disp);font-weight:700;font-size:18.5px;margin:0 0 16px;line-height:1.3}
+.qq.quote{font-family:var(--body);font-weight:500;font-style:italic;font-size:17px;border-left:5px solid var(--teal);padding-left:14px}
+.opt{display:block;width:100%;text-align:left;background:var(--paper);border:var(--border-sm);padding:13px 15px;margin-bottom:9px;font-size:15px;line-height:1.5}
+.opt:hover{border-color:var(--orange)}
+.opt.right{background:var(--teal);color:#fff;border-color:var(--ink)}
+.opt.wrong{background:var(--pink);color:#fff;border-color:var(--ink)}
+.opt:disabled{cursor:default}
+.fb{border:2px dashed var(--ink);padding:14px 16px;font-size:15px;margin:6px 0 4px}
+.fb[hidden]{display:none}
+.fb b{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:5px;color:var(--orange)}
+.sortrow{display:flex;gap:8px;flex-wrap:wrap}
+.sortrow .opt{flex:1 1 180px;text-align:center;margin-bottom:0;font-family:var(--disp);font-weight:700}
+
+/* builder */
+.modes{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.mode{background:#fff;border:var(--border);box-shadow:var(--shadow-sm);padding:12px 18px;font-family:var(--disp);font-weight:700;font-size:16px}
+.mode[aria-pressed="true"]{background:var(--ink);color:#fff}
+.build{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+@media (max-width:980px){.build{grid-template-columns:1fr}}
+.pane{background:var(--paper);border:var(--border);box-shadow:var(--shadow);padding:20px}
+.preview-wrap{position:sticky;top:76px}
+@media (max-width:980px){.preview-wrap{position:static}}
+.field{margin-bottom:15px}
+.field label{display:block;font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;margin-bottom:5px}
+.field input,.field textarea{width:100%;border:var(--border-sm);background:#fff;padding:10px 12px;font:inherit;font-size:15px;color:var(--ink)}
+.field textarea{min-height:110px;resize:vertical;line-height:1.55}
+.field input:focus,.field textarea:focus{border-color:var(--orange);outline:none}
+.hint{font-size:13px;color:var(--dim);margin:5px 0 0;line-height:1.45}
+.hint b{color:var(--ink);font-weight:600}
+.cc{font-family:var(--mono);font-size:11.5px;margin-top:5px;display:flex;justify-content:space-between}
+.cc .ok{color:var(--teal)}
+.cc .no{color:var(--pink)}
+
+.letter{background:#fff;border:var(--border);box-shadow:var(--shadow);padding:30px 32px;font-family:"IBM Plex Sans",Arial,sans-serif;font-size:13.5px;line-height:1.6;color:#1a1a1a;min-height:300px}
+.letter p{margin:0 0 11px}
+.letter .meta{color:#666;font-size:12.5px}
+.letter .empty{color:#bbb;font-style:italic}
+.ucasbox{background:#fff;border:var(--border-sm);margin-bottom:12px}
+.ucasbox .qh{background:var(--ink);color:#fff;padding:8px 12px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:flex;justify-content:space-between;gap:10px}
+.ucasbox .qb{padding:12px 14px;font-size:13.5px;line-height:1.55;min-height:50px;white-space:pre-wrap;word-wrap:break-word}
+.ucasbox .qb .empty{color:#bbb;font-style:italic}
+.qh .pill{padding:1px 7px}
+.pill.ok{background:var(--teal)}
+.pill.no{background:var(--pink)}
+.ucastotal{background:var(--ink);color:#fff;border:var(--border);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:12.5px}
+.ucastotal b{font-family:var(--disp);font-size:22px;color:var(--yellow)}
+
+.score{background:var(--ink);color:#fff;border:var(--border);box-shadow:5px 5px 0 var(--orange);padding:18px 22px;margin-bottom:16px;display:flex;gap:20px;align-items:center;flex-wrap:wrap}
+.score .big{font-family:var(--disp);font-weight:800;font-size:44px;line-height:1;color:var(--yellow)}
+.score p{margin:0;color:#C9C2E0;font-size:14.5px;flex:1;min-width:200px}
+.meter{height:10px;background:#3A3255;border:2px solid #5A5178;margin-top:8px}
+.meter i{display:block;height:100%;background:var(--teal);width:0;transition:width .35s}
+.diag{background:#fff;border:var(--border-sm);padding:11px 14px;margin-bottom:8px;border-left-width:7px;font-size:14px}
+.diag.good{border-left-color:var(--teal)}
+.diag.bad{border-left-color:var(--pink)}
+.diag.warn{border-left-color:var(--yellow)}
+.diag b{font-family:var(--disp);font-size:14.5px;display:block;margin-bottom:2px}
+.diag span{color:var(--soft)}
+
+.gl{background:none;border:none;padding:0;color:inherit;font:inherit;border-bottom:2px dotted var(--orange);cursor:help}
+.gl:hover{background:var(--yellow)}
+.pop{position:absolute;z-index:60;max-width:330px;background:var(--ink);color:#EDE9F7;border:var(--border);box-shadow:5px 5px 0 var(--orange);padding:14px 16px;font-size:14px;line-height:1.55}
+.pop[hidden]{display:none}
+.pop b{display:block;font-family:var(--disp);font-weight:700;color:#fff;margin-bottom:4px;font-size:16px}
+.search{width:100%;max-width:420px;border:var(--border);background:#fff;padding:12px 14px;font:inherit;box-shadow:var(--shadow-sm);margin-bottom:16px}
+.entry{border-bottom:var(--border-sm);padding:14px 0}
+.entry b{font-family:var(--disp);font-weight:700;font-size:17px;display:block}
+.entry p{margin:4px 0 0;font-size:15px}
+
+.lk{background:#fff;border:var(--border);box-shadow:var(--shadow-sm);padding:16px 18px;text-decoration:none;color:inherit;display:block;margin-bottom:12px}
+.lk:hover{border-color:var(--orange)}
+.lk b{font-family:var(--disp);font-size:16.5px;font-weight:700;display:block;color:var(--orange)}
+.lk .u{font-family:var(--mono);font-size:11.5px;color:var(--dim);display:block;margin:3px 0 7px;word-break:break-all}
+.lk span.d{font-size:14.5px;color:var(--soft)}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(140%);z-index:60;background:var(--ink);color:var(--paper);border:var(--border);box-shadow:5px 5px 0 var(--orange);padding:12px 20px;transition:transform .35s cubic-bezier(.2,.8,.3,1);text-align:center}
+.toast.up{transform:translateX(-50%) translateY(0)}
+.toast .l{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;color:var(--yellow);text-transform:uppercase}
+.toast .m{font-family:var(--disp);font-weight:700;font-size:16px}
+.sound-btn{position:fixed;right:14px;bottom:14px;z-index:50;background:var(--ink);color:var(--paper);border:var(--border);box-shadow:4px 4px 0 var(--teal);padding:9px 15px;font-family:var(--mono);font-size:12px;text-transform:uppercase}
+#saveState{font-family:var(--mono);font-size:11px;color:var(--dim);margin-left:8px}
+
+.site-footer{border-top:var(--border);padding:24px 0 90px;font-size:13.5px;color:var(--soft)}
+.site-footer p{margin:0 0 8px;max-width:76ch}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+#printArea{display:none}
+@media print{
+  body{background:#fff;background-image:none}
+  .nav,.sound-btn,.toast,.pop,.titlescreen,.page,.site-footer{display:none!important}
+  #printArea{display:block!important}
+  #printArea .letter,#printArea .ucasbox{border:none;box-shadow:none;padding:0}
+  @page{size:A4;margin:18mm}
+}
+
+.gate{min-height:100svh;display:flex;align-items:center;justify-content:center;padding:20px}
+.gate .card{max-width:420px;width:100%;text-align:center}
+.gate input{width:100%;border:var(--border);padding:12px 14px;font:inherit;font-size:17px;margin:14px 0;text-align:center}
+.gate .err{color:var(--pink);font-family:var(--mono);font-size:12px;min-height:16px}
+.q{background:#fff;border:var(--border);box-shadow:var(--shadow-sm);padding:16px 20px;margin-bottom:14px;break-inside:avoid}
+.q .who{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border:var(--border-sm);display:inline-block;margin-bottom:8px}
+.who.c{background:var(--yellow)} .who.a{background:var(--teal);color:#fff} .who.b{background:var(--pink);color:#fff}
+.q .say{font-family:var(--disp);font-weight:700;font-size:20px;line-height:1.3;margin:0 0 10px}
+.q .say:before{content:"\201C"}.q .say:after{content:"\201D"}
+.q dl{display:grid;grid-template-columns:110px 1fr;gap:4px 12px;margin:0;font-size:14.5px}
+.q dt{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);padding-top:3px}
+.q dd{margin:0}
+.q .tick{font-family:var(--mono);font-size:11.5px;color:var(--soft)}
+.script{background:var(--ink);color:#fff;border:var(--border);padding:16px 20px;margin-bottom:14px;break-inside:avoid}
+.script b{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--yellow);display:block;margin-bottom:6px}
+.script p{margin:0;font-size:16px;line-height:1.55}
+.spares{counter-reset:sp;list-style:none;padding:0;margin:0}
+.spares li{counter-increment:sp;background:#fff;border:var(--border-sm);padding:10px 14px 10px 48px;margin-bottom:8px;position:relative;break-inside:avoid}
+.spares li:before{content:counter(sp,upper-alpha);position:absolute;left:12px;top:9px;width:26px;height:26px;background:var(--orange);color:#fff;font-family:var(--disp);font-weight:800;display:flex;align-items:center;justify-content:center}
+.spares b{font-family:var(--disp);font-size:16px;display:block}
+.spares span{font-size:13.5px;color:var(--soft)}
+.toc{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.toc a{background:#fff;border:var(--border-sm);padding:7px 12px;font-family:var(--mono);font-size:12px;text-transform:uppercase;text-decoration:none;color:var(--ink)}
+@media print{
+  body{background:#fff;background-image:none;font-size:12px}
+  .nav,.toc,.noprint,.sound-btn{display:none!important}
+  #app{display:block!important}
+  .page{display:block!important;padding:0!important}
+  .gate{display:none!important}
+  .card,.q,table{box-shadow:none!important}
+  .q .say{font-size:16px}
+  h2{font-size:24px!important}
+  h3{font-size:16px!important;margin:16px 0 8px!important}
+  .pb{page-break-before:always}
+  @page{size:A4;margin:14mm}
+}
+</style>
+</head>
+<body>
+<div class="gate" id="gate">
+  <div class="card">
+    <span class="mono">Unit B1 · Panel only</span>
+    <h2 style="font-size:32px;margin:10px 0 4px">Panel briefing</h2>
+    <p style="margin:0">Enter the panel password to continue.</p>
+    <input id="pw" type="password" autocomplete="off" aria-label="Password">
+    <div class="err" id="pwErr"></div>
+    <button class="btn btn-sm" id="pwGo">Unlock</button>
+  </div>
+</div>
+
+<div id="app" hidden>
+<nav class="nav"><div class="nav-in">
+  <a class="nav-btn" href="../" style="text-decoration:none">← B1 hub</a>
+  <span class="nav-btn" style="color:var(--yellow)">Panel briefing</span>
+  <a class="nav-btn" href="./report.html" style="text-decoration:none">Interview reports →</a>
+  <button class="nav-btn" onclick="window.print()" style="margin-left:auto">Print</button>
+</div></nav>
+
+<section class="page"><div class="wrap">
+  <span class="tag">Mock interviews · Anchorlight Games · Junior Game Developer (Trainee)</span>
+  <h2>Panel <em>briefing</em></h2>
+  <p class="lede">Everything the three of you need for today: who does what, the running order, the exact questions, and how to fill in the report. Give each panellist a printed copy, or open it on a second screen.</p>
+  <div class="toc"><a href="#roles">Roles</a><a href="#order">Running order</a><a href="#rules">Ground rules</a><a href="#questions">The questions</a><a href="#spares">Spare questions</a><a href="#report">Filling in the report</a></div>
+
+  <h3 id="roles">Who does what</h3>
+  <div class="grid3">
+    <div class="card tint-y"><span class="mono">Chair</span><h4 style="font-size:20px;margin-top:6px">James Bell</h4><p>Collects the candidate and introduces the panel. Asks questions 1 and 2, keeps time and closes. Fills in the report as the panel agrees it.</p></div>
+    <div class="card tint-t"><span class="mono">Panellist A</span><h4 style="font-size:20px;margin-top:6px">Skills and work</h4><p>Asks question 3, the portfolio walkthrough. Watches for evidence: named projects, tools and decisions.</p></div>
+    <div class="card tint-p"><span class="mono">Panellist B</span><h4 style="font-size:20px;margin-top:6px">People and behaviour</h4><p>Asks question 4, about teamwork. Listens for STAR: what <em>they</em> did, and the result.</p></div>
+  </div>
+
+  <h3 id="order">Running order: 10-minute interview, 15-minute slot</h3>
+  <table><thead><tr><th style="width:70px">Time</th><th>What happens</th><th style="width:130px">Who</th></tr></thead><tbody>
+    <tr><td>0:00</td><td>Collect the candidate from outside. Welcome them and read the opening script</td><td>Chair</td></tr>
+    <tr><td>0:01</td><td>Questions 1 to 4, about 90 seconds each. Use the probe only if an answer is thin</td><td>Chair, Chair, A, B</td></tr>
+    <tr><td>0:07</td><td>One spare question, only if there's time</td><td>Chair picks</td></tr>
+    <tr><td>0:08</td><td>"Do you have any questions for us?"</td><td>Chair</td></tr>
+    <tr><td>0:10</td><td>Closing script. The candidate waits outside</td><td>Chair</td></tr>
+    <tr><td>0:10</td><td>Agree the result together and fill in the report</td><td>All three</td></tr>
+    <tr><td>0:13</td><td>Bring the candidate back for two minutes of feedback: one strength, then their top target</td><td>Chair, with a panellist</td></tr>
+    <tr><td>0:15</td><td>Build the report, email it, then press New student</td><td>Chair</td></tr>
+  </tbody></table>
+  <p class="hint">Four candidates an hour. The Chair cuts off politely at 10 minutes: "I'm going to stop you there so we keep to time. Thank you."</p>
+
+  <h3 id="rules">Ground rules for panellists</h3>
+  <div class="grid2">
+    <div class="card"><ul>
+      <li><strong>Same questions, same order, for everyone.</strong> Read them as written. No hints to friends.</li>
+      <li><strong>Judge what you heard,</strong> not who the person is or how well you know them.</li>
+      <li><strong>Take short notes</strong> while they answer, so you remember the detail when you agree the result.</li>
+    </ul></div>
+    <div class="card"><ul>
+      <li><strong>Stay in role.</strong> Friendly and professional. No laughing, no chatting between answers.</li>
+      <li><strong>Keep it confidential.</strong> Nothing about anyone's interview leaves the room.</li>
+      <li><strong>Feedback is specific and kind:</strong> "Your walkthrough worked because you explained why you chose…", not "it was good".</li>
+    </ul></div>
+  </div>
+
+  <h3 id="questions" class="pb">The script and questions</h3>
+  <div class="script"><b>Opening · Chair</b><p>"Hi [name], thanks for coming in. I'm James, and this is [Panellist A] and [Panellist B]. We're interviewing for the Junior Game Developer trainee role at Anchorlight Games. This will take about ten minutes. We'll ask you four or five questions, and then there'll be time for any questions you have for us. Take your time with your answers. Ready?"</p></div>
+
+  <div class="q"><span class="who c">Question 1 · Chair</span>
+    <p class="say">Tell us a bit about yourself and why you've applied for this traineeship.</p>
+    <dl><dt>Listen for</dt><dd>A short, relevant summary of their course, specialism, one project and why this role. Under 90 seconds. Not a life story.</dd>
+    <dt>Probe</dt><dd>"What made you choose your track?"</dd>
+    <dt>Report ticks</dt><dd class="tick">Answered the question · Right length · Enthusiasm and motivation</dd></dl></div>
+
+  <div class="q"><span class="who c">Question 2 · Chair</span>
+    <p class="say">What do you know about Anchorlight Games, and why do you want to work here rather than anywhere else?</p>
+    <dl><dt>Listen for</dt><dd>Has read the advert. Picks out the stylised action games, the mentoring and the live project, and connects them to their own goals.</dd>
+    <dt>Probe</dt><dd>"What would you hope to learn in your first year?"</dd>
+    <dt>Report ticks</dt><dd class="tick">Knew what the role involves · Had researched the studio · Enthusiasm and motivation</dd></dl></div>
+
+  <div class="q"><span class="who a">Question 3 · Panellist A</span>
+    <p class="say">Show us one piece of work from your portfolio and talk us through how you made it.</p>
+    <dl><dt>Listen for</dt><dd>Has it ready on screen. Covers their role, the tools, one problem and how they solved it, and what they'd improve. Says "I" for their own part.</dd>
+    <dt>Probe</dt><dd>"If you had another week on it, what would you change and why?"</dd>
+    <dt>Report ticks</dt><dd class="tick">Had work ready to show · Specific evidence · Industry vocabulary · Walked through work clearly</dd></dl></div>
+
+  <div class="q"><span class="who b">Question 4 · Panellist B</span>
+    <p class="say">Tell us about a time you worked as part of a team. What did you do, and how did it go?</p>
+    <dl><dt>Listen for</dt><dd>STAR: a named project, their specific contribution, and a result. Honest about any difficulty.</dd>
+    <dt>Probe</dt><dd>"What would you do differently in that team now?"</dd>
+    <dt>Report ticks</dt><dd class="tick">Used STAR · Said "I" for their own part · Honest about skills and gaps</dd></dl></div>
+
+  <div class="script"><b>Their questions · Chair</b><p>"That's all our questions. Is there anything you'd like to ask us?"</p></div>
+  <div class="script"><b>Closing · Chair</b><p>"Thanks very much, [name]. If you could wait outside for a few minutes, we'll talk it over and then bring you back in for some quick feedback. You'll also get a written report by email."</p></div>
+
+  <h3 id="spares">Spare questions</h3>
+  <p class="hint" style="margin-top:0">Use one only if a candidate finishes with time to spare. The Chair picks. If a candidate's track suits one better, that's fine.</p>
+  <ol class="spares">
+    <li><b>"You've hit a problem in your work that you can't solve. Talk us through what you do."</b><span>Listen for a method: reproduce, isolate, research, time-box, then ask for help clearly.</span></li>
+    <li><b>"Tell us about a time you got feedback on your work that you didn't agree with at first. What happened?"</b><span>Calm and reflective: what changed, and the result.</span></li>
+    <li><b>"What's a game you've played recently, and what's one thing you'd change about it?"</b><span>Specific and critical. Explains why the change helps the player.</span></li>
+    <li><b>"What tools or engines are you most confident in, and which are you still learning?"</b><span>Honest levels, with something they've made in each.</span></li>
+    <li><b>"Tell us about a time you had a tight deadline."</b><span>Prioritising and cutting scope, not just staying up all night.</span></li>
+    <li><b>"Where do you see yourself in five years?"</b><span>Connects to their B1 five-year plan and to this role.</span></li>
+    <li><b>"A teammate isn't doing their share. What do you do?"</b><span>Talks to them privately first and focuses on the work. Escalates only if needed.</span></li>
+    <li><b>"Why should we offer you the traineeship?"</b><span>Three reasons matched to the advert, each with proof.</span></li>
+  </ol>
+
+  <h3 id="report" class="pb">Filling in the report</h3>
+  <ol class="steps">
+    <li><b>Open Interview reports</b> Use the link at the top of this page or on the B1 hub, and enter the password <code>interview</code>. Use the same laptop all day, because reports only save on that machine.</li>
+    <li><b>Name, and email if you know it</b> Only the name is required. You can add the email later.</li>
+    <li><b>Agree each skill together</b> Go through the five groups. Tick <strong>Strong</strong> if they showed it well, or <strong>Work on</strong> if they need to improve. Leave both blank if you didn't see it. If you disagree, talk it through briefly; the Chair has the final say.</li>
+    <li><b>Overall level</b> Choose from Excellent, Good, Developing or Not yet ready.</li>
+    <li><b>Best moment and top target</b> One sentence each. The top target is what you tell them in the feedback, so make it specific: "Finish your examples on the result", not "be more confident".</li>
+    <li><b>Build report, then Email to student</b> The email opens with the report already filled in. To send the version with charts, use Print / save PDF and attach it. Then press <strong>New student</strong>.</li>
+    <li><b>At the end of the day</b> Press <strong>Download all as spreadsheet</strong> to keep a backup of every result.</li>
+  </ol>
+
+  <h3>Giving the two-minute feedback</h3>
+  <div class="grid2">
+    <div class="card tint-t"><h4>1 · One strength</h4><p>Name it and say why it worked. "Your portfolio walkthrough was really clear. You told us what problem you hit and how you fixed it."</p></div>
+    <div class="card tint-p"><h4>2 · One target</h4><p>Just one, framed as what to do next time. "Next time, finish your team story on the result: what happened because of what you did."</p></div>
+  </div>
+  <p class="hint">Finish with: "Well done. Your full report will come by email. Write it up in your reflective log today."</p>
+</div></section>
+</div>
+
+<script>
+var $=function(i){return document.getElementById(i);};
+/* Same light password gate as the report page: keeps students out, not real security. */
+var PW_HASH="5781s2";
+function hashPw(s){s=String(s).trim().toLowerCase();var h=5381;for(var i=0;i<s.length;i++){h=((h<<5)+h+s.charCodeAt(i))>>>0;}return h.toString(36);}
+function unlock(){$("gate").style.display="none";$("app").hidden=false;try{sessionStorage.setItem("b1rep","1");}catch(e){}}
+$("pwGo").addEventListener("click",function(){if(hashPw($("pw").value)===PW_HASH)unlock();else{$("pwErr").textContent="That's not it. Try again.";$("pw").select();}});
+$("pw").addEventListener("keydown",function(e){if(e.key==="Enter")$("pwGo").click();});
+try{if(sessionStorage.getItem("b1rep")==="1")unlock();}catch(e){}
+</script>
+</body>
+</html>

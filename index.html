@@ -435,7 +435,7 @@ var DLV=[
   why:"Almost all of AC5's content lives here: verbal communication, technical vocabulary, justifying your selections, answering fully, asking good questions back.",
   good:"You can say why each piece is in the portfolio and what it was for. You've researched whoever is interviewing you and you ask them something real back.",
   bad:"Reading your slides aloud. They can read.",
-  tools:[{name:"Hot Seat",url:"./interview/"},{name:"Interview Reports (panel)",url:"./interview/report.html"},{name:"Interview Techniques",url:"https://jamesbell2021.github.io/bmet-interview-techniques/"}]}
+  tools:[{name:"Hot Seat",url:"./interview/"},{name:"Interview Reports (panel)",url:"./interview/report.html"},{name:"Panel Briefing",url:"./interview/briefing.html"},{name:"Interview Techniques",url:"https://jamesbell2021.github.io/bmet-interview-techniques/"}]}
 ];
 
 function renderDlv(){
@@ -496,7 +496,10 @@ var TOOLS=[
   url:"./interview/"},
  {name:"Interview Reports",icon:"\ud83d\udd12",ac:"Panel only \u00b7 password",
   blurb:"For the interview panel. Agree each student's result on one form, build their feedback report with charts, and email it to them. Password protected.",
-  url:"./interview/report.html"}
+  url:"./interview/report.html"},
+ {name:"Panel Briefing",icon:"\ud83d\udccb",ac:"Panel only \u00b7 password",
+  blurb:"Instructions for the interview panel: roles, the 10-minute running order, opening and closing scripts, the questions you ask, and how to fill in the report.",
+  url:"./interview/briefing.html"}
 ];
 function renderToolkit(){
   $("toolkit").innerHTML=TOOLS.map(function(tl){
