@@ -435,7 +435,7 @@ var DLV=[
   why:"Almost all of AC5's content lives here: verbal communication, technical vocabulary, justifying your selections, answering fully, asking good questions back.",
   good:"You can say why each piece is in the portfolio and what it was for. You've researched whoever is interviewing you and you ask them something real back.",
   bad:"Reading your slides aloud. They can read.",
-  tools:[{name:"Hot Seat",url:"./interview/"},{name:"Interview Techniques",url:"https://jamesbell2021.github.io/bmet-interview-techniques/"}]}
+  tools:[{name:"Hot Seat",url:"./interview/"},{name:"Interview Reports (panel)",url:"./interview/report.html"},{name:"Interview Techniques",url:"https://jamesbell2021.github.io/bmet-interview-techniques/"}]}
 ];
 
 function renderDlv(){
@@ -493,7 +493,10 @@ var TOOLS=[
   url:"./statements/"},
  {name:"Hot Seat",icon:"\ud83e\ude91",ac:"AC5 \u00b7 AC4 \u00b7 Interview",
   blurb:"The most common interview questions and what they're really asking, how to prepare with STAR stories, what to wear, a timed practice drill \u2014 and the role you'll be interviewed for by a live panel.",
-  url:"./interview/"}
+  url:"./interview/"},
+ {name:"Interview Reports",icon:"\ud83d\udd12",ac:"Panel only \u00b7 password",
+  blurb:"For the interview panel. Agree each student's result on one form, build their feedback report with charts, and email it to them. Password protected.",
+  url:"./interview/report.html"}
 ];
 function renderToolkit(){
   $("toolkit").innerHTML=TOOLS.map(function(tl){
